@@ -1,0 +1,164 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { supabase } from '@/lib/supabase'
+import { useRouter, usePathname } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
+import { LayoutDashboard, ShoppingBag, Users, LogOut, Package, Menu, X } from 'lucide-react'
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<any>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        router.push('/login')
+      } else {
+        setUser(user)
+        setLoading(false)
+      }
+    }
+    checkUser()
+  }, [router])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Cargando...</div>
+  }
+
+  return (
+    <div className="flex min-h-screen bg-muted/30 flex-col md:flex-row">
+      {/* Sidebar */}
+      <div className={`
+        fixed inset-y-0 left-0 z-50 bg-[#0F172A] text-white p-6 flex flex-col justify-between transform transition-all duration-300 ease-in-out
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isSidebarCollapsed ? 'w-20' : 'w-64'}
+        md:relative md:translate-x-0 md:flex
+      `}>
+        <div>
+          <div className={`flex ${isSidebarCollapsed ? 'justify-center' : 'justify-between'} items-center mb-8`}>
+            {!isSidebarCollapsed && (
+              <div>
+                <span className="text-sm font-bold text-white block leading-tight">Casa de Representación,</span>
+                <span className="text-lg font-bold text-white block leading-tight">C.A. 2N</span>
+                <span className="text-xs text-accent block mt-1 font-medium">Panel Admin</span>
+              </div>
+            )}
+            <div className="flex gap-2">
+              {/* Botón colapsar para desktop */}
+              <button 
+                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                className="hidden md:block text-white/60 hover:text-white transition-colors"
+                title={isSidebarCollapsed ? "Expandir" : "Colapsar"}
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+              {/* Botón cerrar para móvil */}
+              <button 
+                onClick={() => setIsSidebarOpen(false)}
+                className="md:hidden text-white/60 hover:text-white transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+          
+          <nav className="space-y-1">
+            <Link href="/admin" 
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 rounded-lg transition-all duration-200 ${
+                    pathname === '/admin' ? 'bg-primary/20 text-white font-medium border-l-4 border-primary' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                  }`} 
+                  onClick={() => setIsSidebarOpen(false)}>
+              <LayoutDashboard className="h-5 w-5 flex-shrink-0" />
+              {!isSidebarCollapsed && <span>Dashboard</span>}
+            </Link>
+            <Link href="/admin/products" 
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 rounded-lg transition-all duration-200 ${
+                    pathname === '/admin/products' ? 'bg-primary/20 text-white font-medium border-l-4 border-primary' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                  }`} 
+                  onClick={() => setIsSidebarOpen(false)}>
+              <ShoppingBag className="h-5 w-5 flex-shrink-0" />
+              {!isSidebarCollapsed && <span>Productos</span>}
+            </Link>
+            <Link href="/admin/catalogs" 
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 rounded-lg transition-all duration-200 ${
+                    pathname === '/admin/catalogs' ? 'bg-primary/20 text-white font-medium border-l-4 border-primary' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                  }`} 
+                  onClick={() => setIsSidebarOpen(false)}>
+              <Package className="h-5 w-5 flex-shrink-0" />
+              {!isSidebarCollapsed && <span>Catálogos</span>}
+            </Link>
+            <Link href="/admin/users" 
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 rounded-lg transition-all duration-200 ${
+                    pathname === '/admin/users' ? 'bg-primary/20 text-white font-medium border-l-4 border-primary' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                  }`} 
+                  onClick={() => setIsSidebarOpen(false)}>
+              <Users className="h-5 w-5 flex-shrink-0" />
+              {!isSidebarCollapsed && <span>Usuarios</span>}
+            </Link>
+          </nav>
+        </div>
+
+        <div>
+          {!isSidebarCollapsed && (
+            <div className="text-sm text-white/60 mb-4 truncate">
+              {user?.email}
+            </div>
+          )}
+          <button 
+            onClick={handleLogout}
+            className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 w-full rounded-lg hover:bg-white/5 hover:text-red-300 transition-colors text-red-400`}
+          >
+            <LogOut className="h-5 w-5 flex-shrink-0" />
+            {!isSidebarCollapsed && <span>Cerrar Sesión</span>}
+          </button>
+        </div>
+      </div>
+
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content Area */}
+      <div className="flex-grow flex flex-col min-h-screen">
+        {/* Top Bar for Mobile */}
+        <div className="bg-white p-4 flex items-center justify-between md:hidden border-b border-gray-100">
+          <div>
+            <Image src="/logo_dark.png" alt="FarmaTuya" width={100} height={25} className="brightness-0" />
+            <span className="text-xs text-foreground/60 block">Panel Admin</span>
+          </div>
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 text-foreground hover:bg-muted rounded-lg"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex-grow p-4 md:p-8 overflow-auto">
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}

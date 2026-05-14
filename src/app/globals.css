@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0D1B4B;
+  --primary: #1A3A8F;
+  --primary-hover: #2B56C5;
+  --accent: #FF6A00;
+  --accent-hover: #E05E00;
+  --muted: #F1F5F9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  
+  /* Brand 2N Colors */
+  --color-brand-blue: #1A3A8F;
+  --color-brand-orange: #FF6A00;
+  --color-brand-blue-mid: #2B56C5;
+  --color-brand-dark: #0D1B4B;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
