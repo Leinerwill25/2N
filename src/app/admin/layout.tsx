@@ -115,18 +115,7 @@ export default function AdminLayout({
         </div>
 
         <div>
-          {!isSidebarCollapsed && (
-            <div className="text-sm text-white/60 mb-4 truncate">
-              {user?.email}
-            </div>
-          )}
-          <button 
-            onClick={handleLogout}
-            className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 w-full rounded-lg hover:bg-white/5 hover:text-red-300 transition-colors text-red-400`}
-          >
-            <LogOut className="h-5 w-5 flex-shrink-0" />
-            {!isSidebarCollapsed && <span>Cerrar Sesión</span>}
-          </button>
+          {/* Espacio reservado si se desea agregar algo al fondo del sidebar en el futuro */}
         </div>
       </div>
 
@@ -140,18 +129,35 @@ export default function AdminLayout({
 
       {/* Main Content Area */}
       <div className="flex-grow flex flex-col min-h-screen">
-        {/* Top Bar for Mobile */}
-        <div className="bg-white p-4 flex items-center justify-between md:hidden border-b border-gray-100">
-          <div>
-            <Image src="/logo_dark.png" alt="FarmaTuya" width={100} height={25} className="brightness-0" />
-            <span className="text-xs text-foreground/60 block">Panel Admin</span>
+        {/* Unified Top Bar */}
+        <div className="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100 shadow-sm sticky top-0 z-30">
+          <div className="flex items-center md:hidden">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="mr-3 p-2 text-foreground hover:bg-muted rounded-lg -ml-2"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            <div>
+              <span className="text-sm font-bold text-brand-dark leading-none block">2N</span>
+              <span className="text-[10px] text-foreground/60 block">Panel Admin</span>
+            </div>
           </div>
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-2 text-foreground hover:bg-muted rounded-lg"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
+          
+          <div className="hidden md:block">
+            {/* Espacio vacío en desktop para alinear a la derecha */}
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:block text-sm text-foreground/60 font-medium">{user?.email}</span>
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-sm text-red-500 hover:text-red-600 font-medium px-4 py-2 rounded-full hover:bg-red-50 transition-colors border border-red-100 shadow-sm"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Cerrar Sesión</span>
+            </button>
+          </div>
         </div>
 
         {/* Content */}

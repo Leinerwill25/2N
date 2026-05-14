@@ -21,26 +21,39 @@ export default function CatalogPage() {
   }, [id])
 
   const fetchCatalogAndProducts = async () => {
-    setLoading(true)
-    
-    // Fetch Catalog
-    const { data: catalogData } = await supabase
-      .from('catalogos')
-      .select('*')
-      .eq('id', id)
-      .single()
-    
-    setCatalog(catalogData)
+    try {
+      setLoading(true)
+      
+      // Fetch Catalog
+      const { data: catalogData, error: catalogError } = await supabase
+        .from('catalogos')
+        .select('*')
+        .eq('id', id)
+        .single()
+        
+      if (catalogError) {
+        console.error("Error fetching catalog:", catalogError)
+      }
+      
+      setCatalog(catalogData)
 
-    // Fetch Products
-    const { data: productsData } = await supabase
-      .from('productos')
-      .select('*')
-      .eq('catalogo_id', id)
-      .order('nombre', { ascending: true })
-    
-    setProducts(productsData || [])
-    setLoading(false)
+      // Fetch Products
+      const { data: productsData, error: productsError } = await supabase
+        .from('productos')
+        .select('*')
+        .eq('catalogo_id', id)
+        .order('nombre', { ascending: true })
+        
+      if (productsError) {
+        console.error("Error fetching products:", productsError)
+      }
+      
+      setProducts(productsData || [])
+    } catch (err) {
+      console.error("Unexpected error:", err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (loading) {

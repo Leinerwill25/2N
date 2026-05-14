@@ -23,30 +23,42 @@ export default function ProductPage() {
   }, [id])
 
   const fetchProductAndRelated = async () => {
-    setLoading(true)
-    
-    // Fetch Product
-    const { data: productData } = await supabase
-      .from('productos')
-      .select('*, catalogos(nombre)')
-      .eq('id', id)
-      .single()
-    
-    setProduct(productData)
-
-    if (productData) {
-      // Fetch Related Products (same catalog)
-      const { data: relatedData } = await supabase
-        .from('productos')
-        .select('*')
-        .eq('catalogo_id', productData.catalogo_id)
-        .neq('id', id)
-        .limit(4)
+    try {
+      setLoading(true)
       
-      setRelatedProducts(relatedData || [])
+      // Fetch Product
+      const { data: productData, error: productError } = await supabase
+        .from('productos')
+        .select('*, catalogos(nombre)')
+        .eq('id', id)
+        .single()
+        
+      if (productError) {
+        console.error("Error fetching product:", productError)
+      }
+      
+      setProduct(productData)
+
+      if (productData) {
+        // Fetch Related Products (same catalog)
+        const { data: relatedData, error: relatedError } = await supabase
+          .from('productos')
+          .select('*')
+          .eq('catalogo_id', productData.catalogo_id)
+          .neq('id', id)
+          .limit(4)
+          
+        if (relatedError) {
+          console.error("Error fetching related products:", relatedError)
+        }
+        
+        setRelatedProducts(relatedData || [])
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err)
+    } finally {
+      setLoading(false)
     }
-    
-    setLoading(false)
   }
 
   if (loading) {

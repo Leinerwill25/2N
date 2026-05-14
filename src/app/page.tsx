@@ -28,7 +28,8 @@ import {
   Zap,
   Users,
   Star,
-  Leaf
+  Leaf,
+  ChevronDown
 } from 'lucide-react'
 
 export default function Home() {
@@ -38,6 +39,7 @@ export default function Home() {
   const [catalogs, setCatalogs] = useState<any[]>([])
   const [rates, setRates] = useState({ usd: 1, eur: 1 })
   const [showAllCatalogs, setShowAllCatalogs] = useState(false)
+  const [isMoleculesOpen, setIsMoleculesOpen] = useState(false)
 
   useEffect(() => {
     fetchProducts()
@@ -118,10 +120,34 @@ export default function Home() {
             </div>
 
             {/* Desktop Menu */}
-            <nav className="hidden md:flex space-x-8 text-sm font-medium">
+            <nav className="hidden md:flex space-x-8 text-sm font-medium items-center">
               <a href="#inicio" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Inicio</a>
               <a href="#nosotros" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Nosotros</a>
-              <a href="#moleculas" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Moléculas</a>
+              
+              {/* Moléculas Dropdown */}
+              <div className="relative group">
+                <a href="#catalogos" className="flex items-center gap-1 text-brand-dark/70 hover:text-brand-orange transition-colors py-2">
+                  Moléculas <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                </a>
+                <div className="absolute top-full left-0 mt-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
+                  <div className="p-2 flex flex-col max-h-[60vh] overflow-y-auto">
+                    {catalogs.length === 0 ? (
+                      <span className="px-4 py-3 text-sm text-gray-500">Cargando...</span>
+                    ) : (
+                      catalogs.map(catalog => (
+                        <a 
+                          key={catalog.id} 
+                          href={`/catalogs/${catalog.id}`}
+                          className="px-4 py-3 text-sm text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors truncate"
+                        >
+                          {catalog.nombre}
+                        </a>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+
               <a href="#aliados" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Aliados</a>
               <a href="#contacto" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Contacto</a>
             </nav>
@@ -153,11 +179,36 @@ export default function Home() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-b border-gray-100">
+          <div className="md:hidden bg-white border-b border-gray-100 max-h-[80vh] overflow-y-auto">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <a href="#inicio" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Inicio</a>
               <a href="#nosotros" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Nosotros</a>
-              <a href="#moleculas" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Moléculas</a>
+              
+              {/* Moléculas Dropdown Mobile */}
+              <div>
+                <button 
+                  onClick={() => setIsMoleculesOpen(!isMoleculesOpen)}
+                  className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange"
+                >
+                  Moléculas <ChevronDown className={`h-5 w-5 transition-transform ${isMoleculesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isMoleculesOpen && (
+                  <div className="pl-6 pr-3 py-2 space-y-1 bg-gray-50/50 rounded-lg mx-3 mb-2">
+                    <a href="#catalogos" className="block py-2 text-sm font-medium text-brand-dark hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Ver todos</a>
+                    {catalogs.map(catalog => (
+                      <a 
+                        key={catalog.id} 
+                        href={`/catalogs/${catalog.id}`}
+                        className="block py-2 text-sm text-brand-dark/70 hover:text-brand-orange truncate"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {catalog.nombre}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <a href="#aliados" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Aliados</a>
               <a href="#contacto" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Contacto</a>
               <a 
