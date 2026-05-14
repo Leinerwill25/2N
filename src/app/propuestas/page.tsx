@@ -231,10 +231,6 @@ export default function PropuestasPage() {
                         <span>Al regularizar, el acceso se reactiva en &lt; 24h hábiles.</span>
                       </li>
                       <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <Database className="h-5 w-5 text-amber-500 shrink-0" />
-                        <span>Datos se conservan por 60 días tras suspensión.</span>
-                      </li>
-                      <li className="flex items-start gap-3 text-sm text-gray-600">
                         <Ban className="h-5 w-5 text-red-500 shrink-0" />
                         <span>Los meses pagados no son reembolsables.</span>
                       </li>
@@ -271,7 +267,7 @@ export default function PropuestasPage() {
                   </div>
                   <div className="sm:text-right">
                     <p className="text-3xl font-black text-white">$1,200 <span className="text-lg text-white/60 font-medium">USD</span></p>
-                    <p className="text-sm text-white/60">Pago en 2 cuotas (30 días)</p>
+                    <p className="text-sm text-white/60">Pago en 2 cuotas (15 días)</p>
                   </div>
                 </div>
               </div>
@@ -310,7 +306,7 @@ export default function PropuestasPage() {
                         <p className="text-xs text-white/50">$300 en divisas + Bs equiv. $300</p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                        <p className="text-xs text-white/60 mb-1">Cuota 2 — A los 30 días</p>
+                        <p className="text-xs text-white/60 mb-1">Cuota 2 — A los 15 días</p>
                         <p className="text-lg font-bold text-white">$600 USD</p>
                         <p className="text-xs text-white/50">$300 en divisas + Bs equiv. $300</p>
                       </div>
@@ -319,7 +315,7 @@ export default function PropuestasPage() {
                 </div>
 
                 <div className="bg-amber-500/10 text-amber-200 rounded-xl p-4 text-sm border border-amber-500/20 mb-4">
-                  <strong>Condición:</strong> el sistema se entrega funcional solo después de la Cuota 1. La Cuota 2 vence exactamente a los 30 días — si no se recibe, el acceso admin queda suspendido (el catálogo público permanece activo).
+                  <strong>Condición:</strong> el sistema se entrega funcional solo después de la Cuota 1. La Cuota 2 vence exactamente a los 15 días — si no se recibe, el acceso admin queda suspendido (el catálogo público permanece activo).
                 </div>
                 
                 <p className="text-xs text-white/50">
