@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { ShoppingBag, AlertTriangle, Package, Users } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [stats, setStats] = useState({
     totalProducts: 0,
     lowStock: 0,
@@ -120,7 +122,12 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3 text-red-500 font-bold">{product.stock}</td>
                     <td className="px-4 py-3">${product.precio || product.price || 0}</td>
                     <td className="px-4 py-3">
-                      <button className="text-primary hover:underline">Reponer</button>
+                      <button 
+                        onClick={() => router.push(`/admin/products?search=${product.nombre || product.name}`)}
+                        className="text-primary hover:underline"
+                      >
+                        Reponer
+                      </button>
                     </td>
                   </tr>
                 ))}
