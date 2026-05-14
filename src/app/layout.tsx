@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} h-full antialiased font-sans`}
+      className={`${inter.variable} h-full antialiased font-sans overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
         {/* Botón flotante de WhatsApp movido a la página principal */}
       </body>

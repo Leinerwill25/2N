@@ -104,7 +104,7 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-foreground font-sans">
+    <div className="flex flex-col min-h-screen bg-white text-foreground font-sans overflow-x-hidden">
       
       {/* 1. Header / Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md text-brand-dark shadow-sm">
