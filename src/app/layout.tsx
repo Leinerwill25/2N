@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   description: "Empresa venezolana dedicada a la importación, distribución y comercialización de productos farmacéuticos.",
 };
 
+export const viewport = {
+  colorScheme: 'light',
+  themeColor: '#1A3A8F',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,6 +26,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${inter.variable} h-full antialiased font-sans overflow-x-hidden`}
+      style={{ colorScheme: 'light' }}
     >
       <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
