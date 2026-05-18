@@ -138,7 +138,7 @@ export default function Home() {
                         <a 
                           key={catalog.id} 
                           href={`/catalogs/${catalog.id}`}
-                          className="px-4 py-3 text-sm text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors truncate"
+                          className="block px-4 py-2.5 text-sm leading-normal text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors truncate"
                         >
                           {catalog.nombre}
                         </a>
@@ -199,7 +199,7 @@ export default function Home() {
                       <a 
                         key={catalog.id} 
                         href={`/catalogs/${catalog.id}`}
-                        className="block py-2 text-sm text-brand-dark/70 hover:text-brand-orange truncate"
+                        className="block py-2 text-sm leading-normal text-brand-dark/70 hover:text-brand-orange truncate"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {catalog.nombre}
