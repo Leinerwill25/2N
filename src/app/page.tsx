@@ -129,8 +129,8 @@ export default function Home() {
                 <a href="#catalogos" className="flex items-center gap-1 text-brand-dark/70 hover:text-brand-orange transition-colors py-2">
                   Moléculas <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
                 </a>
-                <div className="absolute top-full left-0 mt-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
-                  <div className="p-2 flex flex-col max-h-[60vh] overflow-y-auto">
+                <div className="absolute top-full left-0 mt-0 w-80 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
+                  <div className="p-2 flex flex-col max-h-[60vh] overflow-y-auto custom-scrollbar">
                     {catalogs.length === 0 ? (
                       <span className="px-4 py-3 text-sm text-gray-500">Cargando...</span>
                     ) : (
@@ -138,7 +138,7 @@ export default function Home() {
                         <a 
                           key={catalog.id} 
                           href={`/catalogs/${catalog.id}`}
-                          className="block px-4 py-2.5 text-sm leading-normal text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors truncate"
+                          className="block px-4 py-2.5 text-sm leading-normal text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors whitespace-nowrap"
                         >
                           {catalog.nombre}
                         </a>
@@ -199,7 +199,7 @@ export default function Home() {
                       <a 
                         key={catalog.id} 
                         href={`/catalogs/${catalog.id}`}
-                        className="block py-2 text-sm leading-normal text-brand-dark/70 hover:text-brand-orange truncate"
+                        className="block py-2 text-sm leading-normal text-brand-dark/70 hover:text-brand-orange"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {catalog.nombre}
