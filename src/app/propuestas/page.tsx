@@ -709,18 +709,6 @@ export default function PropuestasPage() {
                         FarmaTuya interactúa diariamente con médicos que recetan medicamentos a sus pacientes. Como parte de esta alianza, FarmaTuya se compromete a presentar ASHIRA a los médicos de su red como una herramienta de gestión de consulta médica. Esta recomendación puede hacerse de forma presencial, por WhatsApp o a través de los canales que FarmaTuya considere convenientes — sin presión ni guión obligatorio.
                       </p>
                     </div>
-                    
-                    <div className="space-y-2 pt-6 border-t border-gray-100">
-                      <div className="flex items-center gap-3">
-                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-orange/10 text-brand-orange text-xs font-bold shrink-0">
-                          5
-                        </span>
-                        <h5 className="text-sm sm:text-base font-bold text-brand-dark">Programa de referidos activo</h5>
-                      </div>
-                      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed pl-10">
-                        Si un médico o farmacia referida por FarmaTuya contrata cualquier plan de ASHIRA o una plataforma web, FarmaTuya recibe un crédito de <span className="font-semibold text-brand-dark">$50 USD</span> descontado directamente de su siguiente factura mensual de ASHIRA. No hay límite de referidos por mes.
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -744,7 +732,7 @@ export default function PropuestasPage() {
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
                         <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold shrink-0">
-                          6
+                          5
                         </span>
                         <h5 className="text-sm sm:text-base font-bold text-brand-dark">Autorización como caso de estudio</h5>
                       </div>
@@ -756,7 +744,7 @@ export default function PropuestasPage() {
                     <div className="space-y-2 pt-6 border-t border-gray-100">
                       <div className="flex items-center gap-3">
                         <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold shrink-0">
-                          7
+                          6
                         </span>
                         <h5 className="text-sm sm:text-base font-bold text-brand-dark">Testimonio grabado</h5>
                       </div>
@@ -768,7 +756,7 @@ export default function PropuestasPage() {
                     <div className="space-y-2 pt-6 border-t border-gray-100">
                       <div className="flex items-center gap-3">
                         <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold shrink-0">
-                          8
+                          7
                         </span>
                         <h5 className="text-sm sm:text-base font-bold text-brand-dark">Sesiones de retroalimentación mensual</h5>
                       </div>
