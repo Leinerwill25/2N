@@ -29,7 +29,8 @@ import {
   Users,
   Star,
   Leaf,
-  ChevronDown
+  ChevronDown,
+  Mail
 } from 'lucide-react'
 
 export default function Home() {
@@ -613,7 +614,7 @@ export default function Home() {
                   0412-504-0440
                 </li>
                 <li className="flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-brand-orange" />
+                  <Mail className="h-4 w-4 text-brand-orange" />
                   casaderepresentacion2nventas@gmail.com
                 </li>
                 <li className="flex items-center gap-2">
