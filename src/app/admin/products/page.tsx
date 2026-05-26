@@ -337,7 +337,7 @@ export default function ProductsPage() {
               >
                 <option value="">Sin Catálogo</option>
                 {catalogs.map((catalog: any) => (
-                  <option key={catalog.id} value={catalog.id}>{catalog.name}</option>
+                  <option key={catalog.id} value={catalog.id}>{catalog.nombre}</option>
                 ))}
               </select>
             </div>
@@ -742,7 +742,7 @@ export default function ProductsPage() {
                   >
                     <option value="">Sin Catálogo</option>
                     {catalogs.map((catalog: any) => (
-                      <option key={catalog.id} value={catalog.id}>{catalog.name}</option>
+                      <option key={catalog.id} value={catalog.id}>{catalog.nombre}</option>
                     ))}
                   </select>
                 </div>
