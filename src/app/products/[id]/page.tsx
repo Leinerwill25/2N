@@ -297,8 +297,8 @@ export default function ProductPage() {
                   className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group"
                 >
                   <div className="relative h-48 bg-muted flex items-center justify-center">
-                    {relProduct.image_url ? (
-                      <Image src={relProduct.image_url} alt={relProduct.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                    {relProduct.imagen_url ? (
+                      <Image src={relProduct.imagen_url} alt={relProduct.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
                     ) : (
                       <ShoppingBag className="h-12 w-12 text-foreground/20" />
                     )}

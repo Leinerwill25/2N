@@ -109,9 +109,9 @@ export default function ProductsPage() {
     const { error } = await supabase.from('productos').insert([
       {
         nombre: newProduct.name,
-        precio: parseFloat(newProduct.price),
+        precio: parseFloat(newProduct.price) || 0,
         moneda: newProduct.currency,
-        stock: parseInt(newProduct.stock),
+        stock: parseInt(newProduct.stock) || 0,
         descripcion: newProduct.description,
         catalogo_id: newProduct.catalog_id || null,
         imagen_url: image_url,
@@ -372,13 +372,13 @@ export default function ProductsPage() {
             <div className="col-span-full text-center text-foreground/60 py-8">No se encontraron productos.</div>
           ) : (
             paginatedProducts.map((product: any) => {
-            const equiv = calculateEquivalents((product.precio || product.price || 0).toString(), product.moneda || product.currency || 'USD')
+            const equiv = calculateEquivalents((product.precio ?? product.price ?? 0).toString(), product.moneda ?? product.currency ?? 'USD')
             return (
               <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)] transition-all border border-gray-50 flex flex-col group p-3">
                 {/* Contenedor de Imagen Limpio */}
                 <div className="relative h-56 bg-[#F8F9FA] rounded-2xl flex items-center justify-center overflow-hidden">
-                  {product.image_url ? (
-                    <img src={product.image_url} alt={product.nombre || product.name} className="object-contain h-4/5 w-4/5 transition-transform duration-500 group-hover:scale-105" />
+                  {product.imagen_url ? (
+                    <img src={product.imagen_url} alt={product.nombre || product.name} className="object-contain h-4/5 w-4/5 transition-transform duration-500 group-hover:scale-105" />
                   ) : (
                     <Upload className="h-12 w-12 text-foreground/20" />
                   )}
@@ -403,9 +403,9 @@ export default function ProductsPage() {
                       <div>
                         <span className="text-xs text-foreground/40 block">Precio</span>
                         <span className="text-2xl font-bold text-[#1A1A1A]">
-                          {(product.moneda || product.currency || 'USD') === 'USD' && `$${product.precio || product.price || 0}`}
-                          {(product.moneda || product.currency) === 'EUR' && `€${product.precio || product.price || 0}`}
-                          {(product.moneda || product.currency) === 'BS' && `${product.precio || product.price || 0} Bs`}
+                          {(product.moneda ?? product.currency ?? 'USD') === 'USD' && `$${product.precio ?? product.price ?? 0}`}
+                          {(product.moneda ?? product.currency) === 'EUR' && `€${product.precio ?? product.price ?? 0}`}
+                          {(product.moneda ?? product.currency) === 'BS' && `${product.precio ?? product.price ?? 0} Bs`}
                         </span>
                       </div>
                       <button 
@@ -421,13 +421,13 @@ export default function ProductsPage() {
 
                     {/* Equivalentes minimalistas */}
                     <div className="flex gap-2 text-xs text-foreground/50">
-                      {(product.moneda || product.currency) !== 'USD' && (
+                      {(product.moneda ?? product.currency) !== 'USD' && (
                         <span>USD: <span className="font-medium text-foreground">${equiv.usd.toFixed(2)}</span></span>
                       )}
-                      {(product.moneda || product.currency) !== 'EUR' && (
+                      {(product.moneda ?? product.currency) !== 'EUR' && (
                         <span>EUR: <span className="font-medium text-foreground">€{equiv.eur.toFixed(2)}</span></span>
                       )}
-                      {product.currency !== 'BS' && (
+                      {(product.moneda ?? product.currency) !== 'BS' && (
                         <span>Bs: <span className="font-medium text-foreground">{equiv.bs.toFixed(2)}</span></span>
                       )}
                     </div>
@@ -612,12 +612,12 @@ export default function ProductsPage() {
               const { error } = await supabase
                 .from('productos')
                 .update({
-                  nombre: editingProduct.nombre || editingProduct.name,
-                  precio: parseFloat(editingProduct.precio || editingProduct.price),
-                  moneda: editingProduct.moneda || editingProduct.currency,
-                  stock: parseInt(editingProduct.stock),
-                  descripcion: editingProduct.descripcion || editingProduct.description,
-                  catalogo_id: editingProduct.catalogo_id || editingProduct.catalog_id || null,
+                  nombre: editingProduct.nombre ?? editingProduct.name ?? '',
+                  precio: parseFloat((editingProduct.precio ?? editingProduct.price ?? 0).toString()) || 0,
+                  moneda: editingProduct.moneda ?? editingProduct.currency ?? 'USD',
+                  stock: parseInt((editingProduct.stock ?? 0).toString()) || 0,
+                  descripcion: editingProduct.descripcion ?? editingProduct.description ?? null,
+                  catalogo_id: editingProduct.catalogo_id ?? editingProduct.catalog_id ?? null,
                   imagen_url: image_url,
                 })
                 .eq('id', editingProduct.id)
@@ -647,7 +647,7 @@ export default function ProductsPage() {
                   <label className="block text-sm font-medium mb-1">Nombre</label>
                   <input
                     type="text"
-                    value={editingProduct.nombre || editingProduct.name || ''}
+                    value={editingProduct.nombre ?? editingProduct.name ?? ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, nombre: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     required
@@ -658,7 +658,7 @@ export default function ProductsPage() {
                   <input
                     type="number"
                     step="0.01"
-                    value={editingProduct.precio || editingProduct.price || ''}
+                    value={editingProduct.precio ?? editingProduct.price ?? ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, precio: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     required
@@ -668,7 +668,7 @@ export default function ProductsPage() {
                   <label className="block text-sm font-medium mb-1">Descripción</label>
                   <input
                     type="text"
-                    value={editingProduct.descripcion || editingProduct.description || ''}
+                    value={editingProduct.descripcion ?? editingProduct.description ?? ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, descripcion: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
@@ -705,7 +705,7 @@ export default function ProductsPage() {
                 <div>
                   <label className="block text-sm font-medium mb-1">Moneda</label>
                   <select
-                    value={editingProduct.moneda || editingProduct.currency || 'USD'}
+                    value={editingProduct.moneda ?? editingProduct.currency ?? 'USD'}
                     onChange={(e) => setEditingProduct({ ...editingProduct, moneda: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   >
@@ -718,7 +718,7 @@ export default function ProductsPage() {
                   <label className="block text-sm font-medium mb-1">Stock</label>
                   <input
                     type="number"
-                    value={editingProduct.stock}
+                    value={editingProduct.stock ?? 0}
                     onChange={(e) => setEditingProduct({ ...editingProduct, stock: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     required
@@ -736,7 +736,7 @@ export default function ProductsPage() {
                 <div>
                   <label className="block text-sm font-medium mb-1">Catálogo</label>
                   <select
-                    value={editingProduct.catalogo_id || editingProduct.catalog_id || ''}
+                    value={editingProduct.catalogo_id ?? editingProduct.catalog_id ?? ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, catalogo_id: e.target.value })}
                     className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   >
