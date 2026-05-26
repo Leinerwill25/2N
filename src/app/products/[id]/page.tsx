@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { ArrowLeft, ShoppingBag, ArrowRight, Check, Info } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Navbar from '@/components/Navbar'
 
 export default function ProductPage() {
   const params = useParams()
@@ -104,31 +105,9 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen bg-white text-foreground font-sans">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 print:hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href={`/catalogs/${product.catalogo_id}`} className="text-brand-dark hover:text-brand-orange transition-colors flex items-center gap-2">
-            <ArrowLeft className="h-5 w-5" />
-            <span className="font-medium">Volver al catálogo</span>
-          </Link>
-          <div className="h-12 w-28 relative overflow-hidden flex items-center justify-center">
-            <Image
-              src="/logon_transparent.png"
-              alt="2N Logo"
-              fill
-              sizes="112px"
-              className="object-contain"
-              style={{
-                transform: 'scale(2.2)',
-                transformOrigin: 'center 46%'
-              }}
-            />
-          </div>
-          <div className="w-10"></div> {/* Spacer */}
-        </div>
-      </header>
+      <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
         {/* Breadcrumbs */}
         <nav className="flex text-sm text-foreground/60 mb-8 gap-2 items-center bg-muted/50 rounded-full px-4 py-2 w-fit print:hidden">
           <Link href="/" className="hover:text-brand-orange transition-colors">Inicio</Link>

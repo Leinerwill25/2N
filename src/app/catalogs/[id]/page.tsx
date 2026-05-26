@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { ArrowLeft, ShoppingBag } from 'lucide-react'
+import Navbar from '@/components/Navbar'
 
 export default function CatalogPage() {
   const params = useParams()
@@ -77,31 +78,9 @@ export default function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-white text-foreground font-sans">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-brand-dark hover:text-brand-orange transition-colors flex items-center gap-2">
-            <ArrowLeft className="h-5 w-5" />
-            <span className="font-medium">Volver</span>
-          </Link>
-          <div className="h-12 w-28 relative overflow-hidden flex items-center justify-center">
-            <Image
-              src="/logon_transparent.png"
-              alt="2N Logo"
-              fill
-              sizes="112px"
-              className="object-contain"
-              style={{
-                transform: 'scale(2.2)',
-                transformOrigin: 'center 46%'
-              }}
-            />
-          </div>
-          <div className="w-10"></div> {/* Spacer */}
-        </div>
-      </header>
+      <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
         {/* Hero Section */}
         <div className="relative rounded-3xl overflow-hidden mb-12 p-8 md:p-12
           bg-gradient-to-br from-brand-dark via-brand-blue to-brand-blue-mid

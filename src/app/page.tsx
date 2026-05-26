@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import { supabase } from '@/lib/supabase'
 import { getLatestRate } from '@/lib/rates-client'
+import Navbar from '@/components/Navbar'
 import { 
   Heart, 
   Shield, 
@@ -34,13 +35,11 @@ import {
 } from 'lucide-react'
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [emblaRef] = useEmblaCarousel({ loop: true })
   const [products, setProducts] = useState<any[]>([])
   const [catalogs, setCatalogs] = useState<any[]>([])
   const [rates, setRates] = useState({ usd: 1, eur: 1 })
   const [showAllCatalogs, setShowAllCatalogs] = useState(false)
-  const [isMoleculesOpen, setIsMoleculesOpen] = useState(false)
 
   useEffect(() => {
     fetchProducts()
@@ -108,130 +107,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-white text-foreground font-sans overflow-x-hidden">
       
       {/* 1. Header / Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md text-brand-dark shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <a href="#inicio" className="flex-shrink-0 flex items-center justify-center h-16 w-36 relative overflow-hidden">
-              <Image 
-                src="/logon_transparent.png" 
-                alt="2N Logo"
-                fill
-                sizes="144px"
-                className="object-contain"
-                style={{ 
-                  transform: 'scale(2.2)',
-                  transformOrigin: 'center 46%'
-                }}
-                priority
-              />
-            </a>
-
-            {/* Desktop Menu */}
-            <nav className="hidden md:flex space-x-8 text-sm font-medium items-center">
-              <a href="#inicio" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Inicio</a>
-              <a href="#nosotros" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Nosotros</a>
-              
-              {/* Moléculas Dropdown */}
-              <div className="relative group">
-                <a href="#catalogos" className="flex items-center gap-1 text-brand-dark/70 hover:text-brand-orange transition-colors py-2">
-                  Moléculas <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-                </a>
-                <div className="absolute top-full left-0 mt-0 w-80 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
-                  <div className="p-2 flex flex-col max-h-[60vh] overflow-y-auto custom-scrollbar">
-                    {catalogs.length === 0 ? (
-                      <span className="px-4 py-3 text-sm text-gray-500">Cargando...</span>
-                    ) : (
-                      catalogs.map(catalog => (
-                        <a 
-                          key={catalog.id} 
-                          href={`/catalogs/${catalog.id}`}
-                          className="block px-4 py-2.5 text-sm leading-normal text-brand-dark hover:bg-brand-orange/10 hover:text-brand-orange rounded-lg transition-colors whitespace-nowrap"
-                        >
-                          {catalog.nombre}
-                        </a>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <a href="#aliados" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Aliados</a>
-              <a href="#contacto" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Contacto</a>
-            </nav>
-
-            {/* CTA Button */}
-            <div className="hidden md:flex items-center">
-              <a 
-                href="https://wa.me/584125040440" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-brand-orange hover:bg-brand-orange/90 transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
-              >
-                <Phone className="h-4 w-4 mr-2" />
-                Contactar WhatsApp
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-brand-dark hover:text-brand-orange focus:outline-none"
-              >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-b border-gray-100 max-h-[80vh] overflow-y-auto">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <a href="#inicio" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Inicio</a>
-              <a href="#nosotros" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Nosotros</a>
-              
-              {/* Moléculas Dropdown Mobile */}
-              <div>
-                <button 
-                  onClick={() => setIsMoleculesOpen(!isMoleculesOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange"
-                >
-                  Moléculas <ChevronDown className={`h-5 w-5 transition-transform ${isMoleculesOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMoleculesOpen && (
-                  <div className="pl-6 pr-3 py-2 space-y-1 bg-gray-50/50 rounded-lg mx-3 mb-2">
-                    <a href="#catalogos" className="block py-2 text-sm font-medium text-brand-dark hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Ver todos</a>
-                    {catalogs.map(catalog => (
-                      <a 
-                        key={catalog.id} 
-                        href={`/catalogs/${catalog.id}`}
-                        className="block py-2 text-sm leading-normal text-brand-dark/70 hover:text-brand-orange"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {catalog.nombre}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <a href="#aliados" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Aliados</a>
-              <a href="#contacto" className="block px-3 py-2 text-base font-medium text-brand-dark/70 hover:text-brand-orange" onClick={() => setIsMenuOpen(false)}>Contacto</a>
-              <a 
-                href="https://wa.me/584125040440" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-3 py-2 text-base font-medium text-white bg-brand-orange rounded-md text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contactar WhatsApp
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
+      <Navbar />
 
       <main className="flex-grow pt-20">
         
