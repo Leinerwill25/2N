@@ -31,13 +31,17 @@ import {
   Star,
   Leaf,
   ChevronDown,
-  Mail
+  Mail,
+  Play,
+  Sparkles,
+  Film
 } from 'lucide-react'
 
 export default function Home() {
   const [emblaRef] = useEmblaCarousel({ loop: true })
   const [products, setProducts] = useState<any[]>([])
   const [catalogs, setCatalogs] = useState<any[]>([])
+  const [promoVideos, setPromoVideos] = useState<any[]>([])
   const [rates, setRates] = useState({ usd: 1, eur: 1 })
   const [showAllCatalogs, setShowAllCatalogs] = useState(false)
 
@@ -45,7 +49,50 @@ export default function Home() {
     fetchProducts()
     fetchRates()
     fetchCatalogs()
+    fetchPromoVideos()
   }, [])
+
+  const fetchPromoVideos = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('videos_promocionales')
+        .select('*')
+        .eq('activo', true)
+        .order('order_index', { ascending: true })
+      if (error) throw error
+      setPromoVideos(data || [])
+    } catch (err) {
+      console.error('Error fetching promo videos:', err)
+      setPromoVideos([])
+    }
+  }
+
+  const getEmbedUrl = (videoUrl: string, tipo: string) => {
+    if (tipo === 'youtube') {
+      let id = ''
+      if (videoUrl.includes('shorts/')) {
+        id = videoUrl.split('shorts/')[1]?.split('?')[0] || ''
+      } else if (videoUrl.includes('watch?v=')) {
+        id = videoUrl.split('watch?v=')[1]?.split('&')[0] || ''
+      } else if (videoUrl.includes('youtu.be/')) {
+        id = videoUrl.split('youtu.be/')[1]?.split('?')[0] || ''
+      }
+      return id ? `https://www.youtube.com/embed/${id}` : videoUrl
+    }
+    if (tipo === 'instagram') {
+      const cleanUrl = videoUrl.split('?')[0]
+      const suffix = cleanUrl.endsWith('/') ? 'embed/' : '/embed/'
+      return `${cleanUrl}${suffix}`
+    }
+    if (tipo === 'drive') {
+      const parts = videoUrl.split('/d/')
+      if (parts.length > 1) {
+        const fileId = parts[1].split('/')[0]
+        return `https://drive.google.com/file/d/${fileId}/preview`
+      }
+    }
+    return videoUrl
+  }
 
   const fetchProducts = async () => {
     const { data } = await supabase.from('productos').select('*').limit(4)
@@ -158,8 +205,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Secciones movidas y actualizadas */}
-
         {/* 3. Lo Que Somos */}
         <section id="lo-que-somos" className="py-24 bg-white relative overflow-hidden">
           {/* Decorative background shape with floating animation */}
@@ -226,6 +271,168 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Section 3: Promociones & Videos Promocionales */}
+        <section id="promociones" className="py-24 bg-gradient-to-tr from-brand-dark via-[#0F172A] to-brand-blue relative overflow-hidden text-white">
+          {/* Decorative design elements */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-blue-mid/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <span className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                <Sparkles className="h-3.5 w-3.5" />
+                Novedades y Ofertas
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+                Nuestras <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones</span>
+              </h2>
+              <p className="text-gray-300 max-w-2xl mx-auto text-base leading-relaxed">
+                Descubre contenidos exclusivos, ofertas mensuales y lanzamientos de medicamentos a través de nuestros videos interactivos.
+              </p>
+            </div>
+
+            {promoVideos.length === 0 ? (
+              /* Fallback: Premium Horizontal Coming Soon Skeleton & Text */
+              <div className="max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  {/* Left Column: Text Content */}
+                  <motion.div 
+                    className="lg:col-span-5 space-y-6 text-left"
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
+                      <Film className="h-3.5 w-3.5" />
+                      Próximamente
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
+                      Espacio de Novedades y <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones 2N</span>
+                    </h3>
+                    <p className="text-gray-300 text-base leading-relaxed">
+                      Estamos preparando contenido audiovisual interactivo especialmente para ti. En esta sección podrás conocer de primera mano nuestras promociones exclusivas, consejos de bienestar y detalles de nuestras líneas farmacéuticas.
+                    </p>
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                        Descuentos exclusivos y ofertas de temporada.
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                        Presentación de nuevas moléculas y medicamentos.
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                        Consejos prácticos de salud respaldados por expertos.
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Right Column: Beautiful Horizontal Video Skeleton */}
+                  <motion.div 
+                    className="lg:col-span-7"
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="relative aspect-[16/9] w-full rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 p-4 backdrop-blur-md overflow-hidden flex flex-col items-center justify-center group hover:border-brand-orange/30 transition-all duration-500 shadow-2xl">
+                      {/* Glow background */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-brand-blue-mid/5 opacity-50" />
+                      <div className="absolute -top-12 -right-12 w-40 h-40 bg-brand-orange/10 rounded-full blur-2xl pointer-events-none" />
+                      <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-brand-blue/10 rounded-full blur-2xl pointer-events-none" />
+                      
+                      <div className="z-10 flex flex-col items-center gap-4 text-center">
+                        <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-orange/50 group-hover:bg-brand-orange/5 transition-all duration-500 shadow-lg">
+                          <Play className="h-8 w-8 text-white/40 group-hover:text-brand-orange transition-colors duration-500 ml-1" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-orange animate-pulse">En Producción</span>
+                          <p className="text-sm text-gray-400">El reproductor se activará cuando subamos el video</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            ) : (
+              /* Real Featured Horizontal Video */
+              <div className="max-w-6xl mx-auto">
+                {(() => {
+                  const featuredVideo = promoVideos[0];
+                  return (
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                      {/* Left Column: Text details */}
+                      <motion.div 
+                        className="lg:col-span-5 space-y-6 text-left"
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/15 border border-brand-orange/30 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
+                          <Film className="h-3.5 w-3.5 animate-pulse" />
+                          Contenido Destacado
+                        </div>
+                        <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
+                          {featuredVideo.titulo}
+                        </h3>
+                        <p className="text-gray-300 text-base leading-relaxed">
+                          Te invitamos a ver este material interactivo que hemos preparado. Aquí conocerás los detalles de nuestras líneas terapéuticas, medicamentos de última generación y promociones especiales vigentes en 2N.
+                        </p>
+                        <div className="pt-4 flex flex-wrap gap-4">
+                          <a 
+                            href="#catalogos" 
+                            className="px-6 py-3 bg-brand-orange hover:bg-brand-orange/95 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-brand-orange/20 text-sm hover:-translate-y-0.5"
+                          >
+                            Ver Productos de la Línea
+                          </a>
+                          {featuredVideo.url && (
+                            <a 
+                              href={featuredVideo.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold rounded-xl transition-all text-sm hover:-translate-y-0.5"
+                            >
+                              Ver en origen
+                            </a>
+                          )}
+                        </div>
+                      </motion.div>
+
+                      {/* Right Column: Premium Horizontal Player */}
+                      <motion.div 
+                        className="lg:col-span-7"
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className="relative aspect-[16/9] w-full rounded-[2.5rem] border border-white/10 bg-black shadow-2xl overflow-hidden group hover:border-brand-orange/30 transition-all duration-300">
+                          {/* Ambient glow around the player */}
+                          <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-orange to-brand-blue rounded-[2.5rem] blur opacity-15 group-hover:opacity-30 transition duration-1000 group-hover:duration-200" />
+                          
+                          <div className="relative w-full h-full bg-black rounded-[2.4rem] overflow-hidden">
+                            <iframe 
+                              src={getEmbedUrl(featuredVideo.url, featuredVideo.tipo)}
+                              className="w-full h-full absolute inset-0 border-0"
+                              allowFullScreen
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            ></iframe>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
           </div>
         </section>
 

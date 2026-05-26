@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { LayoutDashboard, ShoppingBag, Users, LogOut, Package, Menu, X } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Users, LogOut, Package, Menu, X, Video } from 'lucide-react'
 
 export default function AdminLayout({
   children,
@@ -122,6 +122,14 @@ export default function AdminLayout({
                   onClick={() => setIsSidebarOpen(false)}>
               <Users className="h-5 w-5 flex-shrink-0" />
               {!isSidebarCollapsed && <span>Usuarios</span>}
+            </Link>
+            <Link href="/admin/videos" 
+                  className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} p-3 rounded-lg transition-all duration-200 ${
+                    pathname === '/admin/videos' ? 'bg-primary/20 text-white font-medium border-l-4 border-primary' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                  }`} 
+                  onClick={() => setIsSidebarOpen(false)}>
+              <Video className="h-5 w-5 flex-shrink-0" />
+              {!isSidebarCollapsed && <span>Videos Promocionales</span>}
             </Link>
           </nav>
         </div>
