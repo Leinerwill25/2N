@@ -238,13 +238,15 @@ export default function Home() {
         {/* 2. Hero Section */}
         <section id="inicio" className="relative bg-gradient-to-br from-white to-muted overflow-hidden min-h-[85vh] flex items-center">
           <div className="absolute inset-0 z-0">
-            <Image
-              src="/hero_bg.png"
-              alt="Pharmacy interior"
-              fill
-              className="object-cover object-center opacity-90"
-              priority
-            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-90"
+            >
+              <source src="/video2.mp4" type="video/mp4" />
+            </video>
             <div className="absolute inset-0 bg-gradient-to-r from-[#1A3A8F]/80 to-[#0D1B4B]/90"></div>
           </div>
 
