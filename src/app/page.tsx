@@ -112,13 +112,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <div className="flex-shrink-0 flex flex-col items-start justify-center">
-              <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider leading-none mb-1">Casa de Representación, C.A.</span>
-              <div className="flex items-baseline font-extrabold text-4xl leading-none">
-                <span className="text-brand-blue">2</span>
-                <span className="text-brand-orange">N</span>
-              </div>
-            </div>
+            <a href="#inicio" className="flex-shrink-0 flex items-center justify-center h-16 w-36 relative overflow-hidden">
+              <Image 
+                src="/logon_transparent.png" 
+                alt="2N Logo"
+                fill
+                sizes="144px"
+                className="object-contain"
+                style={{ 
+                  transform: 'scale(2.2)',
+                  transformOrigin: 'center 46%'
+                }}
+                priority
+              />
+            </a>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex space-x-8 text-sm font-medium items-center">
@@ -277,16 +284,45 @@ export default function Home() {
 
         {/* 3. Lo Que Somos */}
         <section id="lo-que-somos" className="py-24 bg-white relative overflow-hidden">
-          {/* Decorative background shape */}
-          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-brand-blue/5 rounded-bl-full -z-10"></div>
-          <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-brand-orange/5 rounded-tr-full -z-10"></div>
+          {/* Decorative background shape with floating animation */}
+          <motion.div 
+            animate={{ 
+              y: [0, -12, 0],
+              scale: [1, 1.05, 1] 
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="absolute top-0 right-0 w-1/3 h-1/3 bg-brand-blue/5 rounded-bl-full -z-10"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, 12, 0],
+              scale: [1, 1.03, 1] 
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 1
+            }}
+            className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-brand-orange/5 rounded-tr-full -z-10"
+          />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Lo que somos</span>
               <h2 className="text-4xl font-bold text-brand-dark mb-4">Operamos bajo estrictas normativas sanitarias y de buenas prácticas</h2>
               <div className="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
-            </div>
+            </motion.div>
 
             {/* Grid de Lo Que Somos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
@@ -295,53 +331,77 @@ export default function Home() {
                 { icon: ClipboardCheck, title: "Compromiso Normativo", desc: "Cumplimiento riguroso de los estándares de almacenamiento y distribución oficial." },
                 { icon: Heart, title: "Bienestar Social", desc: "Abastecimiento estratégico de fármacos para patologías diversas y tratamientos de uso prolongado." }
               ].map((item, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col items-start hover:-translate-y-2">
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col items-start cursor-default"
+                >
                   <div className="bg-muted p-4 rounded-xl inline-block mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
-                    <item.icon className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors" />
+                    <item.icon className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors">{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors group-hover:translate-x-1 transition-transform duration-300">{item.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
         {/* 4. Nuestra Esencia (Misión y Visión) */}
-        <section id="nosotros" className="py-24 bg-muted px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Nosotros</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Nuestra Esencia</h2>
-              <div className="w-20 h-1 bg-brand-blue mx-auto rounded-full"></div>
-            </div>
+        <section id="nosotros" className="py-24 bg-gradient-to-tr from-muted via-white to-muted/80 relative overflow-hidden">
+          {/* Orbes de luz de fondo */}
+          <div className="absolute top-10 left-10 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <span className="inline-flex items-center gap-2 bg-brand-blue/5 border border-brand-blue/10 text-brand-blue font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                <span className="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse" />
+                Nosotros
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-4 tracking-tight">
+                Nuestra <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-blue-mid">Esencia</span>
+              </h2>
+              <div className="w-20 h-1 bg-gradient-to-r from-brand-orange to-transparent mx-auto rounded-full"></div>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Misión */}
               <motion.div 
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-lg transition-all border-l-4 border-brand-blue relative overflow-hidden group"
+                whileHover={{ y: -6 }}
+                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-blue relative overflow-hidden group cursor-default"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-blue/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-blue/10 p-3 rounded-lg">
-                    <Target className="h-6 w-6 text-brand-blue" />
+                  <div className="bg-brand-blue/10 p-3.5 rounded-xl group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(26,58,143,0.3)]">
+                    <Target className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-2xl font-bold text-brand-blue">Misión</h3>
                 </div>
                 <div className="text-gray-600 leading-relaxed text-sm">
-                  <p className="text-lg font-semibold text-brand-dark mb-4">"Garantizar el acceso de la familia venezolana a soluciones de alta calidad."</p>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-brand-blue rounded-full"></span>
-                      Excelencia operativa en la cadena de suministro.
+                  <p className="text-lg font-semibold text-brand-dark mb-6">"Garantizar el acceso de la familia venezolana a soluciones de alta calidad."</p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Excelencia operativa en la cadena de suministro.</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-brand-blue rounded-full"></span>
-                      Estricto cumplimiento de estándares sanitarios.
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Estricto cumplimiento de estándares sanitarios.</span>
                     </li>
                   </ul>
                 </div>
@@ -349,29 +409,30 @@ export default function Home() {
 
               {/* Visión */}
               <motion.div 
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-lg transition-all border-l-4 border-brand-orange relative overflow-hidden group"
+                whileHover={{ y: -6 }}
+                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-orange relative overflow-hidden group cursor-default"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/5 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-orange/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-orange/10 p-3 rounded-lg">
-                    <Eye className="h-6 w-6 text-brand-orange" />
+                  <div className="bg-brand-orange/10 p-3.5 rounded-xl group-hover:bg-brand-orange group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(255,106,0,0.3)]">
+                    <Eye className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-2xl font-bold text-brand-orange">Visión</h3>
                 </div>
                 <div className="text-gray-600 leading-relaxed text-sm">
-                  <p className="text-lg font-semibold text-brand-dark mb-4">"Consolidarnos como la casa de representación referente en Venezuela."</p>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
-                      Liderar la cadena de suministro farmacéutico.
+                  <p className="text-lg font-semibold text-brand-dark mb-6">"Consolidarnos como la casa de representación referente en Venezuela."</p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Liderar la cadena de suministro farmacéutico.</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
-                      Medicamentos asequibles y de disponibilidad inmediata.
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Medicamentos asequibles y de disponibilidad inmediata.</span>
                     </li>
                   </ul>
                 </div>
@@ -381,12 +442,23 @@ export default function Home() {
         </section>
 
         {/* 5. Nuestros Valores */}
-        <section className="py-24 bg-white px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Cultura Corporativa</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Nuestros Valores</h2>
-              <div className="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+        <section className="py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-blue to-brand-dark">
+          {/* Orbes de luz de fondo */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-brand-blue-mid/30 rounded-full blur-3xl pointer-events-none" />
+          {/* Patrón de líneas cruzadas */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none stripe-bg" />
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-4">
+                <span className="w-1.5 h-1.5 bg-brand-orange rounded-full animate-ping" />
+                Cultura Corporativa
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+                Nuestros <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-white">Valores</span>
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-brand-orange to-transparent mx-auto rounded-full"></div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -398,13 +470,38 @@ export default function Home() {
                 { title: "Integridad", desc: "Actuamos con ética, transparencia y honestidad.", icon: Shield },
                 { title: "Sostenibilidad", desc: "Crecimiento responsable con el entorno.", icon: Leaf }
               ].map((valor, index) => (
-                <div key={index} className="flex flex-col p-6 bg-white border border-gray-100 rounded-xl hover:shadow-md transition-all group hover:-translate-y-1">
-                  <div className="bg-brand-blue/5 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">
-                    <valor.icon className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors" />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="flex flex-col p-8 bg-white/5 border border-white/10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:border-brand-orange/40 hover:shadow-[0_8px_30px_rgba(255,106,0,0.15)] transition-all duration-300 group cursor-default relative overflow-hidden"
+                >
+                  {/* Fondo hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+
+                  {/* Ícono */}
+                  <div className="p-4 rounded-xl w-14 h-14 flex items-center justify-center mb-6 transition-all duration-300 relative z-10 bg-white/10 border border-white/10 group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:shadow-[0_0_20px_rgba(255,106,0,0.4)]">
+                    <valor.icon className="h-6 w-6 text-white group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <h3 className="text-lg font-bold text-brand-dark mb-2 group-hover:text-brand-orange transition-colors">{valor.title}</h3>
-                  <p className="text-gray-500 text-sm">{valor.desc}</p>
-                </div>
+
+                  <h3 className="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand-orange transition-colors duration-300">
+                    {valor.title}
+                  </h3>
+                  <p className="text-white/60 text-sm leading-relaxed relative z-10 group-hover:text-white/80 transition-colors duration-300">
+                    {valor.desc}
+                  </p>
+
+                  {/* Número decorativo de fondo */}
+                  <span className="absolute bottom-2 right-4 text-7xl font-black text-white/[0.03] group-hover:text-brand-orange/[0.08] transition-colors duration-500 select-none leading-none">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* Línea animada en hover */}
+                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-brand-orange to-transparent w-0 group-hover:w-full transition-all duration-500 rounded-b-2xl" />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -466,15 +563,30 @@ export default function Home() {
         </section>
 
         {/* 6. Presencia Nacional */}
-        <section id="presencia" className="py-24 bg-white">
+        <section id="presencia" className="py-24 bg-gradient-to-tr from-muted/80 via-white to-brand-blue/5 relative overflow-hidden">
+          {/* Orbe decorativo */}
+          <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+          <div className="absolute -bottom-20 left-10 w-72 h-72 bg-brand-orange/5 rounded-full blur-2xl pointer-events-none" />
+          {/* Patrón de puntos radiales */}
+          <div className="absolute inset-0 -z-10 opacity-[0.03] pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(#1A3A8F 1px, transparent 1px)',
+              backgroundSize: '24px 24px'
+            }} />
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Alcance</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Presencia a Nivel Nacional</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">Con cobertura en los principales estados de Venezuela</p>
+            <div className="text-center mb-16 relative z-10">
+              <span className="inline-flex items-center gap-2 bg-brand-blue/5 border border-brand-blue/10 text-brand-blue font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                <span className="w-1.5 h-1.5 bg-brand-orange rounded-full animate-pulse" />
+                Alcance
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-4 tracking-tight">
+                Presencia a Nivel <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-blue-mid">Nacional</span>
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">Con cobertura en los principales estados de Venezuela</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
               {/* Columna Izquierda: Stats */}
               <motion.div 
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
@@ -486,74 +598,93 @@ export default function Home() {
                   visible: {
                     opacity: 1,
                     transition: {
-                      staggerChildren: 0.2
+                      staggerChildren: 0.15
                     }
                   }
                 }}
               >
                 <motion.div 
-                  className="bg-muted p-8 rounded-2xl text-center sm:col-span-2"
+                  className="bg-gradient-to-br from-brand-blue via-brand-blue-mid to-brand-blue p-8 rounded-3xl text-center sm:col-span-2 shadow-[0_12px_40px_rgba(26,58,143,0.18)] border border-white/10 group cursor-default overflow-hidden relative"
                   variants={{
-                    hidden: { opacity: 0, scale: 0.9 },
+                    hidden: { opacity: 0, scale: 0.95 },
                     visible: { opacity: 1, scale: 1 }
                   }}
+                  whileHover={{ y: -5, scale: 1.01 }}
                 >
-                  <span className="text-6xl font-bold text-brand-orange block mb-2">8+</span>
-                  <span className="text-brand-dark font-medium text-lg">Estados con cobertura</span>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-brand-orange/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <span className="text-6xl md:text-7xl font-black text-white block mb-2 stat-number tracking-tight">8+</span>
+                  <span className="text-white/80 font-bold text-xl block">Estados con cobertura</span>
+                  <div className="w-12 h-1 bg-brand-orange rounded-full mx-auto mt-4 group-hover:w-20 transition-all duration-300" />
                 </motion.div>
                 <motion.div 
-                  className="bg-muted p-6 rounded-2xl text-center"
+                  className="bg-white/80 backdrop-blur-md p-6 rounded-2xl text-center border border-gray-100/80 shadow-md transition-all duration-300 hover:border-brand-blue/30 group cursor-default overflow-hidden relative"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
+                  whileHover={{ y: -5 }}
                 >
-                  <span className="text-4xl font-bold text-brand-blue block mb-2">4+</span>
-                  <span className="text-brand-dark font-sm">Años en el mercado</span>
+                  <div className="absolute inset-0 bg-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <span className="text-4xl md:text-5xl font-black text-brand-blue block mb-2 stat-number group-hover:text-brand-orange transition-colors duration-300">4+</span>
+                  <span className="text-brand-dark/70 font-semibold text-sm group-hover:text-brand-dark transition-colors duration-300 block">Años en el mercado</span>
                 </motion.div>
                 <motion.div 
-                  className="bg-muted p-6 rounded-2xl text-center"
+                  className="bg-white/80 backdrop-blur-md p-6 rounded-2xl text-center border border-gray-100/80 shadow-md transition-all duration-300 hover:border-brand-blue/30 group cursor-default overflow-hidden relative"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
+                  whileHover={{ y: -5 }}
                 >
-                  <span className="text-4xl font-bold text-brand-blue block mb-2">6+</span>
-                  <span className="text-brand-dark font-sm">Aliados comerciales</span>
+                  <div className="absolute inset-0 bg-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <span className="text-4xl md:text-5xl font-black text-brand-blue block mb-2 stat-number group-hover:text-brand-orange transition-colors duration-300">6+</span>
+                  <span className="text-brand-dark/70 font-semibold text-sm group-hover:text-brand-dark transition-colors duration-300 block">Aliados comerciales</span>
                 </motion.div>
               </motion.div>
 
               {/* Columna Derecha: Estados */}
               <motion.div 
-                className="space-y-6"
+                className="bg-white/60 backdrop-blur-md p-8 rounded-3xl border border-gray-100 shadow-xl space-y-6 relative overflow-hidden"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-2xl font-bold text-brand-dark mb-4">Cobertura Estratégica</h3>
-                <p className="text-gray-600 mb-6">Operando desde 2022, aseguramos el abastecimiento en las regiones clave del país.</p>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full pointer-events-none" />
+                <h3 className="text-2xl font-bold text-brand-dark mb-2 relative z-10 flex items-center gap-2">
+                  <MapPin className="h-6 w-6 text-brand-orange animate-bounce" />
+                  Cobertura Estratégica
+                </h3>
+                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                  Operando desde 2022, aseguramos el abastecimiento estratégico y la cadena de frío en las regiones clave del territorio nacional.
+                </p>
                 <div className="flex flex-wrap gap-3">
                   {["Zulia", "Lara", "Miranda", "Monagas", "Táchira", "Mérida", "Aragua", "Distrito Capital"].map((estado, index) => (
-                    <span key={index} className="px-4 py-2 bg-brand-blue/10 text-brand-blue text-sm font-medium rounded-full hover:bg-brand-orange hover:text-white transition-colors cursor-default">
-                      {estado}
+                    <span key={index} className="px-4 py-2.5 bg-white border border-gray-100 text-brand-dark/80 text-sm font-semibold rounded-full shadow-sm transition-all duration-300 cursor-default hover:bg-brand-blue hover:text-white hover:border-brand-blue hover:shadow-[0_4px_14px_rgba(26,58,143,0.25)] hover:-translate-y-0.5 transform inline-block">
+                      📍 {estado}
                     </span>
                   ))}
                 </div>
               </motion.div>
             </div>
 
-            <p className="text-center text-gray-500 text-sm">Operando desde 2022, expandiéndonos año a año.</p>
+            <p className="text-center text-gray-500 text-sm mt-12">Operando desde 2022, expandiéndonos año a año.</p>
           </div>
         </section>
 
         {/* 7. Aliados Comerciales */}
-        <section id="aliados" className="py-24 bg-white">
+        <section id="aliados" className="py-24 bg-gradient-to-b from-white via-muted/30 to-white relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Confianza</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Aliados Comerciales</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">Trabajamos con las principales droguerías del país</p>
+            <div className="text-center mb-16 relative z-10">
+              <span className="inline-flex items-center gap-2 bg-brand-orange/5 border border-brand-orange/10 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3 animate-pulse">
+                <span className="w-1.5 h-1.5 bg-brand-orange rounded-full" />
+                Confianza
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-4 tracking-tight">
+                Aliados <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-blue-mid">Comerciales</span>
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">Trabajamos con las principales droguerías del país</p>
             </div>
 
             <div className="relative overflow-hidden py-10">
@@ -566,11 +697,11 @@ export default function Home() {
                   "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven",
                   "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven"
                 ].map((aliado, index) => (
-                  <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-center gap-4 min-w-[280px]">
-                    <div className="bg-brand-blue/5 p-3 rounded-xl">
-                      <Building2 className="h-6 w-6 text-brand-blue" />
+                  <div key={index} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
+                    <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
+                      <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <h3 className="text-lg font-bold text-brand-dark">{aliado}</h3>
+                    <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
                   </div>
                 ))}
               </motion.div>
@@ -610,15 +741,15 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">Contacto</h4>
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-brand-orange" />
+                  <Phone className="h-4 w-4 text-brand-orange shrink-0" />
                   0412-504-0440
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-brand-orange" />
+                  <Mail className="h-4 w-4 text-brand-orange shrink-0" />
                   casaderepresentacion2nventas@gmail.com
                 </li>
                 <li className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-brand-orange" />
+                  <MapPin className="h-4 w-4 text-brand-orange shrink-0" />
                   Caracas, Venezuela.
                 </li>
               </ul>

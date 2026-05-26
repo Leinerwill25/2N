@@ -54,9 +54,21 @@ export default function AdminLayout({
           <div className={`flex ${isSidebarCollapsed ? 'justify-center' : 'justify-between'} items-center mb-8`}>
             {!isSidebarCollapsed && (
               <div>
-                <span className="text-sm font-bold text-white block leading-tight">Casa de Representación,</span>
-                <span className="text-lg font-bold text-white block leading-tight">C.A. 2N</span>
-                <span className="text-xs text-accent block mt-1 font-medium">Panel Admin</span>
+                <div className="h-12 w-28 relative overflow-hidden flex items-center justify-center mb-1">
+                  <Image
+                    src="/logon_transparent.png"
+                    alt="2N Logo"
+                    fill
+                    sizes="112px"
+                    className="object-contain"
+                    style={{
+                      transform: 'scale(2.2)',
+                      transformOrigin: 'center 46%',
+                      filter: 'brightness(0) invert(1)'
+                    }}
+                  />
+                </div>
+                <span className="text-xs text-accent block font-medium">Panel Admin</span>
               </div>
             )}
             <div className="flex gap-2">
@@ -139,7 +151,19 @@ export default function AdminLayout({
               <Menu className="h-6 w-6" />
             </button>
             <div>
-              <span className="text-sm font-bold text-brand-dark leading-none block">2N</span>
+              <div className="h-10 w-24 relative overflow-hidden flex items-center justify-center">
+                <Image
+                  src="/logon_transparent.png"
+                  alt="2N Logo"
+                  fill
+                  sizes="96px"
+                  className="object-contain"
+                  style={{
+                    transform: 'scale(2.2)',
+                    transformOrigin: 'center 46%'
+                  }}
+                />
+              </div>
               <span className="text-[10px] text-foreground/60 block">Panel Admin</span>
             </div>
           </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { 
   FileText, 
@@ -39,10 +40,18 @@ export default function PropuestasPage() {
       <header className="bg-white border-b border-gray-100 py-6 sticky top-0 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider leading-none mb-1">Casa de Representación, C.A.</span>
-            <div className="flex items-baseline font-extrabold text-2xl leading-none">
-              <span className="text-brand-blue">2</span>
-              <span className="text-brand-orange">N</span>
+            <div className="h-12 w-28 relative overflow-hidden flex items-center justify-center">
+              <Image
+                src="/logon_transparent.png"
+                alt="2N Logo"
+                fill
+                sizes="112px"
+                className="object-contain"
+                style={{
+                  transform: 'scale(2.2)',
+                  transformOrigin: 'center 46%'
+                }}
+              />
             </div>
           </div>
           <a href="/" className="text-sm font-medium text-brand-dark/70 hover:text-brand-orange transition-colors">

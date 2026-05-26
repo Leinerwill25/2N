@@ -34,7 +34,20 @@ export default function LoginPage() {
     <div className="min-h-screen bg-muted/50 flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-2xl shadow-xl border border-primary/5 max-w-md w-full">
         <div className="text-center mb-8">
-          <Image src="/logo.png" alt="FarmaTuya" width={150} height={40} className="mx-auto mb-4" />
+          <div className="h-16 w-36 mx-auto mb-4 relative overflow-hidden flex items-center justify-center">
+            <Image 
+              src="/logon_transparent.png" 
+              alt="2N Logo" 
+              fill
+              sizes="144px"
+              className="object-contain"
+              style={{
+                transform: 'scale(2.2)',
+                transformOrigin: 'center 46%'
+              }}
+              priority
+            />
+          </div>
           <h2 className="text-2xl font-bold text-foreground">Panel Administrativo</h2>
           <p className="text-foreground/60 text-sm">Ingresa tus credenciales para continuar</p>
         </div>

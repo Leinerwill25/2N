@@ -84,12 +84,18 @@ export default function CatalogPage() {
             <ArrowLeft className="h-5 w-5" />
             <span className="font-medium">Volver</span>
           </Link>
-          <div className="font-bold text-xl text-brand-dark flex flex-col items-start justify-center">
-            <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider leading-none mb-0.5">Casa de Representación, C.A.</span>
-            <div className="flex items-baseline font-extrabold text-2xl leading-none">
-              <span className="text-brand-blue">2</span>
-              <span className="text-brand-orange">N</span>
-            </div>
+          <div className="h-12 w-28 relative overflow-hidden flex items-center justify-center">
+            <Image
+              src="/logon_transparent.png"
+              alt="2N Logo"
+              fill
+              sizes="112px"
+              className="object-contain"
+              style={{
+                transform: 'scale(2.2)',
+                transformOrigin: 'center 46%'
+              }}
+            />
           </div>
           <div className="w-10"></div> {/* Spacer */}
         </div>
