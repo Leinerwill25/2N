@@ -16,6 +16,28 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('description')
 
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({
+    transformOrigin: 'center center',
+    transform: 'scale(1)'
+  })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - left) / width) * 100
+    const y = ((e.clientY - top) / height) * 100
+    setZoomStyle({
+      transformOrigin: `${x}% ${y}%`,
+      transform: 'scale(2.2)'
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setZoomStyle({
+      transformOrigin: 'center center',
+      transform: 'scale(1)'
+    })
+  }
+
   useEffect(() => {
     if (id) {
       fetchProductAndRelated()
@@ -119,7 +141,9 @@ export default function ProductPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="relative h-[400px] lg:h-[500px] bg-muted rounded-3xl overflow-hidden flex items-center justify-center border border-gray-100"
+            className="relative h-[400px] lg:h-[500px] bg-muted rounded-3xl overflow-hidden flex items-center justify-center border border-gray-100 cursor-zoom-in"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             {product.imagen_url ? (
               <Image 
@@ -127,7 +151,8 @@ export default function ProductPage() {
                 alt={product.nombre} 
                 fill 
                 sizes="(max-width: 1024px) 100vw, 50vw" 
-                className="object-contain p-6"
+                className="object-contain p-6 transition-transform duration-100 ease-out"
+                style={zoomStyle}
                 priority
               />
             ) : (
