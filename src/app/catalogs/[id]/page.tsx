@@ -97,10 +97,28 @@ export default function CatalogPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
-        <div className="mb-12">
-          <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Catálogo</span>
-          <h1 className="text-4xl font-bold text-brand-dark mb-4">{catalog.nombre}</h1>
-          <p className="text-gray-600 max-w-3xl">{catalog.descripcion}</p>
+        <div className="relative rounded-3xl overflow-hidden mb-12 p-8 md:p-12
+          bg-gradient-to-br from-brand-dark via-brand-blue to-brand-blue-mid
+          shadow-[0_20px_60px_rgba(13,27,75,0.3)]">
+          {/* Decorative orbs */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-brand-orange/10 
+            rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 
+            rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10">
+            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 
+              text-brand-orange font-semibold tracking-wider uppercase text-xs 
+              px-4 py-2 rounded-full mb-4">
+              <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
+              Catálogo Terapéutico
+            </span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              {catalog.nombre}
+            </h1>
+            <p className="text-white/70 max-w-3xl text-sm md:text-base leading-relaxed">
+              {catalog.descripcion}
+            </p>
+          </div>
         </div>
 
         {/* Products Grid */}
@@ -111,29 +129,44 @@ export default function CatalogPage() {
             </div>
           ) : (
             products.map((product: any) => (
-              <Link href={`/products/${product.id}`} key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group">
-                <div className="relative h-48 bg-muted flex items-center justify-center">
+              <Link href={`/products/${product.id}`} key={product.id} className="bg-white rounded-2xl overflow-hidden card-glow border border-gray-100/80 flex flex-col group relative">
+                
+                {/* Image container */}
+                <div className="relative h-48 bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center overflow-hidden">
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                   {product.imagen_url ? (
-                    <Image src={product.imagen_url} alt={product.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-contain p-4" />
+                    <Image src={product.imagen_url} alt={product.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-contain p-4 transition-transform duration-500 group-hover:scale-110" />
                   ) : (
-                    <ShoppingBag className="h-12 w-12 text-foreground/20" />
+                    <ShoppingBag className="h-12 w-12 text-foreground/20 group-hover:text-brand-blue/30 transition-colors" />
                   )}
                 </div>
+
+                {/* Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:text-brand-orange transition-colors">{product.nombre}</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:text-brand-orange transition-colors duration-300">
+                      {product.nombre}
+                    </h3>
                     {product.principio_activo && (
-                      <p className="text-sm text-brand-blue font-medium mb-1">{product.principio_activo}</p>
+                      <p className="text-sm text-brand-blue font-medium mb-1 group-hover:text-brand-blue-mid transition-colors">
+                        {product.principio_activo}
+                      </p>
                     )}
                     {product.presentacion && (
                       <p className="text-sm text-foreground/60 mb-2">{product.presentacion}</p>
                     )}
-                    <p className="text-sm text-foreground/60 line-clamp-2">{product.descripcion}</p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-gray-50 flex justify-between items-center text-sm">
-                    <span className="text-foreground/60">Stock: {product.stock}</span>
-                    <span className="font-bold text-brand-orange">
-                      {product.precio > 0 ? `$${product.precio.toFixed(2)}` : <span className="text-brand-blue group-hover:text-brand-orange transition-colors">Consultar</span>}
+                  <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
+                    <span className="text-xs text-foreground/50 bg-muted px-2 py-1 rounded-full">
+                      Stock: {product.stock}
+                    </span>
+                    <span className="font-bold text-brand-orange text-sm">
+                      {product.precio > 0 ? `$${product.precio.toFixed(2)}` : (
+                        <span className="text-brand-blue group-hover:text-brand-orange transition-colors">
+                          Consultar →
+                        </span>
+                      )}
                     </span>
                   </div>
                 </div>

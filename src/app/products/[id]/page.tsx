@@ -124,7 +124,7 @@ export default function ProductPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Breadcrumbs */}
-        <nav className="flex text-sm text-foreground/60 mb-8 gap-2 items-center print:hidden">
+        <nav className="flex text-sm text-foreground/60 mb-8 gap-2 items-center bg-muted/50 rounded-full px-4 py-2 w-fit print:hidden">
           <Link href="/" className="hover:text-brand-orange transition-colors">Inicio</Link>
           <span>/</span>
           <Link href={`/catalogs/${product.catalogo_id}`} className="hover:text-brand-orange transition-colors">
@@ -141,7 +141,7 @@ export default function ProductPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="relative h-[400px] lg:h-[500px] bg-muted rounded-3xl overflow-hidden flex items-center justify-center border border-gray-100 cursor-zoom-in"
+            className="relative h-[400px] lg:h-[500px] bg-gradient-to-br from-muted via-muted/80 to-brand-blue/5 rounded-3xl overflow-hidden flex items-center justify-center border border-brand-blue/10 cursor-zoom-in shadow-[0_20px_60px_rgba(26,58,143,0.08)]"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
@@ -163,8 +163,17 @@ export default function ProductPage() {
             )}
             
             {/* Status Badge */}
-            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold text-brand-dark flex items-center gap-1.5 shadow-sm">
-              <div className={`w-2 h-2 rounded-full ${product.stock > 0 ? 'bg-green-500' : 'bg-red-500'}`}></div>
+            <div className={`absolute top-4 left-4 backdrop-blur-sm px-3 py-1.5 rounded-full 
+              text-xs font-semibold flex items-center gap-1.5 shadow-sm
+              ${product.stock > 0 
+                ? 'bg-green-500/10 border border-green-500/30 text-green-700' 
+                : 'bg-red-500/10 border border-red-500/30 text-red-700'}`}>
+              <div className={`w-2 h-2 rounded-full relative
+                ${product.stock > 0 ? 'bg-green-500' : 'bg-red-500'}`}>
+                {product.stock > 0 && (
+                  <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
+                )}
+              </div>
               {product.stock > 0 ? 'En Stock' : 'Agotado'}
             </div>
           </motion.div>
@@ -187,12 +196,12 @@ export default function ProductPage() {
               )}
 
               {/* Price */}
-              <div className="mb-6 flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-brand-dark">
+              <div className="mb-6 flex items-baseline gap-3 bg-gradient-to-r from-brand-blue/5 to-transparent rounded-2xl p-4">
+                <span className="text-4xl font-bold text-brand-dark">
                   {product.precio > 0 ? `$${product.precio.toFixed(2)}` : 'Consultar Precio'}
                 </span>
                 {product.precio > 0 && (
-                  <span className="text-sm text-foreground/60 font-medium">USD</span>
+                  <span className="text-sm text-foreground/60 font-medium bg-brand-blue/10 px-2 py-0.5 rounded-full">USD</span>
                 )}
               </div>
 
@@ -202,13 +211,21 @@ export default function ProductPage() {
 
               {/* Key Details */}
               <div className="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-6 mb-6">
-                <div>
-                  <span className="text-xs text-foreground/60 uppercase font-medium block mb-1">Presentación</span>
-                  <span className="text-brand-dark font-semibold">{product.presentacion || 'No especificada'}</span>
+                <div className="bg-muted/50 rounded-xl p-4">
+                  <span className="text-xs text-foreground/50 uppercase font-medium block mb-1">
+                    Presentación
+                  </span>
+                  <span className="text-brand-dark font-semibold text-sm">
+                    {product.presentacion || 'No especificada'}
+                  </span>
                 </div>
-                <div>
-                  <span className="text-xs text-foreground/60 uppercase font-medium block mb-1">Disponibilidad</span>
-                  <span className="text-brand-dark font-semibold">{product.stock} unidades</span>
+                <div className="bg-muted/50 rounded-xl p-4">
+                  <span className="text-xs text-foreground/50 uppercase font-medium block mb-1">
+                    Disponibilidad
+                  </span>
+                  <span className="text-brand-dark font-semibold text-sm">
+                    {product.stock} unidades
+                  </span>
                 </div>
               </div>
             </div>
@@ -219,14 +236,20 @@ export default function ProductPage() {
                 href={`https://wa.me/584125040440?text=Hola,%20estoy%20interesado%20en%20el%20producto%20${encodeURIComponent(product.nombre)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3.5 px-6 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                className="flex-1 bg-gradient-to-r from-brand-orange to-brand-orange/90 
+                  hover:from-brand-dark hover:to-brand-blue text-white font-medium py-3.5 px-6 
+                  rounded-full transition-all duration-300 flex items-center justify-center gap-2 
+                  shadow-[0_4px_15px_rgba(255,106,0,0.4)] hover:shadow-[0_4px_20px_rgba(13,27,75,0.4)] group"
               >
                 Consultar por WhatsApp
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <button 
                 onClick={() => window.print()}
-                className="flex-1 border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white font-medium py-3.5 px-6 rounded-full transition-colors flex items-center justify-center gap-2"
+                className="flex-1 border-2 border-brand-dark text-brand-dark 
+                  hover:bg-brand-dark hover:text-white font-medium py-3.5 px-6 rounded-full 
+                  transition-all duration-300 flex items-center justify-center gap-2
+                  hover:shadow-[0_4px_20px_rgba(13,27,75,0.3)]"
               >
                 Descargar Ficha
               </button>
@@ -264,25 +287,22 @@ export default function ProductPage() {
                 <p className="mt-4">Este producto cumple con todas las normativas sanitarias vigentes en el territorio venezolano.</p>
               </div>
             ) : (
-              <div className="bg-muted rounded-2xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden border border-brand-blue/10 shadow-sm">
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-white">
-                      <td className="px-6 py-4 font-medium text-brand-dark bg-muted/50 w-1/3">Principio Activo</td>
-                      <td className="px-6 py-4 text-gray-600">{product.principio_activo || 'N/A'}</td>
-                    </tr>
-                    <tr className="border-b border-white">
-                      <td className="px-6 py-4 font-medium text-brand-dark bg-muted/50">Presentación</td>
-                      <td className="px-6 py-4 text-gray-600">{product.presentacion || 'N/A'}</td>
-                    </tr>
-                    <tr className="border-b border-white">
-                      <td className="px-6 py-4 font-medium text-brand-dark bg-muted/50">Línea Terapéutica</td>
-                      <td className="px-6 py-4 text-gray-600">{product.linea || 'N/A'}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 font-medium text-brand-dark bg-muted/50">Moneda</td>
-                      <td className="px-6 py-4 text-gray-600">{product.moneda || 'USD'}</td>
-                    </tr>
+                    {[
+                      ['Principio Activo', product.principio_activo || 'N/A'],
+                      ['Presentación', product.presentacion || 'N/A'],
+                      ['Línea Terapéutica', product.linea || 'N/A'],
+                      ['Moneda', product.moneda || 'USD'],
+                    ].map(([label, value], index) => (
+                      <tr key={index} className={`border-b border-brand-blue/5 last:border-0
+                        ${index % 2 === 0 ? 'bg-white' : 'bg-muted/30'}`}>
+                        <td className="px-6 py-4 font-medium text-brand-dark w-1/3 
+                          border-r border-brand-blue/5">{label}</td>
+                        <td className="px-6 py-4 text-gray-600">{value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
