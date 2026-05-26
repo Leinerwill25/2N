@@ -127,7 +127,7 @@ export default function ProductPage() {
                 alt={product.nombre} 
                 fill 
                 sizes="(max-width: 1024px) 100vw, 50vw" 
-                className="object-cover"
+                className="object-contain p-6"
                 priority
               />
             ) : (
@@ -298,7 +298,7 @@ export default function ProductPage() {
                 >
                   <div className="relative h-48 bg-muted flex items-center justify-center">
                     {relProduct.imagen_url ? (
-                      <Image src={relProduct.imagen_url} alt={relProduct.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <Image src={relProduct.imagen_url} alt={relProduct.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
                     ) : (
                       <ShoppingBag className="h-12 w-12 text-foreground/20" />
                     )}

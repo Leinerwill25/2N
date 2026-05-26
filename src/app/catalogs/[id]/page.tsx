@@ -114,7 +114,7 @@ export default function CatalogPage() {
               <Link href={`/products/${product.id}`} key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group">
                 <div className="relative h-48 bg-muted flex items-center justify-center">
                   {product.imagen_url ? (
-                    <Image src={product.imagen_url} alt={product.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover" />
+                    <Image src={product.imagen_url} alt={product.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-contain p-4" />
                   ) : (
                     <ShoppingBag className="h-12 w-12 text-foreground/20" />
                   )}
