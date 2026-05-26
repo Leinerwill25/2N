@@ -108,7 +108,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-white text-foreground font-sans overflow-x-hidden">
       
       {/* 1. Header / Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md text-brand-dark shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl text-brand-dark border-b border-brand-blue/10 shadow-[0_1px_20px_rgba(26,58,143,0.08)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
@@ -118,12 +118,14 @@ export default function Home() {
                 <span className="text-brand-blue">2</span>
                 <span className="text-brand-orange">N</span>
               </div>
+              {/* NUEVO: línea decorativa */}
+              <div className="w-8 h-0.5 bg-gradient-to-r from-brand-orange to-transparent rounded-full mt-1" />
             </div>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex space-x-8 text-sm font-medium items-center">
-              <a href="#inicio" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Inicio</a>
-              <a href="#nosotros" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Nosotros</a>
+              <a href="#inicio" className="animated-underline text-brand-dark/70 hover:text-brand-orange transition-colors duration-300">Inicio</a>
+              <a href="#nosotros" className="animated-underline text-brand-dark/70 hover:text-brand-orange transition-colors duration-300">Nosotros</a>
               
               {/* Moléculas Dropdown */}
               <div className="relative group">
@@ -149,8 +151,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <a href="#aliados" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Aliados</a>
-              <a href="#contacto" className="text-brand-dark/70 hover:text-brand-orange transition-colors">Contacto</a>
+              <a href="#aliados" className="animated-underline text-brand-dark/70 hover:text-brand-orange transition-colors duration-300">Aliados</a>
+              <a href="#contacto" className="animated-underline text-brand-dark/70 hover:text-brand-orange transition-colors duration-300">Contacto</a>
             </nav>
 
             {/* CTA Button */}
@@ -159,7 +161,7 @@ export default function Home() {
                 href="https://wa.me/584125040440" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-brand-orange hover:bg-brand-orange/90 transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                className="inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-full text-white bg-brand-orange hover:bg-brand-dark transition-all duration-300 shadow-[0_4px_14px_rgba(255,106,0,0.35)] hover:shadow-[0_4px_20px_rgba(13,27,75,0.4)] transform hover:-translate-y-0.5"
               >
                 <Phone className="h-4 w-4 mr-2" />
                 Contactar WhatsApp
@@ -238,7 +240,13 @@ export default function Home() {
               className="object-cover object-center opacity-90"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A3A8F]/80 to-[#0D1B4B]/90"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0D1B4B]/92 via-[#1A3A8F]/78 to-[#FF6A00]/25" />
+            {/* Orbe superior derecho */}
+            <div className="absolute top-16 right-8 w-[420px] h-[420px] bg-brand-orange/8 rounded-full blur-3xl pointer-events-none" />
+            {/* Orbe inferior izquierdo */}
+            <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-brand-blue-mid/20 rounded-full blur-3xl pointer-events-none" />
+            {/* Orbe central */}
+            <div className="absolute top-1/2 right-1/3 w-48 h-48 bg-white/3 rounded-full blur-2xl pointer-events-none" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -248,7 +256,10 @@ export default function Home() {
               animate="visible"
               variants={fadeIn}
             >
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">2N — Bienestar con Sello de Calidad y Confianza</span>
+              <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-4 w-fit">
+                <span className="w-2 h-2 bg-brand-orange rounded-full float-animation inline-block flex-shrink-0" />
+                2N — Bienestar con Sello de Calidad y Confianza
+              </span>
               <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
                 Bienestar con Sello de Calidad y Confianza
               </h1>
@@ -258,13 +269,13 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
                   href="#catalogos" 
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-brand-orange hover:bg-brand-orange/90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full text-white bg-brand-orange hover:bg-brand-orange/90 transition-all duration-300 shadow-[0_8px_30px_rgba(255,106,0,0.45)] hover:shadow-[0_12px_40px_rgba(255,106,0,0.55)] transform hover:-translate-y-0.5"
                 >
                   Ver Catálogos
                 </a>
                 <a 
                   href="#contacto" 
-                  className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-full text-white hover:bg-white/10 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full text-white bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/40 transition-all duration-300 backdrop-blur-sm transform hover:-translate-y-0.5"
                 >
                   Contáctanos
                 </a>
@@ -276,10 +287,17 @@ export default function Home() {
         {/* Secciones movidas y actualizadas */}
 
         {/* 3. Lo Que Somos */}
-        <section id="lo-que-somos" className="py-24 bg-white relative overflow-hidden">
-          {/* Decorative background shape */}
-          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-brand-blue/5 rounded-bl-full -z-10"></div>
-          <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-brand-orange/5 rounded-tr-full -z-10"></div>
+        <section id="lo-que-somos" className="py-24 bg-gradient-to-b from-white to-muted/60 relative overflow-hidden">
+          {/* Dot grid pattern */}
+          <div className="absolute inset-0 -z-10 opacity-[0.04]"
+            style={{
+              backgroundImage: 'radial-gradient(#1A3A8F 1px, transparent 1px)',
+              backgroundSize: '28px 28px'
+            }} />
+          {/* Gradiente superior derecho */}
+          <div className="absolute top-0 right-0 w-1/2 h-2/3 bg-gradient-to-bl from-brand-blue/6 to-transparent -z-10 rounded-bl-full" />
+          {/* Gradiente inferior izquierdo */}
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-tr from-brand-orange/5 to-transparent -z-10 rounded-tr-full" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -291,24 +309,54 @@ export default function Home() {
             {/* Grid de Lo Que Somos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
               {[
-                { icon: ShieldCheck, title: "Excelencia Operativa", desc: "Importación y comercialización de medicamentos de alta calidad para el mercado venezolano." },
-                { icon: ClipboardCheck, title: "Compromiso Normativo", desc: "Cumplimiento riguroso de los estándares de almacenamiento y distribución oficial." },
-                { icon: Heart, title: "Bienestar Social", desc: "Abastecimiento estratégico de fármacos para patologías diversas y tratamientos de uso prolongado." }
+                {
+                  icon: ShieldCheck,
+                  title: "Excelencia Operativa",
+                  desc: "Importación y comercialización de medicamentos de alta calidad para el mercado venezolano.",
+                  color: "blue"
+                },
+                {
+                  icon: ClipboardCheck,
+                  title: "Compromiso Normativo",
+                  desc: "Cumplimiento riguroso de los estándares de almacenamiento y distribución oficial.",
+                  color: "orange"
+                },
+                {
+                  icon: Heart,
+                  title: "Bienestar Social",
+                  desc: "Abastecimiento estratégico de fármacos para patologías diversas y tratamientos de uso prolongado.",
+                  color: "blue"
+                }
               ].map((item, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col items-start hover:-translate-y-2">
-                  <div className="bg-muted p-4 rounded-xl inline-block mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
-                    <item.icon className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors" />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  className="bg-white p-8 rounded-2xl border border-gray-100/80 card-glow group flex flex-col items-start cursor-default relative overflow-hidden"
+                >
+                  {/* Fondo decorativo de la tarjeta */}
+                  <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full -z-10 transition-all duration-500 group-hover:w-48 group-hover:h-48 ${item.color === 'orange' ? 'bg-brand-orange/5 group-hover:bg-brand-orange/8' : 'bg-brand-blue/5 group-hover:bg-brand-blue/8'}`} />
+
+                  {/* Ícono */}
+                  <div className={`p-4 rounded-xl inline-block mb-6 transition-all duration-300 group-hover:shadow-lg ${item.color === 'orange' ? 'bg-brand-orange/10 group-hover:bg-brand-orange group-hover:shadow-brand-orange/30' : 'bg-brand-blue/10 group-hover:bg-brand-blue group-hover:shadow-brand-blue/30'}`}>
+                    <item.icon className={`h-6 w-6 transition-colors duration-300 group-hover:text-white ${item.color === 'orange' ? 'text-brand-orange' : 'text-brand-blue'}`} />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors">{item.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
+
+                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed flex-1">{item.desc}</p>
+
+                  {/* Línea animada en hover */}
+                  <div className={`w-0 group-hover:w-full h-0.5 rounded-full transition-all duration-500 mt-5 ${item.color === 'orange' ? 'bg-gradient-to-r from-brand-orange to-brand-orange/30' : 'bg-gradient-to-r from-brand-blue to-brand-blue/30'}`} />
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
-
-        {/* 4. Nuestra Esencia (Misión y Visión) */}
-        <section id="nosotros" className="py-24 bg-muted px-4 sm:px-6 lg:px-8">
+        <section id="nosotros" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-muted via-white to-muted/80">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Nosotros</span>
@@ -323,12 +371,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-lg transition-all border-l-4 border-brand-blue relative overflow-hidden group"
+                className="bg-white p-10 rounded-2xl card-glow border-l-4 border-brand-blue relative overflow-hidden group cursor-default"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-blue/8 to-transparent rounded-bl-full -z-10 group-hover:w-52 group-hover:h-52 transition-all duration-700" />
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-blue/10 p-3 rounded-lg">
-                    <Target className="h-6 w-6 text-brand-blue" />
+                  <div className="bg-brand-blue/10 p-3 rounded-xl transition-all duration-300 group-hover:bg-brand-blue group-hover:shadow-[0_8px_20px_rgba(26,58,143,0.35)]">
+                    <Target className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-2xl font-bold text-brand-blue">Misión</h3>
                 </div>
@@ -353,12 +401,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-lg transition-all border-l-4 border-brand-orange relative overflow-hidden group"
+                className="bg-white p-10 rounded-2xl card-glow border-l-4 border-brand-orange relative overflow-hidden group cursor-default"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/5 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-orange/8 to-transparent rounded-bl-full -z-10 group-hover:w-52 group-hover:h-52 transition-all duration-700" />
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-orange/10 p-3 rounded-lg">
-                    <Eye className="h-6 w-6 text-brand-orange" />
+                  <div className="bg-brand-orange/10 p-3 rounded-xl transition-all duration-300 group-hover:bg-brand-orange group-hover:shadow-[0_8px_20px_rgba(255,106,0,0.35)]">
+                    <Eye className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-2xl font-bold text-brand-orange">Visión</h3>
                 </div>
@@ -381,7 +429,12 @@ export default function Home() {
         </section>
 
         {/* 5. Nuestros Valores */}
-        <section className="py-24 bg-white px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-b from-white via-muted/20 to-white">
+          <div className="absolute inset-0 -z-10 opacity-[0.03]"
+            style={{
+              backgroundImage: 'linear-gradient(#1A3A8F 1px, transparent 1px), linear-gradient(to right, #1A3A8F 1px, transparent 1px)',
+              backgroundSize: '48px 48px'
+            }} />
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Cultura Corporativa</span>
@@ -391,27 +444,151 @@ export default function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {[
-                { title: "Responsabilidad Social", desc: "Comprometidos con el bienestar de la comunidad.", icon: Heart },
-                { title: "Innovación y Adaptabilidad", desc: "Evolucionamos con las necesidades del mercado.", icon: Zap },
-                { title: "Trabajo en Equipo", desc: "Sinergia para lograr objetivos comunes.", icon: Users },
-                { title: "Excelencia", desc: "Buscamos la máxima calidad en todo lo que hacemos.", icon: Star },
-                { title: "Integridad", desc: "Actuamos con ética, transparencia y honestidad.", icon: Shield },
-                { title: "Sostenibilidad", desc: "Crecimiento responsable con el entorno.", icon: Leaf }
+                { title: "Responsabilidad Social", desc: "Comprometidos con el bienestar de la comunidad.", icon: Heart, color: "orange" },
+                { title: "Innovación y Adaptabilidad", desc: "Evolucionamos con las necesidades del mercado.", icon: Zap, color: "blue" },
+                { title: "Trabajo en Equipo", desc: "Sinergia para lograr objetivos comunes.", icon: Users, color: "orange" },
+                { title: "Excelencia", desc: "Buscamos la máxima calidad en todo lo que hacemos.", icon: Star, color: "blue" },
+                { title: "Integridad", desc: "Actuamos con ética, transparencia y honestidad.", icon: Shield, color: "orange" },
+                { title: "Sostenibilidad", desc: "Crecimiento responsable con el entorno.", icon: Leaf, color: "blue" }
               ].map((valor, index) => (
-                <div key={index} className="flex flex-col p-6 bg-white border border-gray-100 rounded-xl hover:shadow-md transition-all group hover:-translate-y-1">
-                  <div className="bg-brand-blue/5 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">
-                    <valor.icon className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors" />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  className="flex flex-col p-6 bg-white border border-gray-100 rounded-2xl card-glow group cursor-default relative overflow-hidden"
+                >
+                  {/* Fondo hover */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl ${valor.color === 'orange' ? 'bg-gradient-to-br from-brand-orange/5 to-transparent' : 'bg-gradient-to-br from-brand-blue/5 to-transparent'}`} />
+
+                  {/* Ícono */}
+                  <div className={`p-3 rounded-xl w-12 h-12 flex items-center justify-center mb-4 transition-all duration-300 relative z-10 ${valor.color === 'orange' ? 'bg-brand-orange/8 group-hover:bg-brand-orange group-hover:shadow-[0_6px_16px_rgba(255,106,0,0.35)]' : 'bg-brand-blue/8 group-hover:bg-brand-blue group-hover:shadow-[0_6px_16px_rgba(26,58,143,0.35)]'}`}>
+                    <valor.icon className={`h-5 w-5 transition-colors duration-300 group-hover:text-white ${valor.color === 'orange' ? 'text-brand-orange' : 'text-brand-blue'}`} />
                   </div>
-                  <h3 className="text-lg font-bold text-brand-dark mb-2 group-hover:text-brand-orange transition-colors">{valor.title}</h3>
-                  <p className="text-gray-500 text-sm">{valor.desc}</p>
-                </div>
+
+                  <h3 className="text-base font-bold text-brand-dark mb-2 relative z-10 group-hover:text-brand-orange transition-colors duration-300">
+                    {valor.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed relative z-10">
+                    {valor.desc}
+                  </p>
+
+                  {/* Número decorativo de fondo */}
+                  <span className="absolute bottom-2 right-3 text-6xl font-black text-brand-blue/[0.04] group-hover:text-brand-orange/[0.06] transition-colors duration-300 select-none leading-none">
+                    {index + 1}
+                  </span>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* ===== NUEVA SECCIÓN — COMPROMISO CON VENEZUELA ===== */}
+        <section className="relative py-24 overflow-hidden bg-brand-dark stripe-bg">
+          {/* Orbes de fondo */}
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-blue/50 rounded-full blur-3xl pointer-events-none opacity-60" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-orange/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 -left-20 w-72 h-72 bg-brand-blue-mid/25 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+          {/* Línea decorativa superior */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-orange/40 to-transparent" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <span className="inline-flex items-center gap-2 bg-white/8 border border-white/15 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-5">
+                <span className="w-1.5 h-1.5 bg-brand-orange rounded-full float-animation inline-block flex-shrink-0" />
+                Nuestro Compromiso
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                Salud para toda{' '}
+                <span className="shimmer">Venezuela</span>
+              </h2>
+              <p className="text-white/55 max-w-2xl mx-auto text-base leading-relaxed">
+                Desde 2022 trabajamos para garantizar que cada familia venezolana tenga acceso a medicamentos de calidad, asequibles y disponibles cuando más los necesita.
+              </p>
+            </motion.div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+              {[
+                { number: "110+", label: "Productos disponibles", emoji: "💊" },
+                { number: "15",   label: "Líneas terapéuticas",  emoji: "🔬" },
+                { number: "8+",   label: "Estados cubiertos",    emoji: "📍" },
+                { number: "4+",   label: "Años de trayectoria",  emoji: "⭐" },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.1 }}
+                  className="bg-white/5 hover:bg-white/10 border border-white/8 hover:border-brand-orange/40 rounded-2xl p-6 text-center transition-all duration-300 group cursor-default hover:shadow-[0_8px_30px_rgba(255,106,0,0.12)]"
+                >
+                  <span className="text-2xl mb-3 block">{stat.emoji}</span>
+                  <span className="text-4xl md:text-5xl font-bold text-white block mb-1 group-hover:text-brand-orange transition-colors duration-300 stat-number">
+                    {stat.number}
+                  </span>
+                  <span className="text-white/45 text-xs md:text-sm group-hover:text-white/65 transition-colors duration-300">
+                    {stat.label}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Feature strips */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Regulados y certificados",
+                  desc: "Operamos bajo normativas del Ministerio de Salud y el Instituto Nacional de Higiene Rafael Rangel.",
+                  gradient: "from-brand-blue/60 to-brand-blue/20",
+                  border: "hover:border-brand-blue/50"
+                },
+                {
+                  title: "Cadena de distribución garantizada",
+                  desc: "Almacenamiento y distribución bajo estrictos estándares sanitarios avalados por entes oficiales.",
+                  gradient: "from-brand-orange/50 to-brand-orange/15",
+                  border: "hover:border-brand-orange/50"
+                },
+                {
+                  title: "Disponibilidad inmediata",
+                  desc: "Stock permanente de las moléculas más demandadas para patologías diversas y tratamientos prolongados.",
+                  gradient: "from-brand-blue-mid/50 to-brand-blue-mid/15",
+                  border: "hover:border-brand-blue-mid/50"
+                },
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.12 }}
+                  className={`relative overflow-hidden rounded-2xl p-6 group cursor-default border border-white/8 transition-all duration-300 ${feature.border} hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)]`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-25 group-hover:opacity-40 transition-opacity duration-300`} />
+                  <div className="relative z-10">
+                    <h3 className="text-white font-bold text-base mb-2">{feature.title}</h3>
+                    <p className="text-white/50 text-sm leading-relaxed group-hover:text-white/65 transition-colors duration-300">
+                      {feature.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+        {/* ===== FIN NUEVA SECCIÓN ===== */}
+
         {/* Sección de Catálogos / Líneas Terapéuticas */}
-        <section id="catalogos" className="py-24 bg-muted/30">
+        <section id="catalogos" className="py-24 bg-gradient-to-b from-muted/50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Líneas Terapéuticas</span>
@@ -428,13 +605,15 @@ export default function Home() {
                     <a 
                       href={`/catalogs/${catalog.id}`} 
                       key={catalog.id} 
-                      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group cursor-pointer"
+                      className="bg-white rounded-2xl overflow-hidden card-glow border border-gray-100/80 flex flex-col group cursor-pointer relative"
                     >
-                      <div className="relative h-48 bg-muted flex items-center justify-center">
+                      <div className="relative h-48 bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center overflow-hidden">
+                        {/* Overlay de color en hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/55 via-brand-blue/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10" />
                         {catalog.image_url ? (
                           <Image src={catalog.image_url} alt={catalog.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (
-                          <ShoppingBag className="h-12 w-12 text-foreground/20" />
+                          <ShoppingBag className="h-12 w-12 text-foreground/20 group-hover:text-brand-blue/30 transition-colors duration-300" />
                         )}
                       </div>
                       <div className="p-6 flex-1 flex flex-col justify-between">
@@ -442,8 +621,9 @@ export default function Home() {
                           <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:text-brand-orange transition-colors">{catalog.nombre}</h3>
                           <p className="text-sm text-foreground/60 mb-4 line-clamp-2">{catalog.descripcion || 'Sin descripción'}</p>
                         </div>
-                        <div className="flex items-center text-brand-blue text-sm font-medium group-hover:translate-x-1 transition-transform">
-                          Ver productos <ArrowRight className="h-4 w-4 ml-1" />
+                        <div className="flex items-center text-brand-blue text-sm font-medium group-hover:text-brand-orange transition-colors duration-300">
+                          Ver productos
+                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-2 transition-transform duration-300" />
                         </div>
                       </div>
                     </a>
@@ -456,7 +636,7 @@ export default function Home() {
               <div className="text-center mt-12">
                 <button
                   onClick={() => setShowAllCatalogs(!showAllCatalogs)}
-                  className="inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white font-medium py-3 px-8 rounded-full transition-colors"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-blue-mid hover:from-brand-dark hover:to-brand-blue text-white font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(26,58,143,0.35)] hover:shadow-[0_6px_24px_rgba(26,58,143,0.5)] transform hover:-translate-y-0.5"
                 >
                   {showAllCatalogs ? 'Ver menos' : 'Ver más'}
                 </button>
@@ -466,7 +646,7 @@ export default function Home() {
         </section>
 
         {/* 6. Presencia Nacional */}
-        <section id="presencia" className="py-24 bg-white">
+        <section id="presencia" className="py-24 bg-gradient-to-br from-white via-muted/25 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Alcance</span>
@@ -492,34 +672,38 @@ export default function Home() {
                 }}
               >
                 <motion.div 
-                  className="bg-muted p-8 rounded-2xl text-center sm:col-span-2"
+                  className="bg-gradient-to-br from-brand-blue to-brand-dark p-8 rounded-2xl text-center sm:col-span-2 shadow-[0_12px_40px_rgba(26,58,143,0.25)]"
                   variants={{
                     hidden: { opacity: 0, scale: 0.9 },
                     visible: { opacity: 1, scale: 1 }
                   }}
                 >
-                  <span className="text-6xl font-bold text-brand-orange block mb-2">8+</span>
-                  <span className="text-brand-dark font-medium text-lg">Estados con cobertura</span>
+                  <span className="text-6xl font-bold text-white block mb-2 stat-number">8+</span>
+                  <span className="text-white/70 font-medium text-lg">Estados con cobertura</span>
                 </motion.div>
                 <motion.div 
-                  className="bg-muted p-6 rounded-2xl text-center"
+                  className="bg-brand-blue/6 hover:bg-brand-blue/10 border border-brand-blue/12 hover:border-brand-blue/30 p-6 rounded-2xl text-center transition-all duration-300 group cursor-default hover:shadow-[0_8px_24px_rgba(26,58,143,0.12)]"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
                 >
-                  <span className="text-4xl font-bold text-brand-blue block mb-2">4+</span>
-                  <span className="text-brand-dark font-sm">Años en el mercado</span>
+                  <span className="text-4xl font-bold text-brand-blue block mb-2 stat-number group-hover:text-brand-dark transition-colors duration-300">4+</span>
+                  <span className="text-brand-dark/60 text-sm group-hover:text-brand-dark transition-colors duration-300">
+                    Años en el mercado
+                  </span>
                 </motion.div>
                 <motion.div 
-                  className="bg-muted p-6 rounded-2xl text-center"
+                  className="bg-brand-blue/6 hover:bg-brand-blue/10 border border-brand-blue/12 hover:border-brand-blue/30 p-6 rounded-2xl text-center transition-all duration-300 group cursor-default hover:shadow-[0_8px_24px_rgba(26,58,143,0.12)]"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
                 >
-                  <span className="text-4xl font-bold text-brand-blue block mb-2">6+</span>
-                  <span className="text-brand-dark font-sm">Aliados comerciales</span>
+                  <span className="text-4xl font-bold text-brand-blue block mb-2 stat-number group-hover:text-brand-dark transition-colors duration-300">6+</span>
+                  <span className="text-brand-dark/60 text-sm group-hover:text-brand-dark transition-colors duration-300">
+                    Aliados comerciales
+                  </span>
                 </motion.div>
               </motion.div>
 
@@ -535,7 +719,7 @@ export default function Home() {
                 <p className="text-gray-600 mb-6">Operando desde 2022, aseguramos el abastecimiento en las regiones clave del país.</p>
                 <div className="flex flex-wrap gap-3">
                   {["Zulia", "Lara", "Miranda", "Monagas", "Táchira", "Mérida", "Aragua", "Distrito Capital"].map((estado, index) => (
-                    <span key={index} className="px-4 py-2 bg-brand-blue/10 text-brand-blue text-sm font-medium rounded-full hover:bg-brand-orange hover:text-white transition-colors cursor-default">
+                    <span key={index} className="px-4 py-2 bg-white border border-brand-blue/15 text-brand-blue text-sm font-medium rounded-full transition-all duration-300 cursor-default hover:bg-brand-blue hover:text-white hover:border-brand-blue hover:shadow-[0_4px_14px_rgba(26,58,143,0.3)] transform hover:-translate-y-0.5">
                       {estado}
                     </span>
                   ))}
@@ -543,12 +727,13 @@ export default function Home() {
               </motion.div>
             </div>
 
-            <p className="text-center text-gray-500 text-sm">Operando desde 2022, expandiéndonos año a año.</p>
+            <p className="text-center text-gray-500 text-sm mt-8">Operando desde 2022, expandiéndonos año a año.</p>
           </div>
         </section>
 
         {/* 7. Aliados Comerciales */}
-        <section id="aliados" className="py-24 bg-white">
+        <section id="aliados" className="py-24 bg-gradient-to-b from-muted/40 to-white relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Confianza</span>
@@ -566,11 +751,11 @@ export default function Home() {
                   "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven",
                   "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven"
                 ].map((aliado, index) => (
-                  <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-center gap-4 min-w-[280px]">
-                    <div className="bg-brand-blue/5 p-3 rounded-xl">
-                      <Building2 className="h-6 w-6 text-brand-blue" />
+                  <div key={index} className="bg-white hover:bg-brand-blue p-6 rounded-2xl border border-gray-100 hover:border-brand-blue shadow-sm hover:shadow-[0_8px_30px_rgba(26,58,143,0.25)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default">
+                    <div className="bg-brand-blue/6 group-hover:bg-white/12 p-3 rounded-xl transition-colors duration-300">
+                      <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <h3 className="text-lg font-bold text-brand-dark">{aliado}</h3>
+                    <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
                   </div>
                 ))}
               </motion.div>
@@ -580,14 +765,22 @@ export default function Home() {
       </main>
 
       {/* 8. Footer */}
-      <footer id="contacto" className="bg-brand-blue text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer id="contacto" className="bg-gradient-to-b from-brand-dark to-[#0a1535] text-white py-16 relative">
+        {/* Línea decorativa superior */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-orange/50 to-transparent" />
+        {/* Patrón de fondo */}
+        <div className="absolute inset-0 stripe-bg opacity-30 pointer-events-none" />
+        {/* Orbe decorativo */}
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             
             {/* Brand */}
             <div>
-              <div className="mb-4">
-                <span className="text-2xl font-bold text-white">2N</span>
+              <div className="mb-4 flex items-baseline gap-0.5">
+                <span className="text-3xl font-extrabold text-white leading-none">2</span>
+                <span className="text-3xl font-extrabold text-brand-orange leading-none">N</span>
               </div>
               <p className="text-white/70 text-sm leading-relaxed">
                 Casa de Representación 2N, C.A. — Distribuidora e importadora de medicamentos comprometidos con la salud y el bienestar de toda Venezuela.
@@ -628,10 +821,10 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">Síguenos</h4>
               <div className="flex gap-4">
-                <a href="https://www.instagram.com/casaderepresentacion2n/" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-2 rounded-full hover:bg-white/10 transition-colors">
+                <a href="https://www.instagram.com/casaderepresentacion2n/" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-brand-orange border border-white/10 hover:border-brand-orange p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_4px_14px_rgba(255,106,0,0.4)] transform hover:-translate-y-0.5">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                 </a>
-                <a href="https://wa.me/584125040440" target="_blank" rel="noopener noreferrer" className="bg-white/5 p-2 rounded-full hover:bg-white/10 transition-colors">
+                <a href="https://wa.me/584125040440" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-brand-orange border border-white/10 hover:border-brand-orange p-2.5 rounded-full transition-all duration-300 hover:shadow-[0_4px_14px_rgba(255,106,0,0.4)] transform hover:-translate-y-0.5">
                   <MessageCircle className="h-5 w-5" />
                 </a>
               </div>
@@ -645,18 +838,20 @@ export default function Home() {
         </div>
       </footer>
 
-        {/* Botón flotante de WhatsApp */}
-        <a 
-          href="https://wa.me/584125040440?text=Hola%2C%20vengo%20de%20la%20p%C3%A1gina%20web%2C%20me%20interesa%20cotizar%20algunos%20productos." 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-110 z-50 flex items-center justify-center"
-          aria-label="Contactar por WhatsApp"
-        >
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.163 1.236 8.41 3.483 2.246 2.246 3.482 5.234 3.482 8.41 0 6.556-5.332 11.888-11.888 11.888-2.008 0-3.978-.512-5.728-1.484l-6.265 1.7zm6.34-3.15c1.558.924 3.41 1.411 5.3 1.411 5.617 0 10.188-4.57 10.188-10.188 0-2.72-1.057-5.275-2.977-7.194-1.92-1.919-4.475-2.977-7.193-2.977-5.618 0-10.188 4.57-10.188 10.188 0 1.886.516 3.722 1.492 5.311L1.242 22.75l6.335-1.66zM17.472 14.397c-.3-.149-1.777-.876-2.047-.975-.27-.099-.466-.149-.663.149-.197.298-.761.975-.933 1.173-.173.199-.346.223-.646.074-.3-.149-1.265-.466-2.41-1.484-.89-.794-1.49-1.774-1.665-2.073-.173-.299-.018-.46.131-.609.135-.133.3-.346.45-.52.15-.173.2-.298.3-.497.1-.198.05-.371-.025-.52-.075-.149-.663-1.597-.91-2.194-.24-.58-.485-.5-.663-.51-.172-.007-.37-.007-.568-.007-.198 0-.52.074-.793.371-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.777-.726 2.027-1.427.25-.702.25-1.303.175-1.427-.075-.124-.27-.199-.57-.348z" />
-          </svg>
-        </a>
+      {/* Botón flotante de WhatsApp */}
+      <a 
+        href="https://wa.me/584125040440?text=Hola%2C%20vengo%20de%20la%20p%C3%A1gina%20web%2C%20me%20interesa%20cotizar%20algunos%20productos." 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.5)] hover:shadow-[0_6px_30px_rgba(37,211,102,0.65)] transition-all duration-300 transform hover:scale-110 z-50 flex items-center justify-center relative"
+        aria-label="Contactar por WhatsApp"
+      >
+        {/* Pulse ring */}
+        <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-30 pointer-events-none" />
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.163 1.236 8.41 3.483 2.246 2.246 3.482 5.234 3.482 8.41 0 6.556-5.332 11.888-11.888 11.888-2.008 0-3.978-.512-5.728-1.484l-6.265 1.7zm6.34-3.15c1.558.924 3.41 1.411 5.3 1.411 5.617 0 10.188-4.57 10.188-10.188 0-2.72-1.057-5.275-2.977-7.194-1.92-1.919-4.475-2.977-7.193-2.977-5.618 0-10.188 4.57-10.188 10.188 0 1.886.516 3.722 1.492 5.311L1.242 22.75l6.335-1.66zM17.472 14.397c-.3-.149-1.777-.876-2.047-.975-.27-.099-.466-.149-.663.149-.197.298-.761.975-.933 1.173-.173.199-.346.223-.646.074-.3-.149-1.265-.466-2.41-1.484-.89-.794-1.49-1.774-1.665-2.073-.173-.299-.018-.46.131-.609.135-.133.3-.346.45-.52.15-.173.2-.298.3-.497.1-.198.05-.371-.025-.52-.075-.149-.663-1.597-.91-2.194-.24-.58-.485-.5-.663-.51-.172-.007-.37-.007-.568-.007-.198 0-.52.074-.793.371-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.777-.726 2.027-1.427.25-.702.25-1.303.175-1.427-.075-.124-.27-.199-.57-.348z" />
+        </svg>
+      </a>
     </div>
   )
 }
