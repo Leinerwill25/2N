@@ -205,36 +205,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Lo Que Somos */}
-        <section id="lo-que-somos" className="py-24 bg-white relative overflow-hidden">
-          {/* Decorative background shape with floating animation */}
-          <motion.div 
-            animate={{ 
-              y: [0, -12, 0],
-              scale: [1, 1.05, 1] 
-            }}
-            transition={{ 
-              duration: 8, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            className="absolute top-0 right-0 w-1/3 h-1/3 bg-brand-blue/5 rounded-bl-full -z-10"
-          />
-          <motion.div 
-            animate={{ 
-              y: [0, 12, 0],
-              scale: [1, 1.03, 1] 
-            }}
-            transition={{ 
-              duration: 10, 
-              repeat: Infinity, 
-              ease: "easeInOut",
-              delay: 1
-            }}
-            className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-brand-orange/5 rounded-tr-full -z-10"
-          />
+        {/* 3. Nuestra Esencia (Misión y Visión) */}
+        <section id="nosotros" className="py-24 bg-gradient-to-tr from-muted via-white to-muted/80 relative overflow-hidden">
+          {/* Orbes de luz de fondo */}
+          <div className="absolute top-10 left-10 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -242,39 +219,83 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Lo que somos</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Operamos bajo estrictas normativas sanitarias y de buenas prácticas</h2>
-              <div className="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+              <span className="inline-flex items-center gap-2 bg-brand-blue/5 border border-brand-blue/10 text-brand-blue font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                <span className="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse" />
+                Nosotros
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-4 tracking-tight">
+                Nuestra <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-blue-mid">Esencia</span>
+              </h2>
+              <div className="w-20 h-1 bg-gradient-to-r from-brand-orange to-transparent mx-auto rounded-full"></div>
             </motion.div>
 
-            {/* Grid de Lo Que Somos */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-              {[
-                { icon: ShieldCheck, title: "Excelencia Operativa", desc: "Importación y comercialización de medicamentos de alta calidad para el mercado venezolano." },
-                { icon: ClipboardCheck, title: "Compromiso Normativo", desc: "Cumplimiento riguroso de los estándares de almacenamiento y distribución oficial." },
-                { icon: Heart, title: "Bienestar Social", desc: "Abastecimiento estratégico de fármacos para patologías diversas y tratamientos de uso prolongado." }
-              ].map((item, index) => (
-                <motion.div 
-                  key={index} 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col items-start cursor-default"
-                >
-                  <div className="bg-muted p-4 rounded-xl inline-block mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
-                    <item.icon className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Misión */}
+              <motion.div 
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-blue relative overflow-hidden group cursor-default"
+              >
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-blue/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="bg-brand-blue/10 p-3.5 rounded-xl group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(26,58,143,0.3)]">
+                    <Target className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors group-hover:translate-x-1 transition-transform duration-300">{item.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
+                  <h3 className="text-2xl font-bold text-brand-blue">Misión</h3>
+                </div>
+                <div className="text-gray-600 leading-relaxed text-sm">
+                  <p className="text-lg font-semibold text-brand-dark mb-6">"Garantizar el acceso de la familia venezolana a soluciones de alta calidad."</p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Excelencia operativa en la cadena de suministro.</span>
+                    </li>
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Estricto cumplimiento de estándares sanitarios.</span>
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* Visión */}
+              <motion.div 
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-orange relative overflow-hidden group cursor-default"
+              >
+                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-orange/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="bg-brand-orange/10 p-3.5 rounded-xl group-hover:bg-brand-orange group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(255,106,0,0.3)]">
+                    <Eye className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-brand-orange">Visión</h3>
+                </div>
+                <div className="text-gray-600 leading-relaxed text-sm">
+                  <p className="text-lg font-semibold text-brand-dark mb-6">"Consolidarnos como la casa de representación referente en Venezuela."</p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Liderar la cadena de suministro farmacéutico.</span>
+                    </li>
+                    <li className="flex items-start gap-3 group/item">
+                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
+                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Medicamentos asequibles y de disponibilidad inmediata.</span>
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Section 3: Promociones & Videos Promocionales */}
+        {/* 4. Promociones & Videos Promocionales */}
         <section id="promociones" className="py-24 bg-gradient-to-tr from-brand-dark via-[#0F172A] to-brand-blue relative overflow-hidden text-white">
           {/* Decorative design elements */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
@@ -436,13 +457,91 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Nuestra Esencia (Misión y Visión) */}
-        <section id="nosotros" className="py-24 bg-gradient-to-tr from-muted via-white to-muted/80 relative overflow-hidden">
-          {/* Orbes de luz de fondo */}
-          <div className="absolute top-10 left-10 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
+        {/* 5. Sección de Catálogos / Líneas Terapéuticas */}
+        <section id="catalogos" className="py-24 bg-muted/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Líneas Terapéuticas</span>
+              <h2 className="text-4xl font-bold text-brand-dark mb-4">Nuestros Catálogos</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">Explora nuestros catálogos por línea terapéutica y consulta los productos disponibles.</p>
+            </div>
 
-          <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {catalogs.length === 0 ? (
+                <div className="col-span-4 text-center text-foreground/60">Cargando catálogos...</div>
+              ) : (
+                catalogs.slice(0, showAllCatalogs ? catalogs.length : 4).map((catalog: any) => {
+                  return (
+                    <a 
+                      href={`/catalogs/${catalog.id}`} 
+                      key={catalog.id} 
+                      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group cursor-pointer"
+                    >
+                      <div className="relative h-48 bg-muted flex items-center justify-center">
+                        {catalog.image_url ? (
+                          <Image src={catalog.image_url} alt={catalog.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                        ) : (
+                          <ShoppingBag className="h-12 w-12 text-foreground/20" />
+                        )}
+                      </div>
+                      <div className="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                          <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:text-brand-orange transition-colors">{catalog.nombre}</h3>
+                          <p className="text-sm text-foreground/60 mb-4 line-clamp-2">{catalog.descripcion || 'Sin descripción'}</p>
+                        </div>
+                        <div className="flex items-center text-brand-blue text-sm font-medium group-hover:translate-x-1 transition-transform">
+                          Ver productos <ArrowRight className="h-4 w-4 ml-1" />
+                        </div>
+                      </div>
+                    </a>
+                  )
+                })
+              )}
+            </div>
+            
+            {catalogs.length > 4 && (
+              <div className="text-center mt-12">
+                <button
+                  onClick={() => setShowAllCatalogs(!showAllCatalogs)}
+                  className="inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white font-medium py-3 px-8 rounded-full transition-colors"
+                >
+                  {showAllCatalogs ? 'Ver menos' : 'Ver más'}
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* 6. Lo Que Somos */}
+        <section id="lo-que-somos" className="py-24 bg-white relative overflow-hidden">
+          {/* Decorative background shape with floating animation */}
+          <motion.div 
+            animate={{ 
+              y: [0, -12, 0],
+              scale: [1, 1.05, 1] 
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="absolute top-0 right-0 w-1/3 h-1/3 bg-brand-blue/5 rounded-bl-full -z-10"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, 12, 0],
+              scale: [1, 1.03, 1] 
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 1
+            }}
+            className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-brand-orange/5 rounded-tr-full -z-10"
+          />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -450,83 +549,39 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <span className="inline-flex items-center gap-2 bg-brand-blue/5 border border-brand-blue/10 text-brand-blue font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
-                <span className="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse" />
-                Nosotros
-              </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-brand-dark mb-4 tracking-tight">
-                Nuestra <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-blue-mid">Esencia</span>
-              </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-brand-orange to-transparent mx-auto rounded-full"></div>
+              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Lo que somos</span>
+              <h2 className="text-4xl font-bold text-brand-dark mb-4">Operamos bajo estrictas normativas sanitarias y de buenas prácticas</h2>
+              <div className="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Misión */}
-              <motion.div 
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-blue relative overflow-hidden group cursor-default"
-              >
-                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-blue/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-blue/10 p-3.5 rounded-xl group-hover:bg-brand-blue group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(26,58,143,0.3)]">
-                    <Target className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
+            {/* Grid de Lo Que Somos */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+              {[
+                { icon: ShieldCheck, title: "Excelencia Operativa", desc: "Importación y comercialización de medicamentos de alta calidad para el mercado venezolano." },
+                { icon: ClipboardCheck, title: "Compromiso Normativo", desc: "Cumplimiento riguroso de los estándares de almacenamiento y distribución oficial." },
+                { icon: Heart, title: "Bienestar Social", desc: "Abastecimiento estratégico de fármacos para patologías diversas y tratamientos de uso prolongado." }
+              ].map((item, index) => (
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col items-start cursor-default"
+                >
+                  <div className="bg-muted p-4 rounded-xl inline-block mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
+                    <item.icon className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-2xl font-bold text-brand-blue">Misión</h3>
-                </div>
-                <div className="text-gray-600 leading-relaxed text-sm">
-                  <p className="text-lg font-semibold text-brand-dark mb-6">"Garantizar el acceso de la familia venezolana a soluciones de alta calidad."</p>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3 group/item">
-                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
-                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Excelencia operativa en la cadena de suministro.</span>
-                    </li>
-                    <li className="flex items-start gap-3 group/item">
-                      <span className="w-5 h-5 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-blue group-hover/item:text-white transition-all duration-300">✓</span>
-                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Estricto cumplimiento de estándares sanitarios.</span>
-                    </li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* Visión */}
-              <motion.div 
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className="bg-white p-10 rounded-2xl shadow-md hover:shadow-2xl transition-all border-l-8 border-brand-orange relative overflow-hidden group cursor-default"
-              >
-                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-orange/8 to-transparent rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500" />
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-brand-orange/10 p-3.5 rounded-xl group-hover:bg-brand-orange group-hover:text-white transition-all duration-300 group-hover:shadow-[0_8px_20px_rgba(255,106,0,0.3)]">
-                    <Eye className="h-6 w-6 text-brand-orange group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-brand-orange">Visión</h3>
-                </div>
-                <div className="text-gray-600 leading-relaxed text-sm">
-                  <p className="text-lg font-semibold text-brand-dark mb-6">"Consolidarnos como la casa de representación referente en Venezuela."</p>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3 group/item">
-                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
-                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Liderar la cadena de suministro farmacéutico.</span>
-                    </li>
-                    <li className="flex items-start gap-3 group/item">
-                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center text-xs mt-0.5 font-bold group-hover/item:bg-brand-orange group-hover/item:text-white transition-all duration-300">✓</span>
-                      <span className="group-hover/item:text-brand-dark transition-colors duration-300">Medicamentos asequibles y de disponibilidad inmediata.</span>
-                    </li>
-                  </ul>
-                </div>
-              </motion.div>
+                  <h3 className="text-xl font-bold mb-3 text-brand-dark group-hover:text-brand-orange transition-colors group-hover:translate-x-1 transition-transform duration-300">{item.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* 5. Nuestros Valores */}
+        {/* 7. Nuestros Valores */}
         <section className="py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-blue to-brand-dark">
           {/* Orbes de luz de fondo */}
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
@@ -592,62 +647,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Sección de Catálogos / Líneas Terapéuticas */}
-        <section id="catalogos" className="py-24 bg-muted/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Líneas Terapéuticas</span>
-              <h2 className="text-4xl font-bold text-brand-dark mb-4">Nuestros Catálogos</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">Explora nuestros catálogos por línea terapéutica y consulta los productos disponibles.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {catalogs.length === 0 ? (
-                <div className="col-span-4 text-center text-foreground/60">Cargando catálogos...</div>
-              ) : (
-                catalogs.slice(0, showAllCatalogs ? catalogs.length : 4).map((catalog: any) => {
-                  return (
-                    <a 
-                      href={`/catalogs/${catalog.id}`} 
-                      key={catalog.id} 
-                      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col group cursor-pointer"
-                    >
-                      <div className="relative h-48 bg-muted flex items-center justify-center">
-                        {catalog.image_url ? (
-                          <Image src={catalog.image_url} alt={catalog.nombre} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                        ) : (
-                          <ShoppingBag className="h-12 w-12 text-foreground/20" />
-                        )}
-                      </div>
-                      <div className="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                          <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:text-brand-orange transition-colors">{catalog.nombre}</h3>
-                          <p className="text-sm text-foreground/60 mb-4 line-clamp-2">{catalog.descripcion || 'Sin descripción'}</p>
-                        </div>
-                        <div className="flex items-center text-brand-blue text-sm font-medium group-hover:translate-x-1 transition-transform">
-                          Ver productos <ArrowRight className="h-4 w-4 ml-1" />
-                        </div>
-                      </div>
-                    </a>
-                  )
-                })
-              )}
-            </div>
-            
-            {catalogs.length > 4 && (
-              <div className="text-center mt-12">
-                <button
-                  onClick={() => setShowAllCatalogs(!showAllCatalogs)}
-                  className="inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white font-medium py-3 px-8 rounded-full transition-colors"
-                >
-                  {showAllCatalogs ? 'Ver menos' : 'Ver más'}
-                </button>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* 6. Presencia Nacional */}
+        {/* 8. Presencia Nacional */}
         <section id="presencia" className="py-24 bg-gradient-to-tr from-muted/80 via-white to-brand-blue/5 relative overflow-hidden">
           {/* Orbe decorativo */}
           <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
@@ -757,7 +757,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 7. Aliados Comerciales */}
+        {/* 9. Aliados Comerciales */}
         <section id="aliados" className="py-24 bg-gradient-to-b from-white via-muted/30 to-white relative">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -795,7 +795,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 8. Footer */}
+      {/* 10. Footer */}
       <footer id="contacto" className="bg-brand-blue text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
