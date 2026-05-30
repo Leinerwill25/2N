@@ -32,6 +32,8 @@ import {
   Star,
   Leaf,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Mail,
   Play,
   Sparkles,
@@ -46,6 +48,19 @@ export default function Home() {
   const [descuentos, setDescuentos] = useState<any[]>([])
   const [rates, setRates] = useState({ usd: 1, eur: 1 })
   const [showAllCatalogs, setShowAllCatalogs] = useState(false)
+
+  const sliderRef = React.useRef<HTMLDivElement>(null)
+
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (sliderRef.current) {
+      const { scrollLeft, clientWidth } = sliderRef.current;
+      const scrollAmount = clientWidth * 0.8;
+      sliderRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   useEffect(() => {
     fetchProducts()
@@ -81,44 +96,7 @@ export default function Home() {
       setDescuentos(data || [])
     } catch (err) {
       console.error('Error fetching visual discounts:', err)
-      const mockDiscounts = [
-        {
-          id: 'mock-d1',
-          titulo: 'Hasta 30% Dcto. en Cuidado Bucal',
-          porcentaje: 30,
-          imagen_url: 'https://images.unsplash.com/photo-1593009805482-a5d2a9844577?auto=format&fit=crop&q=80&w=400',
-          catalogo_id: null,
-        },
-        {
-          id: 'mock-d2',
-          titulo: '20% Dcto. en Helados',
-          porcentaje: 20,
-          imagen_url: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=400',
-          catalogo_id: null,
-        },
-        {
-          id: 'mock-d3',
-          titulo: '20% Dcto. en Higiene del Hogar',
-          porcentaje: 20,
-          imagen_url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=400',
-          catalogo_id: null,
-        },
-        {
-          id: 'mock-d4',
-          titulo: 'Hasta 15% Dcto. en Afeitado',
-          porcentaje: 15,
-          imagen_url: 'https://images.unsplash.com/photo-1626015276681-2b446797a783?auto=format&fit=crop&q=80&w=400',
-          catalogo_id: null,
-        },
-        {
-          id: 'mock-d5',
-          titulo: 'Hasta 20% Dcto. en Cuidado Corporal',
-          porcentaje: 20,
-          imagen_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=400',
-          catalogo_id: null,
-        }
-      ]
-      setDescuentos(mockDiscounts)
+      setDescuentos([])
     }
   }
 
@@ -225,7 +203,7 @@ export default function Home() {
             >
               <source src="/video2.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A3A8F]/80 to-[#0D1B4B]/90"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-mid/70 to-brand-blue/80"></div>
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -260,7 +238,315 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Nuestra Esencia (Misión y Visión) */}
+        {/* 3. Ofertas de la Semana */}
+        <section id="promociones" className="py-16 bg-white relative overflow-hidden text-brand-dark">
+          {/* Decorative design elements - light blue/orange shades */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-blue/[0.03] rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Header */}
+            <div className="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <span className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Promociones Especiales
+                </span>
+                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-brand-dark">
+                  Ofertas de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">Semana</span>
+                </h2>
+                <p className="text-gray-500 mt-2 text-base md:text-lg">
+                  Hola, te puede interesar...
+                </p>
+              </div>
+
+              {descuentos.length > 0 ? (
+                <div className="flex items-center gap-4">
+                  <span className="text-xs text-gray-500 bg-gray-100 border border-gray-200 px-3.5 py-1.5 rounded-full hidden md:inline-block">
+                    Haz clic en una oferta para ver su catálogo o desliza para ver más
+                  </span>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => scrollSlider('left')}
+                      className="w-10 h-10 rounded-full bg-gray-50 hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-sm hover:shadow-brand-orange/20 cursor-pointer"
+                      title="Anterior"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button 
+                      onClick={() => scrollSlider('right')}
+                      className="w-10 h-10 rounded-full bg-gray-50 hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-sm hover:shadow-brand-orange/20 cursor-pointer"
+                      title="Siguiente"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <span className="text-xs text-gray-500 bg-gray-100 border border-gray-200 px-3.5 py-1.5 rounded-full">
+                  Próximamente
+                </span>
+              )}
+            </div>
+
+            {descuentos.length > 0 ? (
+              /* Sliding Carousel */
+              <div 
+                ref={sliderRef}
+                className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-6 no-scrollbar"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {descuentos.map((item) => {
+                  const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
+                  const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
+
+                  const CardContent = (
+                    <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-[350px] relative border border-gray-100 select-none group text-left p-4 card-glow w-full">
+                      {/* Percentage Badge */}
+                      <div className="absolute top-4 left-4 bg-gradient-to-br from-brand-orange to-amber-500 text-white font-extrabold text-xs px-2 py-2 rounded-full shadow-lg z-10 w-10 h-10 flex items-center justify-center border border-white/20">
+                        -{item.porcentaje}%
+                      </div>
+                      
+                      {/* Image Container with rounded shape and padding */}
+                      <div className="relative h-40 w-full bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors">
+                        <img 
+                          src={item.imagen_url} 
+                          alt={item.titulo} 
+                          className="object-contain max-h-full max-w-full rounded-xl transition-transform duration-500 group-hover:scale-105 text-brand-dark text-xs" 
+                        />
+                      </div>
+
+                      {/* Text Info */}
+                      <div className="mt-3 flex-1 flex flex-col justify-between">
+                        <div className="space-y-1">
+                          <span className="text-[9px] font-extrabold text-brand-orange uppercase tracking-widest block truncate">
+                            {catalogName}
+                          </span>
+                          <h4 className="text-sm font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors">
+                            {item.titulo}
+                          </h4>
+                          <p className="text-[11px] text-gray-400 font-medium">
+                            Descuento de temporada
+                          </p>
+                        </div>
+
+                        {/* Button-like Link (CTA) */}
+                        <div className="mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 transition-all duration-300">
+                          <span>Explorar Catálogo</span>
+                          <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  );
+
+                  return (
+                    <div key={item.id} className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start">
+                      {item.catalogo_id ? (
+                        <Link 
+                          href={`/catalogs/${item.catalogo_id}`}
+                          className="block transform hover:-translate-y-1.5 transition-all duration-300"
+                        >
+                          {CardContent}
+                        </Link>
+                      ) : (
+                        <div className="block transform hover:-translate-y-1.5 transition-all duration-300">
+                          {CardContent}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* Placeholder Skeletons & Informative Message */
+              <div className="space-y-8">
+                {/* Informative alert box - light mode styled */}
+                <div className="bg-gray-50 border border-gray-150 p-5 md:p-6 rounded-3xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/[0.03] rounded-full blur-3xl pointer-events-none" />
+                  <div className="flex gap-4 items-start relative z-10">
+                    <Sparkles className="h-6 w-6 text-brand-orange flex-shrink-0 mt-1 animate-pulse" />
+                    <div className="space-y-2">
+                      <h4 className="font-extrabold text-lg text-brand-dark">Nuevos descuentos en camino</h4>
+                      <p className="text-sm text-gray-500 leading-relaxed max-w-3xl">
+                        Nuestra casa de representación estará publicando ofertas especiales y descuentos exclusivos en medicamentos e insumos médicos próximamente. Una vez activadas, las nuevas promociones aparecerán automáticamente en esta sección. ¡Mantente atento!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Skeletons row - light mode styled */}
+                <div className="flex gap-6 overflow-hidden select-none opacity-60">
+                  {[1, 2, 3, 4, 5].map((idx) => (
+                    <div 
+                      key={idx} 
+                      className="flex-shrink-0 w-[240px] sm:w-[260px] bg-white rounded-3xl border border-gray-150 p-4 h-[350px] flex flex-col justify-between relative animate-pulse"
+                    >
+                      <div className="absolute top-4 left-4 bg-gray-100 rounded-full w-10 h-10" />
+                      <div className="h-40 w-full bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-50 shimmer" />
+                      <div className="mt-3 flex-1 flex flex-col justify-between">
+                        <div className="space-y-2">
+                          <div className="h-2 w-16 bg-gray-100 rounded-full shimmer" />
+                          <div className="h-3 w-36 bg-gray-100 rounded-full shimmer" />
+                          <div className="h-3 w-28 bg-gray-100 rounded-full shimmer" />
+                        </div>
+                        <div className="h-9 w-full bg-gray-100 rounded-xl shimmer" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* 4. Videos Promocionales */}
+        <section id="promociones-video" className="py-24 bg-gradient-to-tr from-brand-dark via-[#0F172A] to-brand-blue relative overflow-hidden text-white">
+          {/* Decorative design elements */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-blue-mid/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <span className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                <Film className="h-3.5 w-3.5" />
+                Videos Interactivos
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+                Nuestras <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones</span>
+              </h2>
+              <p className="text-gray-300 max-w-2xl mx-auto text-base leading-relaxed">
+                Descubre contenidos exclusivos, consejos de salud y lanzamientos de medicamentos a través de nuestros videos interactivos.
+              </p>
+            </div>
+
+            {promoVideos.length === 0 ? (
+              /* Fallback: Premium Coming Soon video container */
+              <div className="max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  <motion.div 
+                    className="lg:col-span-5 space-y-6 text-left"
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
+                      <Film className="h-3.5 w-3.5" />
+                      Próximamente
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
+                      Espacio de Novedades y <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones 2N</span>
+                    </h3>
+                    <p className="text-gray-300 text-base leading-relaxed">
+                      Estamos preparando contenido audiovisual interactivo especialmente para ti. En esta sección podrás conocer de primera mano nuestras promociones exclusivas, consejos de bienestar y detalles de nuestras líneas farmacéuticas.
+                    </p>
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                        Presentación de nuevas moléculas y medicamentos.
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                        Consejos prácticos de salud respaldados por expertos.
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div 
+                    className="lg:col-span-7"
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="relative aspect-[16/9] w-full rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 p-4 backdrop-blur-md overflow-hidden flex flex-col items-center justify-center group hover:border-brand-orange/30 transition-all duration-500 shadow-2xl">
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-brand-blue-mid/5 opacity-50" />
+                      <div className="z-10 flex flex-col items-center gap-4 text-center">
+                        <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-orange/50 group-hover:bg-brand-orange/5 transition-all duration-500 shadow-lg">
+                          <Play className="h-8 w-8 text-white/40 group-hover:text-brand-orange transition-colors duration-500 ml-1" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-orange animate-pulse">En Producción</span>
+                          <p className="text-sm text-gray-400">El reproductor se activará cuando subamos el video</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            ) : (
+              /* Real Featured Horizontal Video */
+              <div className="max-w-6xl mx-auto">
+                {(() => {
+                  const featuredVideo = promoVideos[0];
+                  return (
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                      <motion.div 
+                        className="lg:col-span-5 space-y-6 text-left"
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/15 border border-brand-orange/30 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
+                          <Film className="h-3.5 w-3.5 animate-pulse" />
+                          Contenido Destacado
+                        </div>
+                        <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
+                          {featuredVideo.titulo}
+                        </h3>
+                        <p className="text-gray-300 text-base leading-relaxed">
+                          Te invitamos a ver este material interactivo que hemos preparado. Aquí conocerás los detalles de nuestras líneas terapéuticas, medicamentos de última generación y promociones especiales vigentes en 2N.
+                        </p>
+                        <div className="pt-4 flex flex-wrap gap-4">
+                          <a 
+                            href="#catalogos" 
+                            className="px-6 py-3 bg-brand-orange hover:bg-brand-orange/95 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-brand-orange/20 text-sm hover:-translate-y-0.5"
+                          >
+                            Ver Catálogos
+                          </a>
+                          {featuredVideo.url && (
+                            <a 
+                              href={featuredVideo.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold rounded-xl transition-all text-sm hover:-translate-y-0.5"
+                            >
+                              Ver en origen
+                            </a>
+                          )}
+                        </div>
+                      </motion.div>
+
+                      <motion.div 
+                        className="lg:col-span-7"
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className="relative aspect-[16/9] w-full rounded-[2.5rem] border border-white/10 bg-black shadow-2xl overflow-hidden group hover:border-brand-orange/30 transition-all duration-300">
+                          <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-orange to-brand-blue rounded-[2.5rem] blur opacity-15 group-hover:opacity-30 transition duration-1000 group-hover:duration-200" />
+                          <div className="relative w-full h-full bg-black rounded-[2.4rem] overflow-hidden">
+                            <iframe 
+                              src={getEmbedUrl(featuredVideo.url, featuredVideo.tipo)}
+                              className="w-full h-full absolute inset-0 border-0"
+                              allowFullScreen
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            ></iframe>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* 5. Nuestra Esencia (Misión y Visión) */}
         <section id="nosotros" className="py-24 bg-gradient-to-tr from-muted via-white to-muted/80 relative overflow-hidden">
           {/* Orbes de luz de fondo */}
           <div className="absolute top-10 left-10 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
@@ -350,237 +636,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Promociones & Videos Promocionales */}
-        <section id="promociones" className="py-24 bg-gradient-to-tr from-brand-dark via-[#0F172A] to-brand-blue relative overflow-hidden text-white">
-          {/* Decorative design elements */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-blue-mid/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Header */}
-            <div className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
-                <Sparkles className="h-3.5 w-3.5" />
-                Novedades y Ofertas
-              </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-                Nuestras <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones</span>
-              </h2>
-              <p className="text-gray-300 max-w-2xl mx-auto text-base leading-relaxed">
-                Descubre contenidos exclusivos, ofertas mensuales y lanzamientos de medicamentos a través de nuestros videos interactivos.
-              </p>
-            </div>
-
-            {promoVideos.length === 0 ? (
-              /* Fallback: Premium Horizontal Coming Soon Skeleton & Text */
-              <div className="max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                  {/* Left Column: Text Content */}
-                  <motion.div 
-                    className="lg:col-span-5 space-y-6 text-left"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
-                      <Film className="h-3.5 w-3.5" />
-                      Próximamente
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
-                      Espacio de Novedades y <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-400">Promociones 2N</span>
-                    </h3>
-                    <p className="text-gray-300 text-base leading-relaxed">
-                      Estamos preparando contenido audiovisual interactivo especialmente para ti. En esta sección podrás conocer de primera mano nuestras promociones exclusivas, consejos de bienestar y detalles de nuestras líneas farmacéuticas.
-                    </p>
-                    <div className="space-y-3 pt-2">
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-                        Descuentos exclusivos y ofertas de temporada.
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-                        Presentación de nuevas moléculas y medicamentos.
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
-                        Consejos prácticos de salud respaldados por expertos.
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Right Column: Beautiful Horizontal Video Skeleton */}
-                  <motion.div 
-                    className="lg:col-span-7"
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="relative aspect-[16/9] w-full rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 p-4 backdrop-blur-md overflow-hidden flex flex-col items-center justify-center group hover:border-brand-orange/30 transition-all duration-500 shadow-2xl">
-                      {/* Glow background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-brand-blue-mid/5 opacity-50" />
-                      <div className="absolute -top-12 -right-12 w-40 h-40 bg-brand-orange/10 rounded-full blur-2xl pointer-events-none" />
-                      <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-brand-blue/10 rounded-full blur-2xl pointer-events-none" />
-                      
-                      <div className="z-10 flex flex-col items-center gap-4 text-center">
-                        <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-orange/50 group-hover:bg-brand-orange/5 transition-all duration-500 shadow-lg">
-                          <Play className="h-8 w-8 text-white/40 group-hover:text-brand-orange transition-colors duration-500 ml-1" />
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-orange animate-pulse">En Producción</span>
-                          <p className="text-sm text-gray-400">El reproductor se activará cuando subamos el video</p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            ) : (
-              /* Real Featured Horizontal Video */
-              <div className="max-w-6xl mx-auto">
-                {(() => {
-                  const featuredVideo = promoVideos[0];
-                  return (
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                      {/* Left Column: Text details */}
-                      <motion.div 
-                        className="lg:col-span-5 space-y-6 text-left"
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                      >
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/15 border border-brand-orange/30 rounded-full text-xs font-bold text-brand-orange uppercase tracking-wider">
-                          <Film className="h-3.5 w-3.5 animate-pulse" />
-                          Contenido Destacado
-                        </div>
-                        <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
-                          {featuredVideo.titulo}
-                        </h3>
-                        <p className="text-gray-300 text-base leading-relaxed">
-                          Te invitamos a ver este material interactivo que hemos preparado. Aquí conocerás los detalles de nuestras líneas terapéuticas, medicamentos de última generación y promociones especiales vigentes en 2N.
-                        </p>
-                        <div className="pt-4 flex flex-wrap gap-4">
-                          <a 
-                            href="#catalogos" 
-                            className="px-6 py-3 bg-brand-orange hover:bg-brand-orange/95 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-brand-orange/20 text-sm hover:-translate-y-0.5"
-                          >
-                            Ver Productos de la Línea
-                          </a>
-                          {featuredVideo.url && (
-                            <a 
-                              href={featuredVideo.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold rounded-xl transition-all text-sm hover:-translate-y-0.5"
-                            >
-                              Ver en origen
-                            </a>
-                          )}
-                        </div>
-                      </motion.div>
-
-                      {/* Right Column: Premium Horizontal Player */}
-                      <motion.div 
-                        className="lg:col-span-7"
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                      >
-                        <div className="relative aspect-[16/9] w-full rounded-[2.5rem] border border-white/10 bg-black shadow-2xl overflow-hidden group hover:border-brand-orange/30 transition-all duration-300">
-                          {/* Ambient glow around the player */}
-                          <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-orange to-brand-blue rounded-[2.5rem] blur opacity-15 group-hover:opacity-30 transition duration-1000 group-hover:duration-200" />
-                          
-                          <div className="relative w-full h-full bg-black rounded-[2.4rem] overflow-hidden">
-                            <iframe 
-                              src={getEmbedUrl(featuredVideo.url, featuredVideo.tipo)}
-                              className="w-full h-full absolute inset-0 border-0"
-                              allowFullScreen
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            ></iframe>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  );
-                })()}
-              </div>
-            )}
-
-            {/* Visual Discounts Subsection */}
-            {descuentos.length > 0 && (
-              <div className="mt-20 pt-16 border-t border-white/10">
-                <div className="text-left mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-brand-orange font-bold text-xs uppercase tracking-wider block mb-1">
-                      Ofertas de la Semana
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white">
-                      Hola, te puede interesar...
-                    </h3>
-                  </div>
-                  <span className="text-xs text-gray-400 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full self-start md:self-auto">
-                    Haz clic en una oferta para ver su catálogo
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                  {descuentos.map((item) => {
-                    const CardContent = (
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-72 relative border border-white/10 select-none group text-left">
-                        {/* Percentage Badge */}
-                        <div className="absolute top-3 left-3 bg-amber-400 text-brand-dark font-black text-xs px-2.5 py-2.5 rounded-full shadow-lg z-10 w-11 h-11 flex items-center justify-center">
-                          {item.porcentaje}%
-                        </div>
-                        
-                        {/* Arrow Button */}
-                        {item.catalogo_id && (
-                          <div className="absolute top-3 right-3 bg-brand-blue text-white rounded-full p-1.5 shadow-md z-10 opacity-90 group-hover:opacity-100 group-hover:bg-brand-orange transition-all">
-                            <ArrowRight className="h-4 w-4" />
-                          </div>
-                        )}
-
-                        {/* Image */}
-                        <div className="relative h-44 bg-gray-50 flex items-center justify-center p-4">
-                          <img 
-                            src={item.imagen_url} 
-                            alt={item.titulo} 
-                            className="object-contain h-full w-full transition-transform duration-500 group-hover:scale-110" 
-                          />
-                        </div>
-
-                        {/* Bottom Text Banner */}
-                        <div className="bg-amber-400 text-brand-dark py-3 px-4 text-center font-bold text-[10px] leading-snug tracking-wide group-hover:bg-amber-500 transition-colors uppercase">
-                          {item.titulo}
-                        </div>
-                      </div>
-                    );
-
-                    return item.catalogo_id ? (
-                      <Link 
-                        key={item.id} 
-                        href={`/catalogs/${item.catalogo_id}`}
-                        className="block transform hover:-translate-y-1.5 transition-all duration-300"
-                      >
-                        {CardContent}
-                      </Link>
-                    ) : (
-                      <div key={item.id} className="block transform hover:-translate-y-1.5 transition-all duration-300">
-                        {CardContent}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* 5. Sección de Catálogos / Líneas Terapéuticas */}
-        <section id="catalogos" className="py-24 bg-muted/30">
+        {/* 6. Sección de Catálogos / Líneas Terapéuticas */}
+        <section id="catalogos" className="py-24 bg-muted/70">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">Líneas Terapéuticas</span>
