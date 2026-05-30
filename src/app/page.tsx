@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import { supabase } from '@/lib/supabase'
@@ -42,6 +43,7 @@ export default function Home() {
   const [products, setProducts] = useState<any[]>([])
   const [catalogs, setCatalogs] = useState<any[]>([])
   const [promoVideos, setPromoVideos] = useState<any[]>([])
+  const [descuentos, setDescuentos] = useState<any[]>([])
   const [rates, setRates] = useState({ usd: 1, eur: 1 })
   const [showAllCatalogs, setShowAllCatalogs] = useState(false)
 
@@ -50,6 +52,7 @@ export default function Home() {
     fetchRates()
     fetchCatalogs()
     fetchPromoVideos()
+    fetchDescuentos()
   }, [])
 
   const fetchPromoVideos = async () => {
@@ -64,6 +67,58 @@ export default function Home() {
     } catch (err) {
       console.error('Error fetching promo videos:', err)
       setPromoVideos([])
+    }
+  }
+
+  const fetchDescuentos = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('descuentos_visuales')
+        .select('*')
+        .eq('activo', true)
+        .order('order_index', { ascending: true })
+      if (error) throw error
+      setDescuentos(data || [])
+    } catch (err) {
+      console.error('Error fetching visual discounts:', err)
+      const mockDiscounts = [
+        {
+          id: 'mock-d1',
+          titulo: 'Hasta 30% Dcto. en Cuidado Bucal',
+          porcentaje: 30,
+          imagen_url: 'https://images.unsplash.com/photo-1593009805482-a5d2a9844577?auto=format&fit=crop&q=80&w=400',
+          catalogo_id: null,
+        },
+        {
+          id: 'mock-d2',
+          titulo: '20% Dcto. en Helados',
+          porcentaje: 20,
+          imagen_url: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=400',
+          catalogo_id: null,
+        },
+        {
+          id: 'mock-d3',
+          titulo: '20% Dcto. en Higiene del Hogar',
+          porcentaje: 20,
+          imagen_url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=400',
+          catalogo_id: null,
+        },
+        {
+          id: 'mock-d4',
+          titulo: 'Hasta 15% Dcto. en Afeitado',
+          porcentaje: 15,
+          imagen_url: 'https://images.unsplash.com/photo-1626015276681-2b446797a783?auto=format&fit=crop&q=80&w=400',
+          catalogo_id: null,
+        },
+        {
+          id: 'mock-d5',
+          titulo: 'Hasta 20% Dcto. en Cuidado Corporal',
+          porcentaje: 20,
+          imagen_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=400',
+          catalogo_id: null,
+        }
+      ]
+      setDescuentos(mockDiscounts)
     }
   }
 
@@ -452,6 +507,73 @@ export default function Home() {
                     </div>
                   );
                 })()}
+              </div>
+            )}
+
+            {/* Visual Discounts Subsection */}
+            {descuentos.length > 0 && (
+              <div className="mt-20 pt-16 border-t border-white/10">
+                <div className="text-left mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div>
+                    <span className="text-brand-orange font-bold text-xs uppercase tracking-wider block mb-1">
+                      Ofertas de la Semana
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-extrabold text-white">
+                      Hola, te puede interesar...
+                    </h3>
+                  </div>
+                  <span className="text-xs text-gray-400 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full self-start md:self-auto">
+                    Haz clic en una oferta para ver su catálogo
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                  {descuentos.map((item) => {
+                    const CardContent = (
+                      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-72 relative border border-white/10 select-none group text-left">
+                        {/* Percentage Badge */}
+                        <div className="absolute top-3 left-3 bg-amber-400 text-brand-dark font-black text-xs px-2.5 py-2.5 rounded-full shadow-lg z-10 w-11 h-11 flex items-center justify-center">
+                          {item.porcentaje}%
+                        </div>
+                        
+                        {/* Arrow Button */}
+                        {item.catalogo_id && (
+                          <div className="absolute top-3 right-3 bg-brand-blue text-white rounded-full p-1.5 shadow-md z-10 opacity-90 group-hover:opacity-100 group-hover:bg-brand-orange transition-all">
+                            <ArrowRight className="h-4 w-4" />
+                          </div>
+                        )}
+
+                        {/* Image */}
+                        <div className="relative h-44 bg-gray-50 flex items-center justify-center p-4">
+                          <img 
+                            src={item.imagen_url} 
+                            alt={item.titulo} 
+                            className="object-contain h-full w-full transition-transform duration-500 group-hover:scale-110" 
+                          />
+                        </div>
+
+                        {/* Bottom Text Banner */}
+                        <div className="bg-amber-400 text-brand-dark py-3 px-4 text-center font-bold text-[10px] leading-snug tracking-wide group-hover:bg-amber-500 transition-colors uppercase">
+                          {item.titulo}
+                        </div>
+                      </div>
+                    );
+
+                    return item.catalogo_id ? (
+                      <Link 
+                        key={item.id} 
+                        href={`/catalogs/${item.catalogo_id}`}
+                        className="block transform hover:-translate-y-1.5 transition-all duration-300"
+                      >
+                        {CardContent}
+                      </Link>
+                    ) : (
+                      <div key={item.id} className="block transform hover:-translate-y-1.5 transition-all duration-300">
+                        {CardContent}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
