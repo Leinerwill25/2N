@@ -129,4 +129,27 @@ body {
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Infinite Marquee animations */
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+  animation: scrollLeft 80s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scrollRight 80s linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
 

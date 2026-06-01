@@ -41,64 +41,64 @@ import {
 } from 'lucide-react'
 
 const aliadosA = [
-  "Wells of Life, C.A.",
-  "Dropharma D&M, C.A.",
-  "Droguería DHM, C.A.",
-  "Droguería Real, C.A.",
-  "Droguería Mundo Médico, C.A.",
-  "Insuaminca, C.A.",
-  "Droguería Surdelago, C.A.",
-  "Droguería Melmax2018, C.A.",
-  "Droguería El Arcángel, C.A.",
-  "Droguería Santo Cristo, C.A.",
-  "Droguería La Esencial, C.A.",
-  "Droguería Cobeca Centro",
-  "Droguería Cobeca Occidente",
-  "Droguería Cobeca Oriente",
-  "Droguería Intercontinental, C.A.",
-  "Droguería Biomedic Lab Centro, C.A.",
-  "Droguería Drobelsa, C.A.",
-  "Droguería Megafar, C.A.",
-  "Crist Medicals, C.A.",
-  "Distribuidora Multimédica 1812, C.A.",
-  "Droguería Rdipharma, C.A.",
-  "Droguería Solidaria de Venezuela, C.A.",
-  "Droguería Medicarpez, C.A.",
-  "Droguería y Distribuidora Colmedica, C.A.",
-  "Innomar, C.A.",
-  "Droguería Los Andes, C.A.",
-  "Droguería Dr. Tito, C.A."
+  { nombre: "Wells of Life, C.A.", rif: "J-305882201" },
+  { nombre: "Dropharma D&M, C.A.", rif: "J-411589188" },
+  { nombre: "Droguería DHM, C.A.", rif: "J-500351763" },
+  { nombre: "Droguería Real, C.A.", rif: "J-501981528" },
+  { nombre: "Droguería Mundo Médico, C.A.", rif: "J-401568909" },
+  { nombre: "Insuaminca, C.A.", rif: "J-412413740" },
+  { nombre: "Droguería Surdelago, C.A.", rif: "J-500690798" },
+  { nombre: "Droguería Melmax2018, C.A.", rif: "J-411259918" },
+  { nombre: "Droguería El Arcángel, C.A.", rif: "J-409672840" },
+  { nombre: "Droguería Santo Cristo, C.A.", rif: "J-500828586" },
+  { nombre: "Droguería La Esencial, C.A.", rif: "J-501910715" },
+  { nombre: "Droguería Cobeca Centro", rif: "J-075881776" },
+  { nombre: "Droguería Cobeca Occidente", rif: "J-070095008" },
+  { nombre: "Droguería Cobeca Oriente", rif: "J-300666704" },
+  { nombre: "Droguería Intercontinental, C.A.", rif: "J-501500192" },
+  { nombre: "Droguería Biomedic Lab Centro, C.A.", rif: "J-409364771" },
+  { nombre: "Droguería Drobelsa, C.A.", rif: "J-501667195" },
+  { nombre: "Droguería Megafar, C.A.", rif: "J-505842009" },
+  { nombre: "Crist Medicals, C.A.", rif: "J-412236709" },
+  { nombre: "Distribuidora Multimédica 1812, C.A.", rif: "J-294190248" },
+  { nombre: "Droguería Rdipharma, C.A.", rif: "J-412753355" },
+  { nombre: "Droguería Solidaria de Venezuela, C.A.", rif: "J-409285170" },
+  { nombre: "Droguería Medicarpez, C.A.", rif: "J-506122111" },
+  { nombre: "Droguería y Distribuidora Colmedica, C.A.", rif: "J-303604906" },
+  { nombre: "Innomar, C.A.", rif: "J-409075742" },
+  { nombre: "Droguería Los Andes, C.A.", rif: "J-500162944" },
+  { nombre: "Droguería Dr. Tito, C.A.", rif: "J-500762082" }
 ]
 
 const aliadosB = [
-  "Droguería Droca, C.A.",
-  "Dromedalca, C.A.",
-  "Casa de Representación Nibiru Pharma, C.A.",
-  "Droguería 4J, C.A.",
-  "Distriroshi, C.A.",
-  "Distribuidora Médica Export-Medex, C.A.",
-  "Casa de Representación Laboratorios Verma, C.A.",
-  "Infarven, C.A.",
-  "Droguería Socialsc, C.A.",
-  "Droguería Blisspharma, C.A.",
-  "Droguería Droplus Occidente, C.A.",
-  "Droguería Global de Suministros Médicos, C.A.",
-  "Droguería Nayter, C.A.",
-  "Droarca Droguería El Arca, C.A.",
-  "Droguería Eda, C.A.",
-  "Droguería y Suministros Drodigca, C.A.",
-  "Droguería Dolbelsa, C.A.",
-  "Droguería Digeca de Occidente",
-  "Marissa Droguería, C.A.",
-  "Droguería Médica Continental, C.A.",
-  "Droguería Clip, C.A.",
-  "Droguería Vital Salud, C.A.",
-  "Droguería Parenteral, C.A.",
-  "Droguería Medi Express, C.A.",
-  "Droguería Medical Group, C.A.",
-  "Droguería Venezuela 2018, C.A.",
-  "Zakipharma, C.A.",
-  "Droguería Hatillana, C.A."
+  { nombre: "Droguería Droca, C.A.", rif: "J-500445219" },
+  { nombre: "Dromedalca, C.A.", rif: "J-409796000" },
+  { nombre: "Casa de Representación Nibiru Pharma, C.A.", rif: "J-500013396" },
+  { nombre: "Droguería 4J, C.A.", rif: "J-505081890" },
+  { nombre: "Distriroshi, C.A.", rif: "J-503775530" },
+  { nombre: "Distribuidora Médica Export-Medex, C.A.", rif: "J-305895906" },
+  { nombre: "Casa de Representación Laboratorios Verma, C.A.", rif: "J-500972309" },
+  { nombre: "Infarven, C.A.", rif: "J-411208060" },
+  { nombre: "Droguería Socialsc, C.A.", rif: "J-500458952" },
+  { nombre: "Droguería Blisspharma, C.A.", rif: "J-507134059" },
+  { nombre: "Droguería Droplus Occidente, C.A.", rif: "J-500029780" },
+  { nombre: "Droguería Global de Suministros Médicos, C.A.", rif: "J-516822282" },
+  { nombre: "Droguería Nayter, C.A.", rif: "J-409355209" },
+  { nombre: "Droarca Droguería El Arca, C.A.", rif: "J-500030205" },
+  { nombre: "Droguería Eda, C.A.", rif: "J-500525115" },
+  { nombre: "Droguería y Suministros Drodigca, C.A.", rif: "J-502048715" },
+  { nombre: "Droguería Dolbelsa, C.A.", rif: "J-501667195" },
+  { nombre: "Droguería Digeca de Occidente", rif: "J-205743092" },
+  { nombre: "Marissa Droguería, C.A.", rif: "J-501155801" },
+  { nombre: "Droguería Médica Continental, C.A.", rif: "J-500573981" },
+  { nombre: "Droguería Clip, C.A.", rif: "J-500576439" },
+  { nombre: "Droguería Vital Salud, C.A.", rif: "J-410809208" },
+  { nombre: "Droguería Parenteral, C.A.", rif: "J-400614813" },
+  { nombre: "Droguería Medi Express, C.A.", rif: "J-500127995" },
+  { nombre: "Droguería Medical Group, C.A.", rif: "J-401754583" },
+  { nombre: "Droguería Venezuela 2018, C.A.", rif: "J-410786469" },
+  { nombre: "Zakipharma, C.A.", rif: "J-500976160" },
+  { nombre: "Droguería Hatillana, C.A.", rif: "J-412580289" }
 ]
 
 export default function Home() {
@@ -988,38 +988,36 @@ export default function Home() {
             <div className="relative overflow-hidden py-10 space-y-8">
               {/* Fila 1: Desplazamiento a la izquierda */}
               <div className="relative overflow-hidden w-full">
-                <motion.div 
-                  className="flex gap-8 w-max"
-                  animate={{ x: ["0%", "-50%"] }}
-                  transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
-                >
+                <div className="flex gap-8 w-max animate-scroll-left pause-on-hover">
                   {[...aliadosA, ...aliadosA].map((aliado, index) => (
-                    <div key={`a-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
+                    <div key={`a-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[300px] group cursor-default transform hover:-translate-y-1">
                       <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
                         <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
+                      <div className="flex flex-col min-w-0">
+                        <h3 className="text-sm font-bold text-brand-dark group-hover:text-white transition-colors duration-300 truncate" title={aliado.nombre}>{aliado.nombre}</h3>
+                        <span className="text-[10px] text-gray-400 font-semibold group-hover:text-white/70 transition-colors duration-300 mt-0.5">{aliado.rif}</span>
+                      </div>
                     </div>
                   ))}
-                </motion.div>
+                </div>
               </div>
 
               {/* Fila 2: Desplazamiento a la derecha */}
               <div className="relative overflow-hidden w-full">
-                <motion.div 
-                  className="flex gap-8 w-max"
-                  animate={{ x: ["-50%", "0%"] }}
-                  transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
-                >
+                <div className="flex gap-8 w-max animate-scroll-right pause-on-hover">
                   {[...aliadosB, ...aliadosB].map((aliado, index) => (
-                    <div key={`b-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
+                    <div key={`b-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[300px] group cursor-default transform hover:-translate-y-1">
                       <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
                         <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
+                      <div className="flex flex-col min-w-0">
+                        <h3 className="text-sm font-bold text-brand-dark group-hover:text-white transition-colors duration-300 truncate" title={aliado.nombre}>{aliado.nombre}</h3>
+                        <span className="text-[10px] text-gray-400 font-semibold group-hover:text-white/70 transition-colors duration-300 mt-0.5">{aliado.rif}</span>
+                      </div>
                     </div>
                   ))}
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
