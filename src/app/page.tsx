@@ -248,9 +248,10 @@ export default function Home() {
             {/* Header */}
             <div className="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-brand-dark">
-                  Promociones <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">Especiales</span>
-                </h2>
+                <span className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 text-brand-orange font-semibold tracking-wider uppercase text-xs px-4 py-2 rounded-full mb-3">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Promociones Especiales
+                </span>
               </div>
 
               {descuentos.length > 0 ? (
