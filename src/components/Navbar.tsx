@@ -100,18 +100,15 @@ export default function Navbar() {
               />
             </Link>
             
-            {/* Venezuela Flag Indicator */}
-            <div className="flex items-center gap-1 px-2 py-1 bg-gray-50/80 border border-gray-150 rounded-lg text-[11px] sm:text-xs font-bold text-brand-dark/80 select-none hover:bg-gray-100/50 hover:border-gray-300 transition-colors duration-200">
-              <div className="relative w-5 h-3.5 overflow-hidden rounded-[2px] shadow-sm border border-gray-200/50 flex-shrink-0">
-                <Image
-                  src="/Flag_of_Venezuela.svg.png"
-                  alt="Bandera de Venezuela"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <span>Ven</span>
-              <ChevronDown className="h-3 w-3 text-gray-400" />
+            {/* Venezuela Flag */}
+            <div className="relative w-8 h-5 overflow-hidden rounded-sm shadow-sm border border-gray-200/40 flex-shrink-0">
+              <Image
+                src="/Flag_of_Venezuela.svg.png"
+                alt="Bandera de Venezuela"
+                fill
+                sizes="32px"
+                className="object-cover"
+              />
             </div>
           </div>
 
