@@ -358,42 +358,25 @@ export default function Home() {
                 })}
               </div>
             ) : (
-              /* Placeholder Skeletons & Informative Message */
-              <div className="space-y-8">
-                {/* Informative alert box - light mode styled */}
-                <div className="bg-gray-50 border border-gray-150 p-5 md:p-6 rounded-3xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/[0.03] rounded-full blur-3xl pointer-events-none" />
-                  <div className="flex gap-4 items-start relative z-10">
-                    <Sparkles className="h-6 w-6 text-brand-orange flex-shrink-0 mt-1 animate-pulse" />
-                    <div className="space-y-2">
-                      <h4 className="font-extrabold text-lg text-brand-dark">Nuevos descuentos en camino</h4>
-                      <p className="text-sm text-gray-500 leading-relaxed max-w-3xl">
-                        Nuestra casa de representación estará publicando ofertas especiales y descuentos exclusivos en medicamentos e insumos médicos próximamente. Una vez activadas, las nuevas promociones aparecerán automáticamente en esta sección. ¡Mantente atento!
-                      </p>
+              /* Placeholder Skeletons */
+              <div className="flex gap-6 overflow-hidden select-none opacity-60">
+                {[1, 2, 3, 4, 5].map((idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex-shrink-0 w-[240px] sm:w-[260px] bg-white rounded-3xl border border-gray-150 p-4 h-[350px] flex flex-col justify-between relative animate-pulse"
+                  >
+                    <div className="absolute top-4 left-4 bg-gray-100 rounded-full w-10 h-10" />
+                    <div className="h-40 w-full bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-50 shimmer" />
+                    <div className="mt-3 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="h-2 w-16 bg-gray-100 rounded-full shimmer" />
+                        <div className="h-3 w-36 bg-gray-100 rounded-full shimmer" />
+                        <div className="h-3 w-28 bg-gray-100 rounded-full shimmer" />
+                      </div>
+                      <div className="h-9 w-full bg-gray-100 rounded-xl shimmer" />
                     </div>
                   </div>
-                </div>
-
-                {/* Skeletons row - light mode styled */}
-                <div className="flex gap-6 overflow-hidden select-none opacity-60">
-                  {[1, 2, 3, 4, 5].map((idx) => (
-                    <div 
-                      key={idx} 
-                      className="flex-shrink-0 w-[240px] sm:w-[260px] bg-white rounded-3xl border border-gray-150 p-4 h-[350px] flex flex-col justify-between relative animate-pulse"
-                    >
-                      <div className="absolute top-4 left-4 bg-gray-100 rounded-full w-10 h-10" />
-                      <div className="h-40 w-full bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-50 shimmer" />
-                      <div className="mt-3 flex-1 flex flex-col justify-between">
-                        <div className="space-y-2">
-                          <div className="h-2 w-16 bg-gray-100 rounded-full shimmer" />
-                          <div className="h-3 w-36 bg-gray-100 rounded-full shimmer" />
-                          <div className="h-3 w-28 bg-gray-100 rounded-full shimmer" />
-                        </div>
-                        <div className="h-9 w-full bg-gray-100 rounded-xl shimmer" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                ))}
               </div>
             )}
           </div>
