@@ -83,21 +83,37 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md text-brand-dark shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0 flex items-center justify-center h-16 w-36 relative overflow-hidden">
-            <Image 
-              src="/logon_transparent.png" 
-              alt="2N Logo"
-              fill
-              sizes="144px"
-              className="object-contain"
-              style={{ 
-                transform: 'scale(2.2)',
-                transformOrigin: 'center 46%'
-              }}
-              priority
-            />
-          </Link>
+          {/* Logo and Country Indicator */}
+          <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+            <Link href="/" className="flex-shrink-0 flex items-center justify-center h-16 w-36 relative overflow-hidden">
+              <Image 
+                src="/logon_transparent.png" 
+                alt="2N Logo"
+                fill
+                sizes="144px"
+                className="object-contain"
+                style={{ 
+                  transform: 'scale(2.2)',
+                  transformOrigin: 'center 46%'
+                }}
+                priority
+              />
+            </Link>
+            
+            {/* Venezuela Flag Indicator */}
+            <div className="flex items-center gap-1 px-2 py-1 bg-gray-50/80 border border-gray-150 rounded-lg text-[11px] sm:text-xs font-bold text-brand-dark/80 select-none hover:bg-gray-100/50 hover:border-gray-300 transition-colors duration-200">
+              <div className="relative w-5 h-3.5 overflow-hidden rounded-[2px] shadow-sm border border-gray-200/50 flex-shrink-0">
+                <Image
+                  src="/Flag_of_Venezuela.svg.png"
+                  alt="Bandera de Venezuela"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span>Ven</span>
+              <ChevronDown className="h-3 w-3 text-gray-400" />
+            </div>
+          </div>
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-8 text-sm font-medium items-center">
