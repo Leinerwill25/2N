@@ -282,11 +282,7 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-              ) : (
-                <span className="text-xs text-gray-500 bg-gray-100 border border-gray-200 px-3.5 py-1.5 rounded-full">
-                  Próximamente
-                </span>
-              )}
+              ) : null}
             </div>
 
             {descuentos.length > 0 ? (
