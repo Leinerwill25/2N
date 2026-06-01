@@ -392,18 +392,12 @@ export default function Home() {
 
                   return (
                     <div key={item.id} className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start">
-                      {item.catalogo_id ? (
-                        <Link 
-                          href={`/catalogs/${item.catalogo_id}`}
-                          className="block transform hover:-translate-y-1.5 transition-all duration-300"
-                        >
-                          {CardContent}
-                        </Link>
-                      ) : (
-                        <div className="block transform hover:-translate-y-1.5 transition-all duration-300">
-                          {CardContent}
-                        </div>
-                      )}
+                      <Link 
+                        href={item.catalogo_id ? `/catalogs/${item.catalogo_id}` : "#catalogos"}
+                        className="block transform hover:-translate-y-1.5 transition-all duration-300"
+                      >
+                        {CardContent}
+                      </Link>
                     </div>
                   );
                 })}
