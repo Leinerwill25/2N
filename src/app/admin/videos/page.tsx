@@ -15,7 +15,8 @@ import {
   RefreshCw,
   Tag,
   Upload,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Edit
 } from 'lucide-react'
 
 const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -79,6 +80,7 @@ export default function AdminPromocionesPage() {
   const [dbDiscountError, setDbDiscountError] = useState(false)
   const [submittingDiscount, setSubmittingDiscount] = useState(false)
   const [isUsingDiscountMock, setIsUsingDiscountMock] = useState(false)
+  const [editingDiscount, setEditingDiscount] = useState<DescuentoVisual | null>(null)
 
   // Discount Form State
   const [discountTitulo, setDiscountTitulo] = useState('')
@@ -320,16 +322,18 @@ export default function AdminPromocionesPage() {
     }
   }
 
-  const handleAddDiscount = async (e: React.FormEvent) => {
+  const handleSaveDiscount = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!discountTitulo || (!discountFile && isUsingDiscountMock === false)) {
+    if (!discountTitulo || (!discountFile && !editingDiscount && isUsingDiscountMock === false)) {
       alert("Por favor introduce un título y selecciona una imagen.")
       return
     }
 
     try {
       setSubmittingDiscount(true)
-      let imagen_url = "https://images.unsplash.com/photo-1593009805482-a5d2a9844577?auto=format&fit=crop&q=80&w=400"
+      let imagen_url = editingDiscount 
+        ? editingDiscount.imagen_url 
+        : "https://images.unsplash.com/photo-1593009805482-a5d2a9844577?auto=format&fit=crop&q=80&w=400"
 
       if (discountFile) {
         const fileExt = discountFile.name.split('.').pop()
@@ -351,7 +355,7 @@ export default function AdminPromocionesPage() {
         imagen_url = publicUrlData.publicUrl
       }
 
-      const newDiscount = {
+      const discountData = {
         titulo: discountTitulo,
         porcentaje: Number(discountPorcentaje),
         imagen_url,
@@ -361,15 +365,27 @@ export default function AdminPromocionesPage() {
       }
 
       if (isUsingDiscountMock) {
-        const mockItem: DescuentoVisual = {
-          id: `mock-d-${Date.now()}`,
-          ...newDiscount
+        if (editingDiscount) {
+          setDiscounts(prev => prev.map(d => d.id === editingDiscount.id ? { ...d, ...discountData } : d).sort((a, b) => a.order_index - b.order_index))
+        } else {
+          const mockItem: DescuentoVisual = {
+            id: `mock-d-${Date.now()}`,
+            ...discountData
+          }
+          setDiscounts(prev => [...prev, mockItem].sort((a, b) => a.order_index - b.order_index))
         }
-        setDiscounts(prev => [...prev, mockItem].sort((a, b) => a.order_index - b.order_index))
         resetDiscountForm()
       } else {
-        const { error } = await supabase.from('descuentos_visuales').insert([newDiscount])
-        if (error) throw error
+        if (editingDiscount) {
+          const { error } = await supabase
+            .from('descuentos_visuales')
+            .update(discountData)
+            .eq('id', editingDiscount.id)
+          if (error) throw error
+        } else {
+          const { error } = await supabase.from('descuentos_visuales').insert([discountData])
+          if (error) throw error
+        }
         await fetchDiscounts()
         resetDiscountForm()
       }
@@ -381,6 +397,19 @@ export default function AdminPromocionesPage() {
     }
   }
 
+  const handleEditDiscount = (discount: DescuentoVisual) => {
+    setEditingDiscount(discount)
+    setDiscountTitulo(discount.titulo)
+    setDiscountPorcentaje(discount.porcentaje)
+    setDiscountCatalogoId(discount.catalogo_id || '')
+    setDiscountOrderIndex(discount.order_index)
+    setDiscountActivo(discount.activo)
+    setDiscountFile(null)
+    
+    // Scroll smoothly to form container
+    document.getElementById('discount-form-container')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const handleDeleteDiscount = async (id: string) => {
     if (!confirm('¿Estás seguro de eliminar este descuento visual?')) return
     try {
@@ -390,6 +419,9 @@ export default function AdminPromocionesPage() {
         const { error } = await supabase.from('descuentos_visuales').delete().eq('id', id)
         if (error) throw error
         await fetchDiscounts()
+      }
+      if (editingDiscount?.id === id) {
+        resetDiscountForm()
       }
     } catch (err) {
       console.error("Error deleting visual discount:", err)
@@ -422,6 +454,7 @@ export default function AdminPromocionesPage() {
     setDiscountOrderIndex(discounts.length + 1)
     setDiscountActivo(true)
     setDiscountFile(null)
+    setEditingDiscount(null)
   }
 
   return (
@@ -677,13 +710,17 @@ export default function AdminPromocionesPage() {
       {activeTab === 'discounts' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form Container */}
-          <div className="lg:col-span-1 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6 h-fit">
+          <div id="discount-form-container" className="lg:col-span-1 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6 h-fit">
             <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-              <Plus className="h-5 w-5 text-brand-orange" />
-              Nuevo Descuento Visual
+              {editingDiscount ? (
+                <Edit className="h-5 w-5 text-brand-blue" />
+              ) : (
+                <Plus className="h-5 w-5 text-brand-orange" />
+              )}
+              {editingDiscount ? 'Editar Descuento' : 'Nuevo Descuento Visual'}
             </h2>
             
-            <form onSubmit={handleAddDiscount} className="space-y-4">
+            <form onSubmit={handleSaveDiscount} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Título de la Tarjeta</label>
                 <input
@@ -693,7 +730,8 @@ export default function AdminPromocionesPage() {
                   value={discountTitulo}
                   onChange={(e) => setDiscountTitulo(e.target.value)}
                   className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-sm"
-                />
+                >
+                </input>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -745,15 +783,19 @@ export default function AdminPromocionesPage() {
                     <Upload className="mx-auto h-10 w-10 text-gray-400" />
                     <div className="flex text-xs text-gray-600 justify-center">
                       <span className="relative cursor-pointer rounded-md font-bold text-brand-orange hover:text-brand-orange/80">
-                        Subir un archivo
+                        {editingDiscount ? 'Cambiar imagen' : 'Subir un archivo'}
                       </span>
                     </div>
                     <p className="text-[10px] text-gray-400">PNG, JPG de productos</p>
-                    {discountFile && (
+                    {discountFile ? (
                       <p className="text-xs text-green-600 font-semibold mt-2 truncate max-w-[200px]">
                         {discountFile.name}
                       </p>
-                    )}
+                    ) : editingDiscount ? (
+                      <p className="text-[10px] text-brand-blue font-semibold mt-2 truncate max-w-[200px]">
+                        Usando imagen actual
+                      </p>
+                    ) : null}
                   </div>
                   <input
                     id="discount-file-input"
@@ -778,13 +820,29 @@ export default function AdminPromocionesPage() {
                 </label>
               </div>
 
-              <button
-                type="submit"
-                disabled={submittingDiscount}
-                className="w-full py-3 bg-brand-orange hover:bg-brand-orange/90 text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm disabled:opacity-50"
-              >
-                {submittingDiscount ? 'Guardando...' : 'Crear Descuento'}
-              </button>
+              <div className="flex gap-3">
+                {editingDiscount && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingDiscount(null)
+                      resetDiscountForm()
+                    }}
+                    className="w-1/3 py-3 bg-gray-150 hover:bg-gray-250 text-gray-700 font-semibold rounded-xl transition-all text-sm cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  disabled={submittingDiscount}
+                  className={`py-3 text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm disabled:opacity-50 cursor-pointer ${
+                    editingDiscount ? 'w-2/3 bg-brand-blue hover:bg-brand-blue/90' : 'w-full bg-brand-orange hover:bg-brand-orange/90'
+                  }`}
+                >
+                  {submittingDiscount ? 'Guardando...' : editingDiscount ? 'Guardar Cambios' : 'Crear Descuento'}
+                </button>
+              </div>
             </form>
           </div>
 
@@ -864,7 +922,7 @@ export default function AdminPromocionesPage() {
                       <div className="p-4 border-t border-gray-50 flex items-center justify-between bg-white">
                         <button
                           onClick={() => handleToggleDiscountStatus(discount.id, discount.activo)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
                             discount.activo 
                               ? 'bg-green-500/10 text-green-700 hover:bg-green-500/20' 
                               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -883,12 +941,22 @@ export default function AdminPromocionesPage() {
                           )}
                         </button>
 
-                        <button
-                          onClick={() => handleDeleteDiscount(discount.id)}
-                          className="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors"
-                        >
-                          <Trash2 className="h-4.5 w-4.5" />
-                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEditDiscount(discount)}
+                            className="p-2 bg-blue-50 hover:bg-blue-100 text-brand-blue rounded-xl transition-colors cursor-pointer"
+                            title="Editar Descuento"
+                          >
+                            <Edit className="h-4.5 w-4.5" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteDiscount(discount.id)}
+                            className="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors cursor-pointer"
+                            title="Eliminar Descuento"
+                          >
+                            <Trash2 className="h-4.5 w-4.5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )
