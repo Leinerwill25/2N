@@ -40,6 +40,67 @@ import {
   Film
 } from 'lucide-react'
 
+const aliadosA = [
+  "Wells of Life, C.A.",
+  "Dropharma D&M, C.A.",
+  "Droguería DHM, C.A.",
+  "Droguería Real, C.A.",
+  "Droguería Mundo Médico, C.A.",
+  "Insuaminca, C.A.",
+  "Droguería Surdelago, C.A.",
+  "Droguería Melmax2018, C.A.",
+  "Droguería El Arcángel, C.A.",
+  "Droguería Santo Cristo, C.A.",
+  "Droguería La Esencial, C.A.",
+  "Droguería Cobeca Centro",
+  "Droguería Cobeca Occidente",
+  "Droguería Cobeca Oriente",
+  "Droguería Intercontinental, C.A.",
+  "Droguería Biomedic Lab Centro, C.A.",
+  "Droguería Drobelsa, C.A.",
+  "Droguería Megafar, C.A.",
+  "Crist Medicals, C.A.",
+  "Distribuidora Multimédica 1812, C.A.",
+  "Droguería Rdipharma, C.A.",
+  "Droguería Solidaria de Venezuela, C.A.",
+  "Droguería Medicarpez, C.A.",
+  "Droguería y Distribuidora Colmedica, C.A.",
+  "Innomar, C.A.",
+  "Droguería Los Andes, C.A.",
+  "Droguería Dr. Tito, C.A."
+]
+
+const aliadosB = [
+  "Droguería Droca, C.A.",
+  "Dromedalca, C.A.",
+  "Casa de Representación Nibiru Pharma, C.A.",
+  "Droguería 4J, C.A.",
+  "Distriroshi, C.A.",
+  "Distribuidora Médica Export-Medex, C.A.",
+  "Casa de Representación Laboratorios Verma, C.A.",
+  "Infarven, C.A.",
+  "Droguería Socialsc, C.A.",
+  "Droguería Blisspharma, C.A.",
+  "Droguería Droplus Occidente, C.A.",
+  "Droguería Global de Suministros Médicos, C.A.",
+  "Droguería Nayter, C.A.",
+  "Droarca Droguería El Arca, C.A.",
+  "Droguería Eda, C.A.",
+  "Droguería y Suministros Drodigca, C.A.",
+  "Droguería Dolbelsa, C.A.",
+  "Droguería Digeca de Occidente",
+  "Marissa Droguería, C.A.",
+  "Droguería Médica Continental, C.A.",
+  "Droguería Clip, C.A.",
+  "Droguería Vital Salud, C.A.",
+  "Droguería Parenteral, C.A.",
+  "Droguería Medi Express, C.A.",
+  "Droguería Medical Group, C.A.",
+  "Droguería Venezuela 2018, C.A.",
+  "Zakipharma, C.A.",
+  "Droguería Hatillana, C.A."
+]
+
 export default function Home() {
   const [emblaRef] = useEmblaCarousel({ loop: true })
   const [products, setProducts] = useState<any[]>([])
@@ -924,24 +985,42 @@ export default function Home() {
               <p className="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">Trabajamos con las principales droguerías del país</p>
             </div>
 
-            <div className="relative overflow-hidden py-10">
-              <motion.div 
-                className="flex gap-8 w-max"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              >
-                {[
-                  "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven",
-                  "Crist Medicals", "Droguería Nibiru", "Insuaminca", "Droguería Hatillana", "Droguería Solidaria", "Droguería Infarven"
-                ].map((aliado, index) => (
-                  <div key={index} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
-                    <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
-                      <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
+            <div className="relative overflow-hidden py-10 space-y-8">
+              {/* Fila 1: Desplazamiento a la izquierda */}
+              <div className="relative overflow-hidden w-full">
+                <motion.div 
+                  className="flex gap-8 w-max"
+                  animate={{ x: ["0%", "-50%"] }}
+                  transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
+                >
+                  {[...aliadosA, ...aliadosA].map((aliado, index) => (
+                    <div key={`a-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
+                      <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
+                        <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                      </div>
+                      <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
                     </div>
-                    <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
-                  </div>
-                ))}
-              </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Fila 2: Desplazamiento a la derecha */}
+              <div className="relative overflow-hidden w-full">
+                <motion.div 
+                  className="flex gap-8 w-max"
+                  animate={{ x: ["-50%", "0%"] }}
+                  transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
+                >
+                  {[...aliadosB, ...aliadosB].map((aliado, index) => (
+                    <div key={`b-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[280px] group cursor-default transform hover:-translate-y-1">
+                      <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
+                        <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                      </div>
+                      <h3 className="text-lg font-bold text-brand-dark group-hover:text-white transition-colors duration-300">{aliado}</h3>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           </div>
         </section>
