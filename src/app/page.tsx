@@ -320,110 +320,112 @@ export default function Home() {
                   <span className="text-xs text-gray-500 bg-gray-100 border border-gray-200 px-3.5 py-1.5 rounded-full hidden md:inline-block">
                     Haz clic en una oferta para ver su catálogo o desliza para ver más
                   </span>
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => scrollSlider('left')}
-                      className="w-10 h-10 rounded-full bg-gray-50 hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-sm hover:shadow-brand-orange/20 cursor-pointer"
-                      title="Anterior"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <button 
-                      onClick={() => scrollSlider('right')}
-                      className="w-10 h-10 rounded-full bg-gray-50 hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-sm hover:shadow-brand-orange/20 cursor-pointer"
-                      title="Siguiente"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
                 </div>
               ) : null}
             </div>
 
-            {descuentos.length > 0 ? (
-              /* Sliding Carousel */
-              <div 
-                ref={sliderRef}
-                className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-6 no-scrollbar"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              >
-                {descuentos.map((item) => {
-                  const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
-                  const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
-
-                  const CardContent = (
-                    <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-[350px] relative border border-gray-100 select-none group text-left p-4 card-glow w-full">
-                      {/* Percentage Badge */}
-                      <div className="absolute top-4 left-4 bg-gradient-to-br from-brand-orange to-amber-500 text-white font-extrabold text-xs px-2 py-2 rounded-full shadow-lg z-10 w-10 h-10 flex items-center justify-center border border-white/20">
-                        -{item.porcentaje}%
-                      </div>
-                      
-                      {/* Image Container with rounded shape and padding */}
-                      <div className="relative h-40 w-full bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors">
-                        <img 
-                          src={item.imagen_url} 
-                          alt={item.titulo} 
-                          className="object-contain max-h-full max-w-full rounded-xl transition-transform duration-500 group-hover:scale-105 text-brand-dark text-xs" 
-                        />
-                      </div>
-
-                      {/* Text Info */}
-                      <div className="mt-3 flex-1 flex flex-col justify-between">
-                        <div className="space-y-1">
-                          <span className="text-[9px] font-extrabold text-brand-orange uppercase tracking-widest block truncate">
-                            {catalogName}
-                          </span>
-                          <h4 className="text-sm font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors">
-                            {item.titulo}
-                          </h4>
-                          <p className="text-[11px] text-gray-400 font-medium">
-                            Descuento de temporada
-                          </p>
-                        </div>
-
-                        {/* Button-like Link (CTA) */}
-                        <div className="mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 transition-all duration-300">
-                          <span>Explorar Catálogo</span>
-                          <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  );
-
-                  return (
-                    <div key={item.id} className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start">
-                      <Link 
-                        href={item.catalogo_id ? `/catalogs/${item.catalogo_id}` : "#catalogos"}
-                        className="block transform hover:-translate-y-1.5 transition-all duration-300"
-                      >
-                        {CardContent}
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              /* Placeholder Skeletons */
-              <div className="flex gap-6 overflow-hidden select-none opacity-60">
-                {[1, 2, 3, 4, 5].map((idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex-shrink-0 w-[240px] sm:w-[260px] bg-white rounded-3xl border border-gray-150 p-4 h-[350px] flex flex-col justify-between relative animate-pulse"
+            {/* Carousel Container Wrapper with Side Navigation Arrows */}
+            <div className="relative group/carousel">
+              {descuentos.length > 0 ? (
+                <>
+                  {/* Left Arrow Button */}
+                  <button 
+                    onClick={() => scrollSlider('left')}
+                    className="absolute -left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-md hover:shadow-brand-orange/20 cursor-pointer opacity-0 group-hover/carousel:opacity-100 duration-300 hidden md:flex"
+                    title="Anterior"
                   >
-                    <div className="absolute top-4 left-4 bg-gray-100 rounded-full w-10 h-10" />
-                    <div className="h-40 w-full bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-50 shimmer" />
-                    <div className="mt-3 flex-1 flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <div className="h-2 w-16 bg-gray-100 rounded-full shimmer" />
-                        <div className="h-3 w-36 bg-gray-100 rounded-full shimmer" />
-                        <div className="h-3 w-28 bg-gray-100 rounded-full shimmer" />
-                      </div>
-                      <div className="h-9 w-full bg-gray-100 rounded-xl shimmer" />
-                    </div>
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  
+                  {/* Right Arrow Button */}
+                  <button 
+                    onClick={() => scrollSlider('right')}
+                    className="absolute -right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white hover:bg-brand-orange border border-gray-200 hover:border-brand-orange flex items-center justify-center text-brand-dark hover:text-white transition-all shadow-md hover:shadow-brand-orange/20 cursor-pointer opacity-0 group-hover/carousel:opacity-100 duration-300 hidden md:flex"
+                    title="Siguiente"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+
+                  {/* Sliding Carousel */}
+                  <div 
+                    ref={sliderRef}
+                    className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-6 no-scrollbar"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                  >
+                    {descuentos.map((item) => {
+                      const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
+                      const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
+
+                      const CardContent = (
+                        <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-[350px] relative border border-gray-100 select-none group text-left p-4 card-glow w-full">
+                          
+                          {/* Image Container with rounded shape and padding */}
+                          <div className="relative h-40 w-full bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors">
+                            <img 
+                              src={item.imagen_url} 
+                              alt={item.titulo} 
+                              className="object-contain max-h-full max-w-full rounded-xl transition-transform duration-500 group-hover:scale-105 text-brand-dark text-xs" 
+                            />
+                          </div>
+
+                          {/* Text Info */}
+                          <div className="mt-3 flex-1 flex flex-col justify-between">
+                            <div className="space-y-1">
+                              <span className="text-[9px] font-extrabold text-brand-orange uppercase tracking-widest block truncate">
+                                {catalogName}
+                              </span>
+                              <h4 className="text-sm font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors">
+                                {item.titulo}
+                              </h4>
+                              <p className="text-[11px] text-gray-400 font-medium">
+                                Descuento de temporada
+                              </p>
+                            </div>
+
+                            {/* Button-like Link (CTA) */}
+                            <div className="mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 transition-all duration-300">
+                              <span>Explorar Catálogo</span>
+                              <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" />
+                            </div>
+                          </div>
+                        </div>
+                      );
+
+                      return (
+                        <div key={item.id} className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start">
+                          <Link 
+                            href={item.catalogo_id ? `/catalogs/${item.catalogo_id}` : "#catalogos"}
+                            className="block transform hover:-translate-y-1.5 transition-all duration-300"
+                          >
+                            {CardContent}
+                          </Link>
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            )}
+                </>
+              ) : (
+                /* Placeholder Skeletons */
+                <div className="flex gap-6 overflow-hidden select-none opacity-60">
+                  {[1, 2, 3, 4, 5].map((idx) => (
+                    <div 
+                      key={idx} 
+                      className="flex-shrink-0 w-[240px] sm:w-[260px] bg-white rounded-3xl border border-gray-150 p-4 h-[350px] flex flex-col justify-between relative animate-pulse"
+                    >
+                      <div className="h-40 w-full bg-gray-50 rounded-2xl flex items-center justify-center p-4 border border-gray-50 shimmer" />
+                      <div className="mt-3 flex-1 flex flex-col justify-between">
+                        <div className="space-y-2">
+                          <div className="h-2 w-16 bg-gray-100 rounded-full shimmer" />
+                          <div className="h-3 w-36 bg-gray-100 rounded-full shimmer" />
+                          <div className="h-3 w-28 bg-gray-100 rounded-full shimmer" />
+                        </div>
+                        <div className="h-9 w-full bg-gray-100 rounded-xl shimmer" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
