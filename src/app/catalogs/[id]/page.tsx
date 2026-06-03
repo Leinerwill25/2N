@@ -83,7 +83,7 @@ export default function CatalogPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
         {/* Hero Section */}
         <div className="relative rounded-3xl overflow-hidden mb-12 p-8 md:p-12
-          bg-gradient-to-br from-brand-dark via-brand-blue to-brand-blue-mid
+          bg-gradient-to-br from-brand-blue-mid to-brand-blue
           shadow-[0_20px_60px_rgba(13,27,75,0.3)]">
           {/* Decorative orbs */}
           <div className="absolute top-0 right-0 w-72 h-72 bg-brand-orange/10 

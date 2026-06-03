@@ -460,7 +460,7 @@ export default function AdminPromocionesPage() {
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8">
       {/* Title / Premium Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-brand-dark to-brand-blue p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-brand-blue-mid to-brand-blue p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 space-y-2">
           <div className="flex items-center gap-2 text-brand-orange">

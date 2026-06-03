@@ -430,7 +430,7 @@ export default function Home() {
         </section>
 
         {/* 4. Videos Promocionales */}
-        <section id="promociones-video" className="py-24 bg-gradient-to-tr from-brand-dark via-[#0F172A] to-brand-blue relative overflow-hidden text-white">
+        <section id="promociones-video" className="py-24 bg-gradient-to-tr from-brand-blue-mid to-brand-blue relative overflow-hidden text-white">
           {/* Decorative design elements */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-blue-mid/10 rounded-full blur-3xl pointer-events-none" />
@@ -791,7 +791,7 @@ export default function Home() {
         </section>
 
         {/* 7. Nuestros Valores */}
-        <section className="py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-blue to-brand-dark">
+        <section className="py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-brand-blue-mid to-brand-blue">
           {/* Orbes de luz de fondo */}
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-brand-blue-mid/30 rounded-full blur-3xl pointer-events-none" />
