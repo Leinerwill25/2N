@@ -144,7 +144,7 @@ export default function CatalogPage() {
                   </div>
                   <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
                     <span className="text-xs text-foreground/50 bg-muted px-2 py-1 rounded-full">
-                      Stock: {product.stock}
+                      Stock: {product.bultos_stock || 0} bultos ({product.stock} unds)
                     </span>
                     <span className="font-bold text-brand-orange text-sm">
                       {product.precio > 0 ? `$${product.precio.toFixed(2)}` : (

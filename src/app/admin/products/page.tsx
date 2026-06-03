@@ -15,7 +15,9 @@ export default function ProductsPage() {
     name: '',
     price: '',
     currency: 'USD',
-    stock: '',
+    stock: '0',
+    bultos_stock: '0',
+    unidades_por_bulto: '1',
     description: '',
     expiration_date: '',
     catalog_id: '',
@@ -106,12 +108,18 @@ export default function ProductsPage() {
       image_url = publicUrlData.publicUrl
     }
 
+    const bStock = parseInt(newProduct.bultos_stock) || 0
+    const uPerB = parseInt(newProduct.unidades_por_bulto) || 1
+    const totalStock = bStock * uPerB
+
     const { error } = await supabase.from('productos').insert([
       {
         nombre: newProduct.name,
         precio: parseFloat(newProduct.price) || 0,
         moneda: newProduct.currency,
-        stock: parseInt(newProduct.stock) || 0,
+        stock: totalStock,
+        bultos_stock: bStock,
+        unidades_por_bulto: uPerB,
         descripcion: newProduct.description,
         catalogo_id: newProduct.catalog_id || null,
         imagen_url: image_url,
@@ -122,7 +130,7 @@ export default function ProductsPage() {
 
     if (!error) {
       setModalMessage({ type: 'success', text: 'Producto agregado exitosamente.' })
-      setNewProduct({ name: '', price: '', currency: 'USD', stock: '', description: '', expiration_date: '', catalog_id: '' })
+      setNewProduct({ name: '', price: '', currency: 'USD', stock: '0', bultos_stock: '0', unidades_por_bulto: '1', description: '', expiration_date: '', catalog_id: '' })
       setFile(null)
       fetchProducts()
     } else {
@@ -143,9 +151,15 @@ export default function ProductsPage() {
       return
     }
 
+    const newStock = (selectedProduct.stock || 0) + received
+    const newBultosStock = Math.floor(newStock / (selectedProduct.unidades_por_bulto || 1))
+
     const { error: stockError } = await supabase
       .from('productos')
-      .update({ stock: selectedProduct.stock + received })
+      .update({ 
+        stock: newStock,
+        bultos_stock: newBultosStock
+      })
       .eq('id', selectedProduct.id)
 
     if (stockError) {
@@ -280,8 +294,8 @@ export default function ProductsPage() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="md:col-span-4">
               <label className="block text-sm font-medium mb-1">Descripción</label>
               <input
                 type="text"
@@ -291,19 +305,66 @@ export default function ProductsPage() {
                 className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Stock Inicial</label>
+              <label className="block text-sm font-medium mb-1">Bultos en Stock</label>
               <input
                 type="number"
                 placeholder="0"
-                value={newProduct.stock}
-                onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+                value={newProduct.bultos_stock}
+                onChange={(e) => {
+                  const bStock = e.target.value;
+                  const uPerB = newProduct.unidades_por_bulto;
+                  const total = (parseInt(bStock) || 0) * (parseInt(uPerB) || 1);
+                  setNewProduct({ ...newProduct, bultos_stock: bStock, stock: total.toString() })
+                }}
                 className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Unidades por Bulto</label>
+              <input
+                type="number"
+                placeholder="1"
+                value={newProduct.unidades_por_bulto}
+                onChange={(e) => {
+                  const uPerB = e.target.value;
+                  const bStock = newProduct.bultos_stock;
+                  const total = (parseInt(bStock) || 0) * (parseInt(uPerB) || 1);
+                  setNewProduct({ ...newProduct, unidades_por_bulto: uPerB, stock: total.toString() })
+                }}
+                className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Stock Total (Unidades)</label>
+              <input
+                type="number"
+                value={(parseInt(newProduct.bultos_stock) || 0) * (parseInt(newProduct.unidades_por_bulto) || 1)}
+                className="w-full px-4 py-2 border border-primary/10 rounded-lg bg-muted/50 text-foreground/60 cursor-not-allowed focus:outline-none font-semibold"
+                disabled
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Catálogo</label>
+              <select
+                value={newProduct.catalog_id || ''}
+                onChange={(e) => setNewProduct({ ...newProduct, catalog_id: e.target.value })}
+                className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="">Sin Catálogo</option>
+                {catalogs.map((catalog: any) => (
+                  <option key={catalog.id} value={catalog.id}>{catalog.nombre}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Imagen del Producto</label>
               <div className="flex items-center gap-4">
@@ -327,19 +388,6 @@ export default function ProductsPage() {
                 onChange={(e) => setNewProduct({ ...newProduct, expiration_date: e.target.value })}
                 className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Catálogo</label>
-              <select
-                value={newProduct.catalog_id || ''}
-                onChange={(e) => setNewProduct({ ...newProduct, catalog_id: e.target.value })}
-                className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                <option value="">Sin Catálogo</option>
-                {catalogs.map((catalog: any) => (
-                  <option key={catalog.id} value={catalog.id}>{catalog.nombre}</option>
-                ))}
-              </select>
             </div>
           </div>
           <div className="flex justify-end">
@@ -386,7 +434,7 @@ export default function ProductsPage() {
                   <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${
                     product.stock > 10 ? 'bg-white text-green-600' : 'bg-white text-red-600'
                   } shadow-sm`}>
-                    Stock: {product.stock}
+                    Stock: {product.bultos_stock || 0} bultos ({product.stock} unds)
                   </div>
                 </div>
 
@@ -609,13 +657,20 @@ export default function ProductsPage() {
                 image_url = publicUrlData.publicUrl
               }
 
+              const bStock = parseInt((editingProduct.bultos_stock ?? 0).toString()) || 0
+              const uPerB = parseInt((editingProduct.unidades_por_bulto ?? 1).toString()) || 1
+              const totalStock = bStock * uPerB
+
               const { error } = await supabase
                 .from('productos')
                 .update({
                   nombre: editingProduct.nombre ?? editingProduct.name ?? '',
                   precio: parseFloat((editingProduct.precio ?? editingProduct.price ?? 0).toString()) || 0,
                   moneda: editingProduct.moneda ?? editingProduct.currency ?? 'USD',
-                  stock: parseInt((editingProduct.stock ?? 0).toString()) || 0,
+                  stock: totalStock,
+                  bStock: undefined, // remove any temporary fields
+                  bultos_stock: bStock,
+                  unidades_por_bulto: uPerB,
                   descripcion: editingProduct.descripcion ?? editingProduct.description ?? null,
                   catalogo_id: editingProduct.catalogo_id ?? editingProduct.catalog_id ?? null,
                   imagen_url: image_url,
@@ -714,14 +769,53 @@ export default function ProductsPage() {
                     <option value="BS">Bolívar (Bs)</option>
                   </select>
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Bultos en Stock</label>
+                    <input
+                      type="number"
+                      value={editingProduct.bultos_stock ?? 0}
+                      onChange={(e) => {
+                        const bStock = e.target.value;
+                        const uPerB = editingProduct.unidades_por_bulto ?? 1;
+                        const total = (parseInt(bStock) || 0) * (parseInt(uPerB) || 1);
+                        setEditingProduct({ 
+                          ...editingProduct, 
+                          bultos_stock: bStock,
+                          stock: total
+                        })
+                      }}
+                      className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Unidades por Bulto</label>
+                    <input
+                      type="number"
+                      value={editingProduct.unidades_por_bulto ?? 1}
+                      onChange={(e) => {
+                        const uPerB = e.target.value;
+                        const bStock = editingProduct.bultos_stock ?? 0;
+                        const total = (parseInt(bStock) || 0) * (parseInt(uPerB) || 1);
+                        setEditingProduct({ 
+                          ...editingProduct, 
+                          unidades_por_bulto: uPerB,
+                          stock: total
+                        })
+                      }}
+                      className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      required
+                    />
+                  </div>
+                </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Stock</label>
+                  <label className="block text-sm font-medium mb-1">Stock Total (Unidades)</label>
                   <input
                     type="number"
-                    value={editingProduct.stock ?? 0}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, stock: e.target.value })}
-                    className="w-full px-4 py-2 border border-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
+                    value={(parseInt(editingProduct.bultos_stock) || 0) * (parseInt(editingProduct.unidades_por_bulto) || 1)}
+                    className="w-full px-4 py-2 border border-primary/10 rounded-lg bg-muted/50 text-foreground/60 cursor-not-allowed focus:outline-none font-semibold"
+                    disabled
                   />
                 </div>
                 <div>

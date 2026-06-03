@@ -119,7 +119,7 @@ export default function AdminDashboard() {
                 {lowStockProducts.map((product: any) => (
                   <tr key={product.id} className="border-b border-primary/5">
                     <td className="px-4 py-3 font-medium">{product.nombre || product.name}</td>
-                    <td className="px-4 py-3 text-red-500 font-bold">{product.stock}</td>
+                    <td className="px-4 py-3 text-red-500 font-bold">{product.bultos_stock || 0} bultos ({product.stock} unds)</td>
                     <td className="px-4 py-3">${product.precio || product.price || 0}</td>
                     <td className="px-4 py-3">
                       <button 

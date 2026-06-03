@@ -195,7 +195,7 @@ export default function ProductPage() {
               </p>
 
               {/* Key Details */}
-              <div className="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-b border-gray-100 py-6 mb-6">
                 <div className="bg-muted/50 rounded-xl p-4">
                   <span className="text-xs text-foreground/50 uppercase font-medium block mb-1">
                     Presentación
@@ -206,10 +206,18 @@ export default function ProductPage() {
                 </div>
                 <div className="bg-muted/50 rounded-xl p-4">
                   <span className="text-xs text-foreground/50 uppercase font-medium block mb-1">
+                    Contenido por Bulto
+                  </span>
+                  <span className="text-brand-dark font-semibold text-sm">
+                    {product.unidades_por_bulto || 1} unidades
+                  </span>
+                </div>
+                <div className="bg-muted/50 rounded-xl p-4">
+                  <span className="text-xs text-foreground/50 uppercase font-medium block mb-1">
                     Disponibilidad
                   </span>
                   <span className="text-brand-dark font-semibold text-sm">
-                    {product.stock} unidades
+                    {product.bultos_stock || 0} bultos ({product.stock} unds)
                   </span>
                 </div>
               </div>
@@ -280,6 +288,8 @@ export default function ProductPage() {
                       ['Presentación', product.presentacion || 'N/A'],
                       ['Línea Terapéutica', product.linea || 'N/A'],
                       ['Moneda', product.moneda || 'USD'],
+                      ['Bultos en Stock', `${product.bultos_stock || 0} bultos`],
+                      ['Unidades por Bulto', `${product.unidades_por_bulto || 1} unidades`],
                     ].map(([label, value], index) => (
                       <tr key={index} className={`border-b border-brand-blue/5 last:border-0
                         ${index % 2 === 0 ? 'bg-white' : 'bg-muted/30'}`}>
@@ -304,7 +314,9 @@ export default function ProductPage() {
             <p><span className="font-semibold text-brand-dark">Descripción:</span> {product.descripcion || 'No hay descripción disponible.'}</p>
             <p><span className="font-semibold text-brand-dark">Presentación:</span> {product.presentacion || 'N/A'}</p>
             <p><span className="font-semibold text-brand-dark">Línea Terapéutica:</span> {product.linea || 'N/A'}</p>
-            <p><span className="font-semibold text-brand-dark">Stock Disponible:</span> {product.stock} unidades</p>
+            <p><span className="font-semibold text-brand-dark">Bultos en Stock:</span> {product.bultos_stock || 0} bultos</p>
+            <p><span className="font-semibold text-brand-dark">Unidades por Bulto:</span> {product.unidades_por_bulto || 1} unidades</p>
+            <p><span className="font-semibold text-brand-dark">Stock Total Disponible:</span> {product.stock} unidades</p>
             <p><span className="font-semibold text-brand-dark">Precio:</span> {product.precio > 0 ? `$${product.precio.toFixed(2)}` : 'Consultar'}</p>
           </div>
           <p className="mt-8 text-xs text-foreground/60 text-center">Este documento es una ficha referencial generada desde el portal de Casa de Representación 2N, C.A.</p>
@@ -342,7 +354,7 @@ export default function ProductPage() {
                       <p className="text-xs text-foreground/60 line-clamp-2">{relProduct.descripcion}</p>
                     </div>
                     <div className="mt-4 pt-3 border-t border-gray-50 flex justify-between items-center text-sm">
-                      <span className="text-foreground/60">Stock: {relProduct.stock}</span>
+                      <span className="text-foreground/60">Stock: {relProduct.bultos_stock || 0} bultos ({relProduct.stock} unds)</span>
                       <span className="font-bold text-brand-orange">
                         {relProduct.precio > 0 ? `$${relProduct.precio.toFixed(2)}` : 'Consultar'}
                       </span>
