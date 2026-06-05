@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import {
   Image as ImageIcon,
@@ -77,7 +77,9 @@ export default function BulkImagesPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [rows, setRows] = useState<MatchRow[]>([])
   const [loading, setLoading] = useState(true)
+  const [processing, setProcessing] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [filter, setFilter] = useState<'all' | 'matched' | 'unmatched' | 'done'>('all')
   const [search, setSearch] = useState('')
   const [minScore, setMinScore] = useState(50)
@@ -105,7 +107,7 @@ export default function BulkImagesPage() {
 
   const buildRowsFromFiles = (files: File[], allProds: Product[]): MatchRow[] => {
     const images = files.filter(f =>
-      /\.(png|jpe?g)$/i.test(f.name)
+      /\.(png|jpe?g|webp)$/i.test(f.name) || f.type.startsWith('image/')
     )
 
     const newRows: MatchRow[] = images.map(fileObj => {
@@ -148,29 +150,38 @@ export default function BulkImagesPage() {
     }
   }
 
-  const handleFilesSelected = async (fileList: FileList | null) => {
-    if (!fileList || fileList.length === 0) return
+  const handleFilesSelected = async (files: File[]) => {
+    if (files.length === 0) return
 
-    setLoading(true)
+    setProcessing(true)
+    setErrorMsg(null)
     try {
       const allProds = products.length > 0 ? products : await fetchProducts()
       if (products.length === 0) setProducts(allProds)
 
+      const newRows = buildRowsFromFiles(files, allProds)
+      if (newRows.length === 0) {
+        setErrorMsg('No se encontraron archivos PNG o JPG válidos en la selección.')
+        return
+      }
+
       setRows(prev => {
         prev.forEach(r => URL.revokeObjectURL(r.previewUrl))
-        return buildRowsFromFiles(Array.from(fileList), allProds)
+        return newRows
       })
       setOverrideMap({})
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
+      setErrorMsg(err?.message || 'Error al procesar las imágenes.')
     } finally {
-      setLoading(false)
+      setProcessing(false)
     }
   }
 
   const reanalyze = async () => {
     if (rows.length === 0) return
-    setLoading(true)
+    setProcessing(true)
+    setErrorMsg(null)
     try {
       const allProds = await fetchProducts()
       setProducts(allProds)
@@ -179,10 +190,11 @@ export default function BulkImagesPage() {
         prev.forEach(r => URL.revokeObjectURL(r.previewUrl))
         return buildRowsFromFiles(files, allProds)
       })
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
+      setErrorMsg(err?.message || 'Error al reanalizar las imágenes.')
     } finally {
-      setLoading(false)
+      setProcessing(false)
     }
   }
 
@@ -287,16 +299,19 @@ export default function BulkImagesPage() {
           <p className="text-white/70 text-sm mt-1">Selecciona imágenes desde tu computadora y asigna automáticamente a productos</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
-          <label className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-colors cursor-pointer">
-            <ImageIcon className="h-4 w-4" /> Seleccionar imágenes
+          <label className={`flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-colors cursor-pointer ${processing ? 'opacity-60 pointer-events-none' : ''}`}>
+            {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
+            {processing ? 'Procesando...' : 'Seleccionar imágenes'}
             <input
               type="file"
-              accept="image/png,image/jpeg,image/jpg"
+              accept="image/png,image/jpeg,image/jpg,.png,.jpg,.jpeg"
               multiple
               className="sr-only"
+              disabled={processing}
               onChange={e => {
-                handleFilesSelected(e.target.files)
+                const selected = Array.from(e.target.files ?? [])
                 e.target.value = ''
+                handleFilesSelected(selected)
               }}
             />
           </label>
@@ -317,6 +332,13 @@ export default function BulkImagesPage() {
           </button>
         </div>
       </div>
+
+      {errorMsg && (
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
+          <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -397,7 +419,7 @@ export default function BulkImagesPage() {
             <tbody className="divide-y divide-gray-50">
               {filteredRows.map(row => (
                 <tr
-                  key={row.file}
+                  key={`${row.file}-${row.fileObj.lastModified}`}
                   className={`hover:bg-gray-50/50 transition-colors ${row.selected ? 'bg-blue-50/30' : ''} ${row.status === 'done' ? 'bg-green-50/20' : ''} ${row.status === 'error' ? 'bg-red-50/20' : ''}`}
                 >
                   {/* Checkbox */}
