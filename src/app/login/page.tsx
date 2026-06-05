@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('admin@farmatuya.com')
+  const [email, setEmail] = useState('admin@casaderepresentacion2n.com')
   const [password, setPassword] = useState('admin123')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

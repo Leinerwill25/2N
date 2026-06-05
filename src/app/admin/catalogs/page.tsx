@@ -25,7 +25,7 @@ export default function CatalogsPage() {
 
   const fetchCatalogs = async () => {
     setLoading(true)
-    const { data } = await supabase.from('catalogos').select('*')
+    const { data } = await supabase.from('catalogos').select('*').eq('empresa', '2n')
     setCatalogs(data || [])
     setLoading(false)
   }
@@ -64,6 +64,7 @@ export default function CatalogsPage() {
         nombre: newCatalog.name,
         descripcion: newCatalog.description,
         image_url: image_url,
+        empresa: '2n',
       },
     ])
 

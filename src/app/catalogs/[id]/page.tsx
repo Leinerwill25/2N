@@ -43,6 +43,7 @@ export default function CatalogPage() {
         .from('productos')
         .select('*')
         .eq('catalogo_id', id)
+        .eq('empresa', '2n')
         .order('nombre', { ascending: true })
         
       if (productsError) {

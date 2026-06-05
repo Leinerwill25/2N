@@ -68,6 +68,7 @@ export default function ProductPage() {
           .from('productos')
           .select('*')
           .eq('catalogo_id', productData.catalogo_id)
+          .eq('empresa', '2n')
           .neq('id', id)
           .limit(4)
           

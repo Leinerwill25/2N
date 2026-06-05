@@ -136,6 +136,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from('videos_promocionales')
         .select('*')
+        .eq('empresa', '2n')
         .eq('activo', true)
         .order('order_index', { ascending: true })
       if (error) throw error
@@ -151,6 +152,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from('descuentos_visuales')
         .select('*')
+        .eq('empresa', '2n')
         .eq('activo', true)
         .order('order_index', { ascending: true })
       if (error) throw error
@@ -189,12 +191,12 @@ export default function Home() {
   }
 
   const fetchProducts = async () => {
-    const { data } = await supabase.from('productos').select('*').limit(4)
+    const { data } = await supabase.from('productos').select('*').eq('empresa', '2n').limit(4)
     setProducts(data || [])
   }
 
   const fetchCatalogs = async () => {
-    const { data, error } = await supabase.from('catalogos').select('*')
+    const { data, error } = await supabase.from('catalogos').select('*').eq('empresa', '2n')
     if (error) {
       console.error('Error fetching catalogs:', error)
     }

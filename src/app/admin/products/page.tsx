@@ -60,13 +60,13 @@ export default function ProductsPage() {
 
   const fetchProducts = async () => {
     setLoading(true)
-    const { data } = await supabase.from('productos').select('*')
+    const { data } = await supabase.from('productos').select('*').eq('empresa', '2n')
     setProducts(data || [])
     setLoading(false)
   }
 
   const fetchCatalogs = async () => {
-    const { data } = await supabase.from('catalogos').select('*')
+    const { data } = await supabase.from('catalogos').select('*').eq('empresa', '2n')
     setCatalogs(data || [])
   }
 
@@ -123,6 +123,7 @@ export default function ProductsPage() {
         descripcion: newProduct.description,
         catalogo_id: newProduct.catalog_id || null,
         imagen_url: image_url,
+        empresa: '2n',
       },
     ])
 

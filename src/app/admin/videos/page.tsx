@@ -140,7 +140,7 @@ export default function AdminPromocionesPage() {
   // General Fetch Catalogs
   const fetchCatalogs = async () => {
     try {
-      const { data } = await supabase.from('catalogos').select('id, nombre')
+      const { data } = await supabase.from('catalogos').select('id, nombre').eq('empresa', '2n')
       setCatalogs(data || [])
     } catch (err) {
       console.error("Error fetching catalogs:", err)
@@ -166,6 +166,7 @@ export default function AdminPromocionesPage() {
       const { data, error } = await supabase
         .from('videos_promocionales')
         .select('*')
+        .eq('empresa', '2n')
         .order('order_index', { ascending: true })
       if (error) throw error
       setVideos(data || [])
@@ -205,7 +206,7 @@ export default function AdminPromocionesPage() {
         setVideos(prev => [...prev, mockItem].sort((a, b) => a.order_index - b.order_index))
         resetVideoForm()
       } else {
-        const { error } = await supabase.from('videos_promocionales').insert([newVideo])
+        const { error } = await supabase.from('videos_promocionales').insert([{ ...newVideo, empresa: '2n' }])
         if (error) throw error
         await fetchVideos()
         resetVideoForm()
@@ -306,6 +307,7 @@ export default function AdminPromocionesPage() {
       const { data, error } = await supabase
         .from('descuentos_visuales')
         .select('*')
+        .eq('empresa', '2n')
         .order('order_index', { ascending: true })
       if (error) throw error
       setDiscounts(data || [])
@@ -383,7 +385,7 @@ export default function AdminPromocionesPage() {
             .eq('id', editingDiscount.id)
           if (error) throw error
         } else {
-          const { error } = await supabase.from('descuentos_visuales').insert([discountData])
+          const { error } = await supabase.from('descuentos_visuales').insert([{ ...discountData, empresa: '2n' }])
           if (error) throw error
         }
         await fetchDiscounts()

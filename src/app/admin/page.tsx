@@ -23,9 +23,9 @@ export default function AdminDashboard() {
       const { data: { user } } = await supabase.auth.getUser()
       
       // Real fetch (will be 0 if tables are empty)
-      const { count: productsCount } = await supabase.from('productos').select('*', { count: 'exact', head: true })
-      const { count: lowStockCount } = await supabase.from('productos').select('*', { count: 'exact', head: true }).lt('stock', 5)
-      const { count: categoriesCount } = await supabase.from('catalogos').select('*', { count: 'exact', head: true })
+      const { count: productsCount } = await supabase.from('productos').select('*', { count: 'exact', head: true }).eq('empresa', '2n')
+      const { count: lowStockCount } = await supabase.from('productos').select('*', { count: 'exact', head: true }).eq('empresa', '2n').lt('stock', 5)
+      const { count: categoriesCount } = await supabase.from('catalogos').select('*', { count: 'exact', head: true }).eq('empresa', '2n')
       
       const { data: profiles } = await supabase.from('profiles').select('*')
       const filteredUsers = profiles?.filter((p: any) => p.permissions?.created_by === user?.id) || []
@@ -38,7 +38,7 @@ export default function AdminDashboard() {
         totalUsers: usersCount,
       })
 
-      const { data: products } = await supabase.from('productos').select('*').lt('stock', 5).limit(5)
+      const { data: products } = await supabase.from('productos').select('*').eq('empresa', '2n').lt('stock', 5).limit(5)
       setLowStockProducts(products || [])
       
       setLoading(false)

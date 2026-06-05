@@ -21,7 +21,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const fetchCatalogs = async () => {
-      const { data, error } = await supabase.from('catalogos').select('*')
+      const { data, error } = await supabase.from('catalogos').select('*').eq('empresa', '2n')
       if (error) {
         console.error('Error fetching catalogs:', error)
       } else {
@@ -53,6 +53,7 @@ export default function Navbar() {
             .select('id, nombre, principio_activo, presentacion')
             .or(`nombre.ilike.%${searchQuery}%,principio_activo.ilike.%${searchQuery}%`)
             .eq('activo', true)
+            .eq('empresa', '2n')
             .limit(6)
           if (error) throw error
           setSearchResults(data || [])
