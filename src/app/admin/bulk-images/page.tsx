@@ -63,6 +63,8 @@ interface Product {
 
 interface MatchRow {
   file: string
+  fileObj: File
+  previewUrl: string
   product: Product | null
   score: number
   status: 'pending' | 'uploading' | 'done' | 'error' | 'skipped'
@@ -73,7 +75,6 @@ interface MatchRow {
 
 export default function BulkImagesPage() {
   const [products, setProducts] = useState<Product[]>([])
-  const [imageFiles, setImageFiles] = useState<string[]>([])
   const [rows, setRows] = useState<MatchRow[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -94,47 +95,90 @@ export default function BulkImagesPage() {
     loadData()
   }, [])
 
+  const fetchProducts = async () => {
+    const { data: prods } = await supabase
+      .from('productos')
+      .select('id, nombre, imagen_url')
+      .eq('empresa', '2n')
+    return (prods || []) as Product[]
+  }
+
+  const buildRowsFromFiles = (files: File[], allProds: Product[]): MatchRow[] => {
+    const images = files.filter(f =>
+      /\.(png|jpe?g)$/i.test(f.name)
+    )
+
+    const newRows: MatchRow[] = images.map(fileObj => {
+      const file = fileObj.name
+      let bestProduct: Product | null = null
+      let bestScore = 0
+
+      for (const p of allProds) {
+        const s = scoreMatch(file, p.nombre)
+        if (s > bestScore) {
+          bestScore = s
+          bestProduct = p
+        }
+      }
+
+      return {
+        file,
+        fileObj,
+        previewUrl: URL.createObjectURL(fileObj),
+        product: bestScore >= 30 ? bestProduct : null,
+        score: bestScore,
+        status: 'pending',
+        selected: bestScore >= 50,
+      }
+    })
+
+    newRows.sort((a, b) => b.score - a.score)
+    return newRows
+  }
+
   const loadData = async () => {
     setLoading(true)
     try {
-      // 1. Fetch products
-      const { data: prods } = await supabase
-        .from('productos')
-        .select('id, nombre, imagen_url')
-        .eq('empresa', '2n')
-      const allProds: Product[] = prods || []
+      const allProds = await fetchProducts()
       setProducts(allProds)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-      // 2. Fetch image list from API
-      const res = await fetch('/api/list-png')
-      const { images }: { images: string[] } = await res.json()
-      setImageFiles(images)
+  const handleFilesSelected = async (fileList: FileList | null) => {
+    if (!fileList || fileList.length === 0) return
 
-      // 3. Build match rows
-      const newRows: MatchRow[] = images.map(file => {
-        let bestProduct: Product | null = null
-        let bestScore = 0
+    setLoading(true)
+    try {
+      const allProds = products.length > 0 ? products : await fetchProducts()
+      if (products.length === 0) setProducts(allProds)
 
-        for (const p of allProds) {
-          const s = scoreMatch(file, p.nombre)
-          if (s > bestScore) {
-            bestScore = s
-            bestProduct = p
-          }
-        }
-
-        return {
-          file,
-          product: bestScore >= 30 ? bestProduct : null,
-          score: bestScore,
-          status: 'pending',
-          selected: bestScore >= 50,
-        }
+      setRows(prev => {
+        prev.forEach(r => URL.revokeObjectURL(r.previewUrl))
+        return buildRowsFromFiles(Array.from(fileList), allProds)
       })
+      setOverrideMap({})
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-      // Sort: highest score first
-      newRows.sort((a, b) => b.score - a.score)
-      setRows(newRows)
+  const reanalyze = async () => {
+    if (rows.length === 0) return
+    setLoading(true)
+    try {
+      const allProds = await fetchProducts()
+      setProducts(allProds)
+      const files = rows.map(r => r.fileObj)
+      setRows(prev => {
+        prev.forEach(r => URL.revokeObjectURL(r.previewUrl))
+        return buildRowsFromFiles(files, allProds)
+      })
     } catch (err) {
       console.error(err)
     } finally {
@@ -171,18 +215,13 @@ export default function BulkImagesPage() {
       setRows(prev => prev.map(r => r.file === row.file ? { ...r, status: 'uploading' } : r))
 
       try {
-        // Fetch the image from public folder
-        const imgRes = await fetch(`/PNG/${encodeURIComponent(row.file)}`)
-        if (!imgRes.ok) throw new Error('No se pudo leer la imagen')
-        const blob = await imgRes.blob()
-
-        // Upload to Supabase Storage
-        const fileExt = row.file.split('.').pop()
+        const fileExt = row.file.split('.').pop()?.toLowerCase() || 'png'
+        const contentType = row.fileObj.type || `image/${fileExt === 'jpg' ? 'jpeg' : fileExt}`
         const storagePath = `productos/${productId}_${Date.now()}.${fileExt}`
 
         const { error: uploadErr } = await supabase.storage
           .from('product-images')
-          .upload(storagePath, blob, { contentType: `image/${fileExt}`, upsert: true })
+          .upload(storagePath, row.fileObj, { contentType, upsert: true })
 
         if (uploadErr) throw uploadErr
 
@@ -245,10 +284,27 @@ export default function BulkImagesPage() {
             <span className="text-sm font-semibold uppercase tracking-wider">Herramienta Masiva</span>
           </div>
           <h1 className="text-2xl font-bold">Carga Masiva de Imágenes</h1>
-          <p className="text-white/70 text-sm mt-1">Matching automático entre archivos PNG y productos de la base de datos</p>
+          <p className="text-white/70 text-sm mt-1">Selecciona imágenes desde tu computadora y asigna automáticamente a productos</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button onClick={loadData} className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-colors">
+        <div className="flex items-center gap-3 flex-wrap">
+          <label className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-colors cursor-pointer">
+            <ImageIcon className="h-4 w-4" /> Seleccionar imágenes
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/jpg"
+              multiple
+              className="sr-only"
+              onChange={e => {
+                handleFilesSelected(e.target.files)
+                e.target.value = ''
+              }}
+            />
+          </label>
+          <button
+            onClick={reanalyze}
+            disabled={rows.length === 0}
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-colors disabled:opacity-40"
+          >
             <RefreshCw className="h-4 w-4" /> Reanalizar
           </button>
           <button
@@ -359,15 +415,14 @@ export default function BulkImagesPage() {
                   {/* Thumbnail */}
                   <td className="p-3">
                     <button
-                      onClick={() => setPreviewImg(`/PNG/${encodeURIComponent(row.file)}`)}
+                      onClick={() => setPreviewImg(row.previewUrl)}
                       className="relative h-12 w-12 rounded-lg overflow-hidden border border-gray-100 bg-gray-50 hover:border-brand-blue/40 transition-all group"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={`/PNG/${encodeURIComponent(row.file)}`}
+                        src={row.previewUrl}
                         alt={row.file}
                         className="h-full w-full object-contain"
-                        onError={e => { (e.target as HTMLImageElement).src = '' }}
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
                         <ZoomIn className="h-4 w-4 text-white" />
@@ -453,7 +508,14 @@ export default function BulkImagesPage() {
             </tbody>
           </table>
 
-          {filteredRows.length === 0 && (
+          {rows.length === 0 && (
+            <div className="p-12 text-center text-gray-400">
+              <ImageIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+              <p className="font-medium text-gray-500">No hay imágenes seleccionadas</p>
+              <p className="text-sm mt-1">Usa el botón &quot;Seleccionar imágenes&quot; para elegir los archivos PNG o JPG desde tu computadora.</p>
+            </div>
+          )}
+          {rows.length > 0 && filteredRows.length === 0 && (
             <div className="p-12 text-center text-gray-400">
               <ImageIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
               <p>No hay imágenes que coincidan con el filtro.</p>
