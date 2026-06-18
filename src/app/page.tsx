@@ -354,15 +354,16 @@ export default function Home() {
                     className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-6 no-scrollbar"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
-                    {descuentos.map((item) => {
+                    {descuentos.map((item, index) => {
                       const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
                       const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
+                      const isFirst = index === 0;
 
                       const CardContent = (
-                        <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-[350px] relative border border-gray-100 select-none group text-left p-4 card-glow w-full">
+                        <div className={`bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 relative border border-gray-100 select-none group text-left p-4 card-glow w-full ${isFirst ? 'flex flex-col sm:flex-row gap-4 sm:gap-6 h-auto sm:h-[350px]' : 'flex flex-col justify-between h-[350px]'}`}>
                           
-                          {/* Image Container with rounded shape and padding */}
-                          <div className="relative h-40 w-full bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors">
+                          {/* Image Container */}
+                          <div className={`relative bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors ${isFirst ? 'h-48 sm:h-full sm:w-1/2 sm:flex-shrink-0' : 'h-40 w-full'}`}>
                             <img 
                               src={item.imagen_url} 
                               alt={item.titulo} 
@@ -371,21 +372,21 @@ export default function Home() {
                           </div>
 
                           {/* Text Info */}
-                          <div className="mt-3 flex-1 flex flex-col justify-between">
+                          <div className={`mt-3 flex-1 flex flex-col justify-between ${isFirst ? 'sm:mt-0 sm:py-2' : ''}`}>
                             <div className="space-y-1">
                               <span className="text-[9px] font-extrabold text-brand-orange uppercase tracking-widest block truncate">
                                 {catalogName}
                               </span>
-                              <h4 className="text-sm font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors">
+                              <h4 className={`font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors ${isFirst ? 'text-lg sm:text-2xl' : 'text-sm'}`}>
                                 {item.titulo}
                               </h4>
-                              <p className="text-[11px] text-gray-400 font-medium">
+                              <p className={`${isFirst ? 'text-sm' : 'text-[11px]'} text-gray-400 font-medium`}>
                                 Descuento de temporada
                               </p>
                             </div>
 
                             {/* Button-like Link (CTA) */}
-                            <div className="mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 transition-all duration-300">
+                            <div className={`mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white rounded-xl font-bold text-center flex items-center justify-center gap-1 transition-all duration-300 ${isFirst ? 'py-3 px-4 text-sm' : 'py-2 px-3 text-xs'}`}>
                               <span>Explorar Catálogo</span>
                               <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -394,10 +395,10 @@ export default function Home() {
                       );
 
                       return (
-                        <div key={item.id} className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start">
+                        <div key={item.id} className={`flex-shrink-0 snap-start ${isFirst ? 'w-[320px] sm:w-[520px] md:w-[600px]' : 'w-[240px] sm:w-[260px]'}`}>
                           <Link 
                             href={item.catalogo_id ? `/catalogs/${item.catalogo_id}` : "#catalogos"}
-                            className="block transform hover:-translate-y-1.5 transition-all duration-300"
+                            className="block transform hover:-translate-y-1.5 transition-all duration-300 h-full"
                           >
                             {CardContent}
                           </Link>
