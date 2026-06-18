@@ -358,8 +358,11 @@ export default function Home() {
                       const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
                       const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
                       
-                      // Usar el campo is_featured de la base de datos (con fallback a index === 0 solo por compatibilidad si es null)
-                      const isFeatured = item.is_featured === true;
+                      // Verificar si hay alguna promoción destacada explícitamente en todo el array
+                      const hasAnyFeatured = descuentos.some((d: any) => d.is_featured === true);
+                      
+                      // Usar el campo is_featured, o hacer fallback al primer elemento si no hay ninguna destacada
+                      const isFeatured = item.is_featured === true || (!hasAnyFeatured && index === 0);
 
                       // Valores dinámicos desde la BD con fallbacks
                       const fondoColor = item.fondo_color || '#9bd4c3';
