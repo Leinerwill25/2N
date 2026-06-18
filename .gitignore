@@ -43,3 +43,5 @@ next-env.d.ts
 # Migraciones y archivos irrelevantes
 *.sql
 informacion_pagina_principal.txt
+
+public/PNG/
