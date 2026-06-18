@@ -52,6 +52,13 @@ interface DescuentoVisual {
   catalogo_id: string | null
   activo: boolean
   order_index: number
+  is_featured?: boolean
+  fondo_color?: string
+  marca_agua?: string
+  etiqueta_superior?: string
+  titulo_principal?: string
+  etiqueta_inferior?: string
+  boton_color?: string
   created_at?: string
 }
 
@@ -89,6 +96,15 @@ export default function AdminPromocionesPage() {
   const [discountOrderIndex, setDiscountOrderIndex] = useState(1)
   const [discountActivo, setDiscountActivo] = useState(true)
   const [discountFile, setDiscountFile] = useState<File | null>(null)
+  
+  // Featured Discount Form State
+  const [discountIsFeatured, setDiscountIsFeatured] = useState(false)
+  const [discountFondoColor, setDiscountFondoColor] = useState('#9bd4c3')
+  const [discountMarcaAgua, setDiscountMarcaAgua] = useState('SINMEGAS')
+  const [discountEtiquetaSuperior, setDiscountEtiquetaSuperior] = useState('✨ MANTÉN TU BIENESTAR BAJO CONTROL')
+  const [discountTituloPrincipal, setDiscountTituloPrincipal] = useState('Disfruta cada día sin consecuencias')
+  const [discountEtiquetaInferior, setDiscountEtiquetaInferior] = useState('💊 Calidad Asegurada')
+  const [discountBotonColor, setDiscountBotonColor] = useState('#f2006c')
 
   // Mock fallbacks
   const mockVideos: VideoPromo[] = [
@@ -363,7 +379,14 @@ export default function AdminPromocionesPage() {
         imagen_url,
         catalogo_id: discountCatalogoId || null,
         activo: discountActivo,
-        order_index: Number(discountOrderIndex)
+        order_index: Number(discountOrderIndex),
+        is_featured: discountIsFeatured,
+        fondo_color: discountFondoColor,
+        marca_agua: discountMarcaAgua,
+        etiqueta_superior: discountEtiquetaSuperior,
+        titulo_principal: discountTituloPrincipal,
+        etiqueta_inferior: discountEtiquetaInferior,
+        boton_color: discountBotonColor
       }
 
       if (isUsingDiscountMock) {
@@ -407,6 +430,13 @@ export default function AdminPromocionesPage() {
     setDiscountOrderIndex(discount.order_index)
     setDiscountActivo(discount.activo)
     setDiscountFile(null)
+    setDiscountIsFeatured(discount.is_featured || false)
+    setDiscountFondoColor(discount.fondo_color || '#9bd4c3')
+    setDiscountMarcaAgua(discount.marca_agua || 'SINMEGAS')
+    setDiscountEtiquetaSuperior(discount.etiqueta_superior || '✨ MANTÉN TU BIENESTAR BAJO CONTROL')
+    setDiscountTituloPrincipal(discount.titulo_principal || 'Disfruta cada día sin consecuencias')
+    setDiscountEtiquetaInferior(discount.etiqueta_inferior || '💊 Calidad Asegurada')
+    setDiscountBotonColor(discount.boton_color || '#f2006c')
     
     // Scroll smoothly to form container
     document.getElementById('discount-form-container')?.scrollIntoView({ behavior: 'smooth' })
@@ -457,6 +487,13 @@ export default function AdminPromocionesPage() {
     setDiscountActivo(true)
     setDiscountFile(null)
     setEditingDiscount(null)
+    setDiscountIsFeatured(false)
+    setDiscountFondoColor('#9bd4c3')
+    setDiscountMarcaAgua('SINMEGAS')
+    setDiscountEtiquetaSuperior('✨ MANTÉN TU BIENESTAR BAJO CONTROL')
+    setDiscountTituloPrincipal('Disfruta cada día sin consecuencias')
+    setDiscountEtiquetaInferior('💊 Calidad Asegurada')
+    setDiscountBotonColor('#f2006c')
   }
 
   return (
@@ -820,6 +857,64 @@ export default function AdminPromocionesPage() {
                 <label htmlFor="discount-activo" className="text-sm font-medium text-gray-700 cursor-pointer select-none">
                   Activo / Visible en Web
                 </label>
+              </div>
+
+              {/* FEATURED SETTINGS */}
+              <div className="pt-4 mt-4 border-t border-gray-100 space-y-4">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="discount-featured"
+                    checked={discountIsFeatured}
+                    onChange={(e) => setDiscountIsFeatured(e.target.checked)}
+                    className="w-4.5 h-4.5 text-brand-orange border-gray-300 rounded focus:ring-brand-orange"
+                  />
+                  <label htmlFor="discount-featured" className="text-sm font-bold text-gray-900 cursor-pointer select-none flex items-center gap-1">
+                    <Sparkles className="h-4 w-4 text-brand-orange" />
+                    ¿Es Promoción Destacada? (Rectángulo Ancho)
+                  </label>
+                </div>
+
+                {discountIsFeatured && (
+                  <div className="bg-gray-50 p-4 rounded-xl space-y-4 border border-gray-100">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Color de Fondo</label>
+                        <div className="flex gap-2">
+                          <input type="color" value={discountFondoColor} onChange={(e) => setDiscountFondoColor(e.target.value)} className="w-8 h-8 rounded cursor-pointer" />
+                          <input type="text" value={discountFondoColor} onChange={(e) => setDiscountFondoColor(e.target.value)} className="flex-1 px-2 text-xs border rounded outline-none uppercase" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Color del Botón</label>
+                        <div className="flex gap-2">
+                          <input type="color" value={discountBotonColor} onChange={(e) => setDiscountBotonColor(e.target.value)} className="w-8 h-8 rounded cursor-pointer" />
+                          <input type="text" value={discountBotonColor} onChange={(e) => setDiscountBotonColor(e.target.value)} className="flex-1 px-2 text-xs border rounded outline-none uppercase" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Marca de Agua (Fondo)</label>
+                      <input type="text" value={discountMarcaAgua} onChange={(e) => setDiscountMarcaAgua(e.target.value)} className="w-full px-3 py-1.5 border rounded outline-none text-xs" />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Etiqueta Superior (Pill 1)</label>
+                      <input type="text" value={discountEtiquetaSuperior} onChange={(e) => setDiscountEtiquetaSuperior(e.target.value)} className="w-full px-3 py-1.5 border rounded outline-none text-xs" />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Título Principal (Grande)</label>
+                      <input type="text" value={discountTituloPrincipal} onChange={(e) => setDiscountTituloPrincipal(e.target.value)} className="w-full px-3 py-1.5 border rounded outline-none text-xs font-bold" />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Etiqueta Inferior (Pill 2)</label>
+                      <input type="text" value={discountEtiquetaInferior} onChange={(e) => setDiscountEtiquetaInferior(e.target.value)} className="w-full px-3 py-1.5 border rounded outline-none text-xs" />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-3">

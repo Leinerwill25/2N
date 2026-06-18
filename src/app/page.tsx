@@ -354,39 +354,102 @@ export default function Home() {
                     className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-6 no-scrollbar"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
-                    {descuentos.map((item, index) => {
+                    {descuentos.map((item: any, index) => {
                       const linkedCatalog = catalogs.find((c: any) => c.id === item.catalogo_id);
                       const catalogName = linkedCatalog ? linkedCatalog.nombre : "Oferta Especial";
-                      const isFirst = index === 0;
+                      
+                      // Usar el campo is_featured de la base de datos (con fallback a index === 0 solo por compatibilidad si es null)
+                      const isFeatured = item.is_featured === true;
 
-                      const CardContent = (
-                        <div className={`bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 relative border border-gray-100 select-none group text-left p-4 card-glow w-full ${isFirst ? 'flex flex-col sm:flex-row gap-4 sm:gap-6 h-auto sm:h-[350px]' : 'flex flex-col justify-between h-[350px]'}`}>
+                      // Valores dinámicos desde la BD con fallbacks
+                      const fondoColor = item.fondo_color || '#9bd4c3';
+                      const botonColor = item.boton_color || '#f2006c';
+                      const shortName = item.marca_agua || (item.titulo ? item.titulo.split(' ')[0].toUpperCase() : 'OFERTA');
+                      const etiquetaSuperior = item.etiqueta_superior || '✨ MANTÉN TU BIENESTAR BAJO CONTROL';
+                      const tituloPrincipal = item.titulo_principal || 'Disfruta cada día sin consecuencias';
+                      const etiquetaInferior = item.etiqueta_inferior || `💊 ${item.titulo} - Calidad Asegurada`;
+
+                      const CardContent = isFeatured ? (
+                        <div 
+                          className="rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 relative border-none select-none group text-left flex flex-col md:flex-row items-center w-full h-auto md:h-[350px] p-6 md:p-10 gap-6 md:gap-10"
+                          style={{ backgroundColor: fondoColor }}
+                        >
                           
+                          {/* Background Watermark */}
+                          <div className="absolute right-[-10%] bottom-[-20%] text-[10rem] md:text-[14rem] font-black text-white/20 select-none pointer-events-none uppercase tracking-tighter" style={{ lineHeight: 0.8 }}>
+                            {shortName}
+                          </div>
+
+                          {/* Left: Floating White Card */}
+                          <div className="relative z-10 w-full md:w-[35%] bg-white rounded-3xl p-4 shadow-xl flex flex-col items-center justify-center flex-shrink-0 aspect-square md:aspect-auto md:h-full">
+                            <div className="flex-1 w-full flex items-center justify-center">
+                              <img 
+                                src={item.imagen_url} 
+                                alt={item.titulo} 
+                                className="object-contain max-h-[160px] md:max-h-[200px] max-w-full transition-transform duration-500 group-hover:scale-105" 
+                              />
+                            </div>
+                            <div className="mt-4 text-center pb-2">
+                              <div className="text-[10px] md:text-xs font-black text-[#0c3e7f] uppercase tracking-wider">{item.titulo}</div>
+                              <div className="text-[9px] md:text-[10px] font-bold text-[#23b33a] uppercase tracking-widest mt-1">Garantizado</div>
+                            </div>
+                          </div>
+
+                          {/* Right: Text and CTA */}
+                          <div className="relative z-10 flex-1 flex flex-col justify-center items-start w-full">
+                            
+                            {/* Top Pill */}
+                            <div className="bg-white/20 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 backdrop-blur-sm border border-white/30 flex items-center gap-2">
+                              {etiquetaSuperior}
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#0c3e7f] leading-tight mb-4 tracking-tight drop-shadow-sm">
+                              {tituloPrincipal}
+                            </h3>
+
+                            {/* Details Pill */}
+                            <div className="bg-black/10 text-white text-[11px] md:text-sm font-semibold px-4 py-2 rounded-full mb-6 backdrop-blur-sm flex items-center gap-2">
+                              {etiquetaInferior}
+                            </div>
+
+                            {/* CTA Button */}
+                            <div 
+                              className="text-white py-3 px-8 rounded-full font-bold text-sm md:text-base flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:brightness-90"
+                              style={{ backgroundColor: botonColor }}
+                            >
+                              Comprar Ahora <ArrowRight className="h-4 w-4" />
+                            </div>
+                          </div>
+
+                        </div>
+                      ) : (
+                        <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-[350px] relative border border-gray-100 select-none group text-left p-4 card-glow w-full">
                           {/* Image Container */}
-                          <div className={`relative bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors ${isFirst ? 'h-48 sm:h-full sm:w-1/2 sm:flex-shrink-0' : 'h-40 w-full'}`}>
+                          <div className="relative h-40 w-full bg-gray-50/60 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-gray-100/50 group-hover:bg-gray-50 transition-colors">
                             <img 
                               src={item.imagen_url} 
                               alt={item.titulo} 
-                              className="object-contain max-h-full max-w-full rounded-xl transition-transform duration-500 group-hover:scale-105 text-brand-dark text-xs" 
+                              className="object-contain max-h-full max-w-full rounded-xl transition-transform duration-500 group-hover:scale-105" 
                             />
                           </div>
 
                           {/* Text Info */}
-                          <div className={`mt-3 flex-1 flex flex-col justify-between ${isFirst ? 'sm:mt-0 sm:py-2' : ''}`}>
+                          <div className="mt-3 flex-1 flex flex-col justify-between">
                             <div className="space-y-1">
                               <span className="text-[9px] font-extrabold text-brand-orange uppercase tracking-widest block truncate">
                                 {catalogName}
                               </span>
-                              <h4 className={`font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors ${isFirst ? 'text-lg sm:text-2xl' : 'text-sm'}`}>
+                              <h4 className="text-sm font-extrabold text-brand-dark line-clamp-2 leading-snug group-hover:text-brand-blue transition-colors">
                                 {item.titulo}
                               </h4>
-                              <p className={`${isFirst ? 'text-sm' : 'text-[11px]'} text-gray-400 font-medium`}>
+                              <p className="text-[11px] text-gray-400 font-medium">
                                 Descuento de temporada
                               </p>
                             </div>
 
-                            {/* Button-like Link (CTA) */}
-                            <div className={`mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white rounded-xl font-bold text-center flex items-center justify-center gap-1 transition-all duration-300 ${isFirst ? 'py-3 px-4 text-sm' : 'py-2 px-3 text-xs'}`}>
+                            {/* CTA */}
+                            <div className="mt-3 w-full bg-brand-blue/5 group-hover:bg-brand-orange text-brand-blue group-hover:text-white py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 transition-all duration-300">
                               <span>Explorar Catálogo</span>
                               <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -395,7 +458,7 @@ export default function Home() {
                       );
 
                       return (
-                        <div key={item.id} className={`flex-shrink-0 snap-start ${isFirst ? 'w-[320px] sm:w-[520px] md:w-[600px]' : 'w-[240px] sm:w-[260px]'}`}>
+                        <div key={item.id} className={`flex-shrink-0 snap-start ${isFeatured ? 'w-[320px] sm:w-[600px] md:w-[850px] lg:w-[950px]' : 'w-[240px] sm:w-[260px]'}`}>
                           <Link 
                             href={item.catalogo_id ? `/catalogs/${item.catalogo_id}` : "#catalogos"}
                             className="block transform hover:-translate-y-1.5 transition-all duration-300 h-full"
