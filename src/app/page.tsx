@@ -40,65 +40,13 @@ import {
   Film
 } from 'lucide-react'
 
-const aliadosA = [
-  { nombre: "Wells of Life, C.A.", rif: "J-305882201" },
-  { nombre: "Dropharma D&M, C.A.", rif: "J-411589188" },
-  { nombre: "Droguería DHM, C.A.", rif: "J-500351763" },
-  { nombre: "Droguería Real, C.A.", rif: "J-501981528" },
-  { nombre: "Droguería Mundo Médico, C.A.", rif: "J-401568909" },
-  { nombre: "Insuaminca, C.A.", rif: "J-412413740" },
-  { nombre: "Droguería Surdelago, C.A.", rif: "J-500690798" },
-  { nombre: "Droguería Melmax2018, C.A.", rif: "J-411259918" },
-  { nombre: "Droguería El Arcángel, C.A.", rif: "J-409672840" },
-  { nombre: "Droguería Santo Cristo, C.A.", rif: "J-500828586" },
-  { nombre: "Droguería La Esencial, C.A.", rif: "J-501910715" },
-  { nombre: "Droguería Cobeca Centro", rif: "J-075881776" },
-  { nombre: "Droguería Cobeca Occidente", rif: "J-070095008" },
-  { nombre: "Droguería Cobeca Oriente", rif: "J-300666704" },
-  { nombre: "Droguería Intercontinental, C.A.", rif: "J-501500192" },
-  { nombre: "Droguería Biomedic Lab Centro, C.A.", rif: "J-409364771" },
-  { nombre: "Droguería Drobelsa, C.A.", rif: "J-501667195" },
-  { nombre: "Droguería Megafar, C.A.", rif: "J-505842009" },
-  { nombre: "Crist Medicals, C.A.", rif: "J-412236709" },
-  { nombre: "Distribuidora Multimédica 1812, C.A.", rif: "J-294190248" },
-  { nombre: "Droguería Rdipharma, C.A.", rif: "J-412753355" },
-  { nombre: "Droguería Solidaria de Venezuela, C.A.", rif: "J-409285170" },
-  { nombre: "Droguería Medicarpez, C.A.", rif: "J-506122111" },
-  { nombre: "Droguería y Distribuidora Colmedica, C.A.", rif: "J-303604906" },
-  { nombre: "Innomar, C.A.", rif: "J-409075742" },
-  { nombre: "Droguería Los Andes, C.A.", rif: "J-500162944" },
-  { nombre: "Droguería Dr. Tito, C.A.", rif: "J-500762082" }
-]
-
-const aliadosB = [
-  { nombre: "Droguería Droca, C.A.", rif: "J-500445219" },
-  { nombre: "Dromedalca, C.A.", rif: "J-409796000" },
-  { nombre: "Casa de Representación Nibiru Pharma, C.A.", rif: "J-500013396" },
-  { nombre: "Droguería 4J, C.A.", rif: "J-505081890" },
-  { nombre: "Distriroshi, C.A.", rif: "J-503775530" },
-  { nombre: "Distribuidora Médica Export-Medex, C.A.", rif: "J-305895906" },
-  { nombre: "Casa de Representación Laboratorios Verma, C.A.", rif: "J-500972309" },
-  { nombre: "Infarven, C.A.", rif: "J-411208060" },
-  { nombre: "Droguería Socialsc, C.A.", rif: "J-500458952" },
-  { nombre: "Droguería Blisspharma, C.A.", rif: "J-507134059" },
-  { nombre: "Droguería Droplus Occidente, C.A.", rif: "J-500029780" },
-  { nombre: "Droguería Global de Suministros Médicos, C.A.", rif: "J-516822282" },
-  { nombre: "Droguería Nayter, C.A.", rif: "J-409355209" },
-  { nombre: "Droarca Droguería El Arca, C.A.", rif: "J-500030205" },
-  { nombre: "Droguería Eda, C.A.", rif: "J-500525115" },
-  { nombre: "Droguería y Suministros Drodigca, C.A.", rif: "J-502048715" },
-  { nombre: "Droguería Dolbelsa, C.A.", rif: "J-501667195" },
-  { nombre: "Droguería Digeca de Occidente", rif: "J-205743092" },
-  { nombre: "Marissa Droguería, C.A.", rif: "J-501155801" },
-  { nombre: "Droguería Médica Continental, C.A.", rif: "J-500573981" },
-  { nombre: "Droguería Clip, C.A.", rif: "J-500576439" },
-  { nombre: "Droguería Vital Salud, C.A.", rif: "J-410809208" },
-  { nombre: "Droguería Parenteral, C.A.", rif: "J-400614813" },
-  { nombre: "Droguería Medi Express, C.A.", rif: "J-500127995" },
-  { nombre: "Droguería Medical Group, C.A.", rif: "J-401754583" },
-  { nombre: "Droguería Venezuela 2018, C.A.", rif: "J-410786469" },
-  { nombre: "Zakipharma, C.A.", rif: "J-500976160" },
-  { nombre: "Droguería Hatillana, C.A.", rif: "J-412580289" }
+const aliadosLogos = [
+  { nombre: "ZakiPharma", img: "/Gemini_Generated_Image_2kxk002kxk002kxk.png" },
+  { nombre: "Roipharma", img: "/Gemini_Generated_Image_6xxwan6xxwan6xxw.png" },
+  { nombre: "Insuaminca", img: "/Gemini_Generated_Image_94s1i194s1i194s1.png" },
+  { nombre: "Droguería Solidaria", img: "/Gemini_Generated_Image_gcsdopgcsdopgcsd.png" },
+  { nombre: "Crist Medicals", img: "/Gemini_Generated_Image_h1zahph1zahph1za.png" },
+  { nombre: "Hatillana", img: "/Gemini_Generated_Image_rll0carll0carll0.png" }
 ]
 
 export default function Home() {
@@ -1051,35 +999,18 @@ export default function Home() {
             </div>
 
             <div className="relative overflow-hidden py-10 space-y-8">
-              {/* Fila 1: Desplazamiento a la izquierda */}
+              {/* Carrusel de Logos de Aliados */}
               <div className="relative overflow-hidden w-full">
-                <div className="flex gap-8 w-max animate-scroll-left pause-on-hover">
-                  {[...aliadosA, ...aliadosA].map((aliado, index) => (
-                    <div key={`a-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[300px] group cursor-default transform hover:-translate-y-1">
-                      <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
-                        <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <div className="flex flex-col min-w-0">
-                        <h3 className="text-sm font-bold text-brand-dark group-hover:text-white transition-colors duration-300 truncate" title={aliado.nombre}>{aliado.nombre}</h3>
-                        <span className="text-[10px] text-gray-400 font-semibold group-hover:text-white/70 transition-colors duration-300 mt-0.5">{aliado.rif}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Fila 2: Desplazamiento a la derecha */}
-              <div className="relative overflow-hidden w-full">
-                <div className="flex gap-8 w-max animate-scroll-right pause-on-hover">
-                  {[...aliadosB, ...aliadosB].map((aliado, index) => (
-                    <div key={`b-${index}`} className="bg-white hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue-mid p-6 rounded-2xl border border-gray-100 hover:border-transparent shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.22)] transition-all duration-300 flex items-center gap-4 min-w-[300px] group cursor-default transform hover:-translate-y-1">
-                      <div className="bg-brand-blue/5 group-hover:bg-white/15 p-3 rounded-xl transition-colors duration-300">
-                        <Building2 className="h-6 w-6 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <div className="flex flex-col min-w-0">
-                        <h3 className="text-sm font-bold text-brand-dark group-hover:text-white transition-colors duration-300 truncate" title={aliado.nombre}>{aliado.nombre}</h3>
-                        <span className="text-[10px] text-gray-400 font-semibold group-hover:text-white/70 transition-colors duration-300 mt-0.5">{aliado.rif}</span>
-                      </div>
+                {/* Multiplicamos el array varias veces para asegurar que el marquee sea infinito y no haya espacios vacíos */}
+                <div className="flex gap-8 w-max animate-scroll-left pause-on-hover items-center">
+                  {[...aliadosLogos, ...aliadosLogos, ...aliadosLogos, ...aliadosLogos].map((aliado, index) => (
+                    <div key={`a-${index}`} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.12)] transition-all duration-300 flex items-center justify-center min-w-[220px] max-w-[220px] h-[120px] group cursor-default">
+                      <img 
+                        src={aliado.img} 
+                        alt={`Logo de ${aliado.nombre}`} 
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" 
+                        title={aliado.nombre}
+                      />
                     </div>
                   ))}
                 </div>
