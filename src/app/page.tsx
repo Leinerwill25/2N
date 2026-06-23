@@ -1004,11 +1004,11 @@ export default function Home() {
                 {/* Multiplicamos el array varias veces para asegurar que el marquee sea infinito y no haya espacios vacíos */}
                 <div className="flex gap-8 w-max animate-scroll-left pause-on-hover items-center">
                   {[...aliadosLogos, ...aliadosLogos, ...aliadosLogos, ...aliadosLogos].map((aliado, index) => (
-                    <div key={`a-${index}`} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.12)] transition-all duration-300 flex items-center justify-center min-w-[220px] max-w-[220px] h-[120px] group cursor-default">
+                    <div key={`a-${index}`} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(13,27,75,0.02)] hover:shadow-[0_8px_30px_rgba(26,58,143,0.12)] transition-all duration-300 flex items-center justify-center min-w-[280px] max-w-[280px] h-[160px] group cursor-default">
                       <img 
                         src={aliado.img} 
                         alt={`Logo de ${aliado.nombre}`} 
-                        className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" 
+                        className="max-w-full max-h-full object-contain mix-blend-multiply filter brightness-110 contrast-125 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:brightness-100 group-hover:contrast-100 transition-all duration-500 scale-110 group-hover:scale-125" 
                         title={aliado.nombre}
                       />
                     </div>
