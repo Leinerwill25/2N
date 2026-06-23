@@ -1008,7 +1008,7 @@ export default function Home() {
                       <img 
                         src={aliado.img} 
                         alt={`Logo de ${aliado.nombre}`} 
-                        className="max-w-full max-h-full object-contain mix-blend-multiply filter brightness-110 contrast-125 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:brightness-100 group-hover:contrast-100 transition-all duration-500 scale-110 group-hover:scale-125" 
+                        className="max-w-full max-h-full object-contain mix-blend-multiply filter brightness-110 contrast-125 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-110 group-hover:scale-125" 
                         title={aliado.nombre}
                       />
                     </div>
